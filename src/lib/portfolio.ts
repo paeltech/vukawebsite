@@ -52,3 +52,10 @@ export function portfolioTeaser(summary: string): string {
   const firstSentence = normalized.match(/^[^.!?]+[.!?]/)?.[0]?.trim();
   return firstSentence ?? normalized;
 }
+
+export type PortfolioAudience = 'founders' | 'corporates' | 'government' | 'investors' | 'partners';
+
+export async function getPortfolioForAudience(audience: PortfolioAudience): Promise<PortfolioEntry[]> {
+  const published = await getPublishedPortfolio();
+  return published.filter((entry) => entry.data.audiences?.includes(audience));
+}

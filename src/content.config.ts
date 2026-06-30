@@ -15,6 +15,14 @@ const portfolioPathways = [
   'government-innovation',
 ] as const;
 
+const portfolioAudiences = [
+  'founders',
+  'corporates',
+  'government',
+  'investors',
+  'partners',
+] as const;
+
 const clientLogoSchema = z.object({
   name: z.string(),
   src: z.string(),
@@ -35,9 +43,11 @@ const portfolio = defineCollection({
     featured: z.boolean().default(false),
     published: z.boolean().default(false),
     order: z.number().default(0),
+    /** Audience routes where this venture is relevant proof */
+    audiences: z.array(z.enum(portfolioAudiences)).default([]),
   }),
 });
 
 export const collections = { portfolio };
 
-export { portfolioSectors, portfolioPathways };
+export { portfolioSectors, portfolioPathways, portfolioAudiences };

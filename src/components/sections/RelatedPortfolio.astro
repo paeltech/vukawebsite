@@ -1,0 +1,26 @@
+---
+import ContentSection from '@/components/sections/ContentSection.astro';
+import PortfolioCard from '@/components/sections/PortfolioCard.astro';
+import type { PortfolioEntry } from '@/lib/portfolio';
+
+interface Props {
+  entries: PortfolioEntry[];
+  intro: string;
+  label?: string;
+}
+
+const { entries, intro, label = 'Related work' } = Astro.props;
+---
+
+{
+  entries.length > 0 && (
+    <ContentSection label={label} icon="proof">
+      <p class="mb-vuka-3xl max-w-2xl text-lg leading-relaxed text-vuka-black">{intro}</p>
+      <div class="flex flex-col gap-4">
+        {entries.map((entry) => (
+          <PortfolioCard entry={entry} />
+        ))}
+      </div>
+    </ContentSection>
+  )
+}

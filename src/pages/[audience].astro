@@ -2,56 +2,75 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/layout/Section.astro';
 import AudienceSectionCard from '@/components/sections/AudienceSectionCard.astro';
+import ContentSection from '@/components/sections/ContentSection.astro';
 import PageCTA from '@/components/sections/PageCTA.astro';
 import PageHeader from '@/components/sections/PageHeader.astro';
+import RelatedPortfolio from '@/components/sections/RelatedPortfolio.astro';
 import ContextNav from '@/components/ui/ContextNav.astro';
 import Button from '@/components/ui/Button.astro';
 import Icon from '@/components/ui/Icon.astro';
-import { audiences, audienceSlugs } from '@/data/copy/audiences';
+import HubLinkList from '@/components/sections/HubLinkList.astro';
+import {
+  audiences,
+  audienceNavLabels,
+  audienceSlugs,
+  type AudienceSlug,
+} from '@/data/copy/audiences';
+import { getPortfolioForAudience } from '@/lib/portfolio';
 
 export function getStaticPaths() {
   return audienceSlugs.map((slug) => ({ params: { audience: slug } }));
 }
 
 const { audience } = Astro.params;
-const page = audiences[audience as string];
+const page = audiences[audience as AudienceSlug];
 
 if (!page) {
   return Astro.redirect('/who-we-work-with');
 }
 
-const typeMap: Record<string, string> = {
+const relatedVentures = await getPortfolioForAudience(page.slug);
+
+const typeMap: Record<AudienceSlug, string> = {
   founders: 'founder',
   corporates: 'corporate',
   government: 'government',
   investors: 'investor',
   partners: 'partner',
 };
+
+const siblingLinks = audienceSlugs
+  .filter((slug) => slug !== page.slug)
+  .map((slug) => ({
+    label: audienceNavLabels[slug],
+    description: audiences[slug].header.headline.split('\n')[0],
+    href: `/${slug}`,
+  }));
 ---
 
-<BaseLayout title={page.header.headline.split('\n')[0]}>
+<BaseLayout title={page.eyebrow}>
   <Section class="relative overflow-hidden">
-    <PageHeader {...page.header} headlineSize="hero">
+    <PageHeader eyebrow={page.eyebrow} {...page.header} headlineSize="hero">
       <ContextNav
         links={[
           { label: 'Audiences on home', href: '/#audiences' },
-          { label: 'All routes', href: '/who-we-work-with' },
+          { label: 'Who we work with', href: '/who-we-work-with' },
         ]}
       />
     </PageHeader>
   </Section>
 
   <Section variant="dark">
-    <AudienceSectionCard
-      label="Your situation"
-      icon="situation"
-      body={page.problem}
-      variant="dark"
-      index={1}
-    />
+    <ContentSection label="In context" icon="situation" inverted>
+      <p class="max-w-3xl text-lg leading-relaxed text-sand">{page.overview}</p>
+    </ContentSection>
   </Section>
 
   <Section>
+    <AudienceSectionCard label="Your situation" icon="situation" body={page.problem} index={1} />
+  </Section>
+
+  <Section variant="sand">
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
       <AudienceSectionCard label="What Vuka offers" icon="offer" body={page.offer} index={2} />
       <AudienceSectionCard label="How it works" icon="process" body={page.howItWorks} index={3}>
@@ -74,9 +93,17 @@ const typeMap: Record<string, string> = {
     </div>
   </Section>
 
-  <Section variant="dark">
-    <AudienceSectionCard label="Proof" icon="proof" body={page.proof} variant="dark" index={4} />
+  <Section>
+    <AudienceSectionCard label="Proof" icon="proof" body={page.proof} index={4} />
   </Section>
+
+  {
+    relatedVentures.length > 0 && (
+      <Section variant="sand">
+        <RelatedPortfolio entries={relatedVentures} intro={page.relatedWorkIntro} />
+      </Section>
+    )
+  }
 
   <Section>
     <AudienceSectionCard
@@ -89,11 +116,24 @@ const typeMap: Record<string, string> = {
     />
   </Section>
 
+  <Section variant="sand">
+    <div class="grid grid-cols-1 gap-vuka-4xl lg:grid-cols-2 lg:items-start">
+      <div class="vuka-reveal">
+        <p class="mb-4 font-light text-[11px] uppercase tracking-category text-baobab">Other audiences</p>
+        <h2 class="font-heavy text-h3 leading-tight text-vuka-black">Not your route?</h2>
+        <p class="mt-vuka-xl max-w-md text-lg leading-relaxed text-vuka-black">
+          Vuka works with five audience types. Explore another entry point — or use the contact form and we will route you.
+        </p>
+      </div>
+      <HubLinkList links={siblingLinks} />
+    </div>
+  </Section>
+
   <Section>
     <PageCTA
       cta={{
         ...page.cta,
-        href: `/work-with-us?type=${typeMap[page.slug] ?? ''}`,
+        href: `/work-with-us?type=${typeMap[page.slug]}`,
       }}
     />
   </Section>

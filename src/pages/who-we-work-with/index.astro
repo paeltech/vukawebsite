@@ -1,33 +1,39 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/layout/Section.astro';
-import HubLinkList from '@/components/sections/HubLinkList.astro';
+import AudienceHubCards from '@/components/sections/AudienceHubCards.astro';
+import ContentSection from '@/components/sections/ContentSection.astro';
 import PageHeader from '@/components/sections/PageHeader.astro';
 import PageCTA from '@/components/sections/PageCTA.astro';
-import SectionPromo from '@/components/sections/SectionPromo.astro';
-import { homeAudiences } from '@/data/copy/home';
+import ContextNav from '@/components/ui/ContextNav.astro';
 import { whoWeWorkWith } from '@/data/copy/audiences';
-
-const audienceLinks = homeAudiences.cards.map((card) => ({
-  label: card.tag,
-  description: card.headline,
-  href: card.cta.href,
-}));
 ---
 
 <BaseLayout title="Who we work with">
   <Section>
-    <PageHeader {...whoWeWorkWith.header} headlineSize="hero" />
+    <PageHeader {...whoWeWorkWith.header} headlineSize="hero">
+      <ContextNav
+        links={[
+          { label: 'Audiences on home', href: '/#audiences' },
+          { label: 'How we build', href: '/#pathways' },
+        ]}
+      />
+    </PageHeader>
   </Section>
 
   <Section variant="sand">
-    <div class="grid grid-cols-1 gap-vuka-4xl lg:grid-cols-2 lg:items-start">
-      <SectionPromo {...whoWeWorkWith.hubPromo} />
-      <HubLinkList links={audienceLinks} />
-    </div>
+    <ContentSection label={whoWeWorkWith.overview.label} icon="situation">
+      <p class="max-w-3xl text-lg leading-relaxed whitespace-pre-line text-vuka-black">
+        {whoWeWorkWith.overview.body}
+      </p>
+    </ContentSection>
   </Section>
 
   <Section>
+    <AudienceHubCards cards={whoWeWorkWith.cards} />
+  </Section>
+
+  <Section variant="sand">
     <PageCTA
       cta={{
         headline: whoWeWorkWith.bottomNote,
