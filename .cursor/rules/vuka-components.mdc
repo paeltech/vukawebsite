@@ -1,0 +1,93 @@
+---
+description: Vuka component catalog and composition patterns
+globs: "src/components/**"
+alwaysApply: false
+---
+
+# Vuka Component Library
+
+Build once, reuse everywhere. Reference prototypes in `Vuka Design System/ui_kits/website/components/`.
+
+## Primitives (`src/components/ui/`)
+
+| Component | Props | Notes |
+|-----------|-------|-------|
+| `Button.astro` | `variant`, `href`, `size` | primary \| secondary \| ghost \| inverse |
+| `Tag.astro` | `variant`, `label` | sector \| climate \| programme \| status |
+| `Eyebrow.astro` | `text` | ALL CAPS category label |
+| `Wordmark.astro` | `variant` | default \| parchment (dark bg) |
+| `SectionLabel.astro` | `text` | Sentence-case section labels |
+| `Divider.astro` | `variant` | ember rule above footer |
+
+## Layout (`src/components/layout/`)
+
+| Component | Purpose |
+|-----------|---------|
+| `Header.astro` | Sticky nav: logo, links, dropdown, CTA. Dark bg on scroll per copy doc |
+| `Footer.astro` | 3-column: wordmark, studio links, work-with-us links, contact |
+| `NavDropdown.astro` | "Who we work with" — 5 audience links |
+| `MobileNav.astro` | Full-screen overlay, accordion dropdown |
+| `Container.astro` | `max-w-[1200px] mx-auto px-5 md:px-10` |
+| `Section.astro` | `variant`: default \| dark \| bold \| parchment |
+
+## Content blocks (`src/components/sections/`)
+
+| Component | IA codes | Used on |
+|-----------|----------|---------|
+| `Hero.astro` | H1, WD1, T1 | Home, page headers |
+| `ProblemCards.astro` | H2 | Home — 3 gap cards |
+| `AudienceCard.astro` | H3, WWW2, WU2 | 5-audience grids |
+| `PathwayCard.astro` | H4, WD3 | 4 pathway cards |
+| `CredentialBlock.astro` | H5 | Paul's track record |
+| `ThesisCard.astro` | H6, T3 | Featured essay promo |
+| `SectorGrid.astro` | H7, WD4 | 4 sector cards/tags |
+| `StudioInvestment.astro` | H8 | DFI section + stat callout |
+| `PartnershipStack.astro` | H9 | Program badges |
+| `ClosingCTA.astro` | H10 | Ember full-bleed CTA |
+| `ProcessSteps.astro` | P3 | Numbered steps, ember left border |
+| `TwoColumn.astro` | P4 | You bring / We bring |
+| `FAQ.astro` | P6 | Accordion, max 4 items |
+| `PageCTA.astro` | P7, WD5 | Pathway bottom CTA |
+| `ArticleCard.astro` | T4, J4 | Essay/journal cards |
+| `ArticleGrid.astro` | T5, J2-J4 | Filterable grid |
+| `FilterBar.astro` | J2, T5 | Tag filters (client island) |
+| `ContactForm.astro` | WU3 | Form + validation island |
+| `EmptyState.astro` | J5, T4 | "Nothing here yet…" |
+| `AuthorCard.astro` | E3 | Paul bio on essay pages |
+| `StatCallout.astro` | H8 | Large number + caption |
+| `PortfolioCard.astro` | P2 | Grid card — venture logo, tags, summary |
+| `VentureHero.astro` | P3 | Case study header — venture logo + metadata |
+| `ClientLogoStrip.astro` | P3 | Row of client/partner logos on case study |
+
+## Portfolio logo components
+
+**`PortfolioCard`** — venture logo top-left, max-h-10, object-contain. Fallback: venture name in `font-heavy` if no logo.
+
+**`VentureHero`** — venture logo larger (max-h-14 md:max-h-16). Client logos below summary via `ClientLogoStrip`.
+
+**`ClientLogoStrip`** — horizontal wrap, uniform height `h-8 md:h-10`, `opacity-70 hover:opacity-100`, `grayscale` optional on parchment (remove on dark). Gap `gap-8 md:gap-12`. Each logo needs `alt` with client name.
+
+Logo treatment: no drop shadows, no borders around logos, preserve aspect ratio, `object-contain`.
+
+## Page templates (`src/layouts/`)
+
+- `BaseLayout.astro` — SEO, fonts, Header, Footer
+- `ArticleLayout.astro` — single column prose, author card, related essays
+- `PathwayLayout.astro` — P1–P7 section sequence
+- `AudienceLayout.astro` — A1–A7 section sequence
+- `VentureLayout.astro` — case study + venture logo + client logo strip
+
+## Composition rules
+
+1. Pages are **arrays of sections** — no page-specific markup outside `src/pages/`
+2. Pass copy as props or import from `src/data/copy/` generated from docs
+3. Cards share one base: `border border-sand bg-parchment p-8 rounded-sm`
+4. Dark sections alternate on long pages for rhythm
+5. Every page ends with `ClosingCTA` or `PageCTA` except article pages (use essay CTA)
+
+## Responsive patterns
+
+- 5-card grids: `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3` (founders wraps to 2+3)
+- 4-card grids: `grid-cols-1 md:grid-cols-2`
+- Hero CTAs: `flex-col sm:flex-row gap-4`
+- Nav: hamburger below `lg` breakpoint

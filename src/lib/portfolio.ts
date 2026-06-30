@@ -45,3 +45,10 @@ export async function getPortfolioSlugs(): Promise<string[]> {
 export function isPortfolioEnabled(): boolean {
   return siteConfig.portfolioEnabled;
 }
+
+/** First sentence for card teasers — full summary stays on the venture page */
+export function portfolioTeaser(summary: string): string {
+  const normalized = summary.replace(/\s+/g, ' ').trim();
+  const firstSentence = normalized.match(/^[^.!?]+[.!?]/)?.[0]?.trim();
+  return firstSentence ?? normalized;
+}

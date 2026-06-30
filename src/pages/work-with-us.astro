@@ -1,14 +1,13 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/layout/Section.astro';
-import AudienceCard from '@/components/sections/AudienceCard.astro';
 import ContactForm from '@/components/sections/ContactForm.astro';
+import HubLinkList from '@/components/sections/HubLinkList.astro';
 import PageHeader from '@/components/sections/PageHeader.astro';
 import SectionLabel from '@/components/ui/SectionLabel.astro';
 import { workWithUs } from '@/data/copy/work-with-us';
 
 const preselectedType = Astro.url.searchParams.get('type') ?? '';
-const routingIcons = ['founder', 'corporate', 'government', 'investor', 'partner'] as const;
 ---
 
 <BaseLayout title="Work with us">
@@ -16,21 +15,12 @@ const routingIcons = ['founder', 'corporate', 'government', 'investor', 'partner
     <PageHeader {...workWithUs.header} headlineSize="hero" />
   </Section>
 
-  <Section variant="dark">
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        workWithUs.routingCards.map((card, index) => (
-          <AudienceCard
-            variant="dark"
-            headline={card.headline}
-            body={card.body}
-            cta={card.cta}
-            icon={routingIcons[index % routingIcons.length]}
-            index={index}
-          />
-        ))
-      }
-    </div>
+  <Section variant="sand">
+    <SectionLabel text="Where to start" class="mb-vuka-2xl" />
+    <p class="vuka-reveal mb-vuka-3xl max-w-xl text-lg text-vuka-black">
+      Not ready for the form? Open an audience route or return to the overview on the home page.
+    </p>
+    <HubLinkList links={workWithUs.startingPoints} class="max-w-2xl" />
   </Section>
 
   <Section>

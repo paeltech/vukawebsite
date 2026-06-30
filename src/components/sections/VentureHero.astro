@@ -1,62 +1,38 @@
 ---
+import Eyebrow from '@/components/ui/Eyebrow.astro';
 import Tag from '@/components/ui/Tag.astro';
-import ClientLogoStrip from '@/components/sections/ClientLogoStrip.astro';
 import { pathwayLabels } from '@/data/copy/portfolio';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   entry: CollectionEntry<'portfolio'>;
-  inverted?: boolean;
 }
 
-const { entry, inverted = false } = Astro.props;
-const { title, summary, sector, sectorLabel, pathway, stage, logo, logoDark, clientLogos } =
-  entry.data;
-
-const logoSrc = inverted && logoDark ? logoDark : logo;
+const { entry } = Astro.props;
+const { title, summary, sector, sectorLabel, pathway, stage, logo, logoDark } = entry.data;
+const logoSrc = logoDark ? logoDark : logo;
 ---
 
-<header>
-  <div class="mb-vuka-2xl">
+<header class="venture-hero vuka-reveal">
+  <Eyebrow text="Case study" class="mb-vuka-2xl" />
+
+  <div class="mb-vuka-2xl flex flex-col gap-vuka-2xl sm:flex-row sm:items-center sm:justify-between">
     <img
       src={logoSrc}
       alt={`${title} logo`}
-      class="max-h-16 w-auto max-w-[220px] object-contain object-left md:max-h-20"
-      width="220"
-      height="80"
+      class="max-h-14 w-auto max-w-[200px] object-contain object-left md:max-h-16"
+      width="200"
+      height="64"
       loading="eager"
       decoding="async"
     />
+    <div class="flex flex-wrap gap-2 sm:justify-end">
+      <Tag variant="sector" label={sectorLabel ?? sector} />
+      <Tag variant="programme" label={pathwayLabels[pathway] ?? pathway} />
+      <Tag variant="status" label={stage} />
+    </div>
   </div>
 
-  <div class="mb-4 flex flex-wrap gap-2">
-    <Tag variant="sector" label={sectorLabel ?? sector} />
-    <Tag variant="programme" label={pathwayLabels[pathway] ?? pathway} />
-    <Tag variant="status" label={stage} />
-  </div>
-
-  <p
-    class:list={[
-      'max-w-2xl text-xl leading-relaxed whitespace-pre-line',
-      inverted ? 'text-sand' : 'text-vuka-black',
-    ]}
-  >
-    {summary}
-  </p>
-
-  {
-    clientLogos && clientLogos.length > 0 && (
-      <div class="mt-vuka-3xl">
-        <p
-          class:list={[
-            'mb-4 font-light text-[11px] uppercase tracking-category',
-            inverted ? 'text-baobab' : 'text-baobab',
-          ]}
-        >
-          Deployed with
-        </p>
-        <ClientLogoStrip logos={clientLogos} inverted={inverted} />
-      </div>
-    )
-  }
+  <h1 class="article-title">{title}</h1>
+  <p class="mt-vuka-xl max-w-2xl text-xl leading-relaxed text-baobab">{summary}</p>
 </header>

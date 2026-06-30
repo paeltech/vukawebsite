@@ -4,6 +4,7 @@ import Section from '@/components/layout/Section.astro';
 import AudienceSectionCard from '@/components/sections/AudienceSectionCard.astro';
 import PageCTA from '@/components/sections/PageCTA.astro';
 import PageHeader from '@/components/sections/PageHeader.astro';
+import ContextNav from '@/components/ui/ContextNav.astro';
 import Button from '@/components/ui/Button.astro';
 import Icon from '@/components/ui/Icon.astro';
 import { audiences, audienceSlugs } from '@/data/copy/audiences';
@@ -30,7 +31,14 @@ const typeMap: Record<string, string> = {
 
 <BaseLayout title={page.header.headline.split('\n')[0]}>
   <Section class="relative overflow-hidden">
-    <PageHeader {...page.header} headlineSize="hero" />
+    <PageHeader {...page.header} headlineSize="hero">
+      <ContextNav
+        links={[
+          { label: 'Audiences on home', href: '/#audiences' },
+          { label: 'All routes', href: '/who-we-work-with' },
+        ]}
+      />
+    </PageHeader>
   </Section>
 
   <Section variant="dark">

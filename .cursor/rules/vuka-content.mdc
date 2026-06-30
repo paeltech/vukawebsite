@@ -1,0 +1,108 @@
+---
+description: Vuka copy rules, IA routing, and audience-specific content constraints
+globs: "src/**/*.{astro,ts,md,mdx}"
+alwaysApply: false
+---
+
+# Vuka Content & IA Rules
+
+All copy lives in `docs/vuka-website-copy-complete.md`. Import via `src/data/` — do not paraphrase.
+
+## Voice
+
+- Direct, declarative, minimal — one strong sentence beats three qualifying ones
+- Brand name: lowercase **vuka** in body copy
+- Sentence case headings; ALL CAPS only for eyebrows via `Eyebrow` component
+- "You" ≥ 1.5× "we" on every page
+- Em-dashes over parentheses. Oxford comma. No exclamation marks. No emoji.
+
+## Banned words
+
+passionate, disruptive, ecosystem play, value-add, synergies, scalable solutions, world-class, transformative, revolutionary, next-generation, empower, leverage, facilitate, cohort, demo day, curriculum, pitch coaching, graduate
+
+## Audience routing CTAs
+
+Name the action, not the mechanism:
+- ✅ `Start a spinout conversation` — ❌ `Contact us`
+- ✅ `Apply to Founder-in-Residence` — ❌ `Learn more`
+
+Primary site CTA everywhere: **work with us** → `/work-with-us`
+
+## Content scope by page
+
+| Argument | Allowed on |
+|----------|------------|
+| Venture Engines thesis | All pages |
+| $100 Problem / access gap | `/founders`, `/partners`, `/our-thesis` only |
+| Stage honesty | `/investors` (explicit), elsewhere (implicit) |
+| "Startup speed" | Government pages — always define: "a working service in 90 days, not an 18-month implementation plan" |
+
+## Geography
+
+Name cities: Dar es Salaam, Nairobi, Kampala. Not "Africa" alone when EA-specific.
+
+## Routes (launch)
+
+```
+/  /what-we-do  /what-we-do/{4-pathways}
+/who-we-work-with  /{founders|corporates|government|investors|partners}
+/our-thesis  /our-thesis/[slug]
+/studio-journal  /studio-journal/[slug]
+/work-with-us
+```
+
+Portfolio: **omit from nav and sitemap at launch**. MDX in `src/content/portfolio/` — not Medium.
+
+## Portfolio assets & schema
+
+Drop logo files in `public/assets/portfolio/`:
+
+```
+public/assets/portfolio/
+  ventures/
+    hakiki.svg          # venture logo (prefer SVG)
+    hakiki-dark.svg     # optional — for dark/emer sections
+  clients/
+    hakiki/
+      tosci.svg
+      asa.svg
+      ttcl.svg
+      aatf.svg
+```
+
+Naming: lowercase, hyphenated (`client-name.svg`). SVG preferred; PNG only if no vector available (min 2× retina).
+
+**MDX frontmatter:**
+
+```yaml
+logo: /assets/portfolio/ventures/hakiki.svg
+logoDark: /assets/portfolio/ventures/hakiki-dark.svg  # optional
+clientLogos:
+  - name: TOSCI
+    src: /assets/portfolio/clients/hakiki/tosci.svg
+published: false   # flip true when venture is public-ready
+```
+
+URL slug is the filename (`hakiki.mdx` → `/portfolio/hakiki`).
+
+`clientLogos` renders on the case study page only — not on the index card grid (keeps cards clean). Venture logo appears on both grid card and case study hero.
+
+## Medium → site mapping
+
+When syncing Medium posts:
+- Title, date, author, reading time → frontmatter
+- First paragraph → card excerpt
+- Medium tags → site filter tags: `Studio model`, `Infrastructure`, `AI & tools`, `East Africa`, `Founder stories`, `Government & public sector`
+- Canonical URL → original Medium post (SEO)
+- Publication tag `thesis` vs `journal` → route prefix
+
+## Form (`/work-with-us`)
+
+Fields: name, organisation (optional), enquiry type (6 options + "something else"), message.
+Success copy redirects visitor to `/our-thesis`. Email: `hello@vukaventures.co`.
+
+## SEO per page
+
+- Title: `{Page} · vuka.` — homepage: `vuka. · East Africa's venture studio`
+- Description: first sentence of page sub-copy
+- OG image: typography-led, parchment bg, no stock photos

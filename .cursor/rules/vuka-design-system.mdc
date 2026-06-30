@@ -1,0 +1,104 @@
+---
+description: Vuka design tokens, Tailwind mapping, and visual rules
+globs: "**/*.{astro,css,ts}"
+alwaysApply: false
+---
+
+# Vuka Design System → Tailwind
+
+**Canonical implemented spec:** `docs/vuka-visual-spec.md` (overrides stale `Vuka Design System/` preview HTML where it still shows deep-soil or ember section backgrounds).
+
+Map tokens in `src/styles/global.css` `@theme`:
+
+## Colors (never use raw hex in components)
+
+| Token | Hex | Tailwind key | Use |
+|-------|-----|--------------|-----|
+| ember | `#C4581C` | `ember` | CTAs, accents, logo mark |
+| ember-hover | `#A8490F` | `ember-hover` | Primary button hover |
+| parchment | `#F5EFE6` | `parchment` | Default background; text on dark |
+| vuka-black | `#1A1008` | `vuka-black` | **Text** — headings, body |
+| surface-dark | `#1A1008` | `surface-dark` | **Backgrounds** — footer, dark sections, dark cards |
+| baobab | `#8B5A2B` | `baobab` | Muted text, nav links |
+| sand | `#D4C4A8` | `sand` | Borders, body on dark |
+| rift-green | `#2A4A3A` | `rift-green` | Climate sector tags |
+
+**Do not use:** `deep-soil` (`#3D2B0E`), `bg-deep-soil`, `--color-deep-soil`.
+
+## Surface combinations (`Section.astro`)
+
+| Variant | Classes |
+|---------|---------|
+| default / parchment | `bg-parchment text-vuka-black` |
+| sand | `bg-sand text-vuka-black` |
+| dark | `bg-surface-dark text-parchment` |
+| bold | `bg-surface-dark text-parchment` (same as dark; use for closing CTA bands) |
+
+Accent on all: `text-ember` / `text-accent`.
+
+**Do not** use `bg-ember` for full-width sections. Ember is for buttons, tags, and small UI accents only.
+
+## Typography
+
+Font: `font-codec` (Codec Pro). Load all weights from `public/fonts/`.
+
+| Role | Classes |
+|------|---------|
+| Display / hero | `font-heavy text-display tracking-tight leading-none` |
+| H2 section | `font-heavy text-h2 leading-[0.95] tracking-tight` |
+| Body | `font-normal text-lg leading-relaxed` |
+| Eyebrow | `font-light text-[11px] uppercase tracking-category text-baobab` |
+| On dark sections | headings `text-parchment`, body `text-sand`, eyebrows `inverted` |
+
+Line-height: `leading-relaxed` for body. Headlines: `text-balance`.
+
+## Site chrome
+
+- **Header scrolled:** `background: parchment` — not surface-dark. Logo stays default (dark) SVG.
+- **Footer:** `.site-footer` → `#1A1008` / `surface-dark`, `text-parchment`, parchment logo.
+- **Mobile nav:** `bg-surface-dark/98`.
+
+## Buttons
+
+- `primary` — ember fill (default CTA on light and dark)
+- `secondary` — baobab outline, vuka-black text (no shadow)
+- `inverse` — surface-dark fill (rare)
+
+On dark surfaces use `primary`, not parchment inverse buttons.
+
+## Tags
+
+- Sector: `bg-ember text-parchment`
+- Climate: `bg-rift-green text-sand`
+- Programme / vuka-dark: `bg-surface-dark text-parchment`
+- Status: `bg-sand text-baobab`
+
+## Cards
+
+- Light: `vuka-card` — parchment, sand border
+- Dark: `vuka-card-dark` — surface-dark bg
+
+Avoid `bg-surface-dark/40` on light backgrounds (reads as old deep-soil brown).
+
+## Spacing (Fibonacci scale)
+
+3, 5, 8, 13, 21, 34, 55, 89, 144px → `vuka-*` spacing tokens.
+Section rhythm: `py-16 md:py-24`. Max content: `1200px`, `px-5 md:px-10`.
+
+## Radius & shadow
+
+- Radius: `rounded-sm` (2px) default; `rounded-md` (4px) cards max
+- Shadow: sparingly; prefer `border-sand` on cards
+- No gradients, no pure white/black
+
+## Motion
+
+`transition-all duration-150 ease-out`. No bounce. `active:scale-[0.97]` on buttons.
+
+## Icons
+
+Stroke icons, 1.5px weight. Logo SVGs from `public/assets/` — never recreate.
+
+## New work checklist
+
+Before shipping UI, verify against `docs/vuka-visual-spec.md` §13.

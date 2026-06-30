@@ -6,6 +6,7 @@ import PageHeader from '@/components/sections/PageHeader.astro';
 import PrincipleCard from '@/components/sections/PrincipleCard.astro';
 import TeamMemberCard from '@/components/sections/TeamMemberCard.astro';
 import ContentSection from '@/components/sections/ContentSection.astro';
+import ContextNav from '@/components/ui/ContextNav.astro';
 import { aboutPage } from '@/data/copy/about';
 import { isAboutEnabled } from '@/config/site';
 
@@ -26,6 +27,11 @@ const principleIcons = ['principle', 'layers', 'process', 'proof'] as const;
       <p class="max-w-3xl text-xl leading-relaxed text-sand whitespace-pre-line">
         {aboutPage.story}
       </p>
+      <ContextNav
+        inverted
+        links={[{ label: 'Why we exist — on home', href: '/#why' }]}
+        class="mt-vuka-3xl"
+      />
     </ContentSection>
   </Section>
 

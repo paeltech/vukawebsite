@@ -279,3 +279,8 @@
     transition: none;
   }
 }
+
+/* Anchor targets — offset fixed header */
+section[id] {
+  scroll-margin-top: 5.5rem;
+}

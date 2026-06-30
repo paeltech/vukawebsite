@@ -5,6 +5,7 @@ import ContentSection from '@/components/sections/ContentSection.astro';
 import FAQ from '@/components/sections/FAQ.astro';
 import PageCTA from '@/components/sections/PageCTA.astro';
 import PageHeader from '@/components/sections/PageHeader.astro';
+import ContextNav from '@/components/ui/ContextNav.astro';
 import ProcessSteps from '@/components/sections/ProcessSteps.astro';
 import TwoColumn from '@/components/sections/TwoColumn.astro';
 import { pathways, type PathwaySlug } from '@/data/copy/pathways';
@@ -38,7 +39,14 @@ const ctaHref = `/work-with-us?type=${encodeURIComponent(
       headline={pathway.headline}
       subcopy={pathway.subcopy}
       headlineSize="hero"
-    />
+    >
+      <ContextNav
+        links={[
+          { label: 'Pathways on home', href: '/#pathways' },
+          { label: 'All pathways', href: '/what-we-do' },
+        ]}
+      />
+    </PageHeader>
   </Section>
 
   <Section variant="dark">

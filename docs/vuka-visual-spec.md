@@ -177,7 +177,32 @@ Dark cards on dark sections: use `vuka-card-dark` with parchment/sand text.
 
 ---
 
-## 10. Routes added
+## 10. Home anchors & hub pages
+
+### Home section IDs
+
+| ID | Section |
+|----|---------|
+| `#why` | Problem cards |
+| `#audiences` | Who we work with |
+| `#pathways` | How we build |
+| `#join-team` | Team callout |
+
+`section[id]` uses `scroll-margin-top: 5.5rem` for the fixed header.
+
+### Hub pattern (no duplicate grids)
+
+Hub routes (`/who-we-work-with`, `/what-we-do`, `/work-with-us`) **do not** repeat full audience/pathway card grids from the home page. They use:
+
+- `SectionPromo` — points to the matching home anchor
+- `HubLinkList` — compact links to detail routes
+- `PageCTA` — contact / next step
+
+Detail pages use `ContextNav` under `PageHeader` to link back to home anchors or hub routes.
+
+---
+
+## 11. Routes added
 
 | Route | Purpose |
 |-------|---------|
@@ -186,7 +211,7 @@ Dark cards on dark sections: use `vuka-card-dark` with parchment/sand text.
 
 ---
 
-## 11. Logo
+## 12. Logo
 
 - Header: SVG wordmark `logo-default.svg` (cropped viewBox), width-led `w-[7.75rem] md:w-[8.25rem]`
 - Footer / dark surfaces: `logo-parchment.svg`
@@ -194,7 +219,7 @@ Dark cards on dark sections: use `vuka-card-dark` with parchment/sand text.
 
 ---
 
-## 12. Change log (summary)
+## 13. Change log (summary)
 
 | Date | Change |
 |------|--------|
@@ -207,9 +232,12 @@ Dark cards on dark sections: use `vuka-card-dark` with parchment/sand text.
 | 2026-06 | `TeamCallout` + `/join-our-team` added after pathways |
 | 2026-06 | Tag `vuka-dark` + `programme` use `bg-surface-dark` |
 
+| 2026-06 | Hub pages slimmed — `HubLinkList` + home anchors; duplicate grids removed |
+| 2026-06 | Home sections: `#why`, `#audiences`, `#pathways`, `#join-team` |
+
 ---
 
-## 13. Checklist for new UI
+## 14. Checklist for new UI
 
 - [ ] Dark section? → `Section variant="dark"` or `bg-surface-dark`, text `parchment` / `sand`
 - [ ] Heading on light? → `text-vuka-black`, accent `text-ember`

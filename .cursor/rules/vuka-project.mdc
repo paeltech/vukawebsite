@@ -1,0 +1,85 @@
+---
+description: Vuka website — stack, architecture, and source-of-truth docs
+alwaysApply: true
+---
+
+# Vuka Ventures Website
+
+Build a bold, minimalist, typography-led marketing site for **vukaventures.co**.
+
+## Stack
+
+- **Astro 5** — static site generation, islands only where needed (nav, form, filters)
+- **Tailwind CSS v4** — utility layer mapped to Vuka design tokens
+- **Medium** — headless CMS for `/our-thesis` and `/studio-journal` via RSS at build time
+- **MDX content collections** — portfolio case studies with venture + client logos
+- **TypeScript** — all `.astro` frontmatter and `src/lib/` utilities
+
+## Source of truth (read before building)
+
+| Doc | Purpose |
+|-----|---------|
+| `docs/vuka-visual-spec.md` | **Implemented visual spec** — colors, surfaces, chrome, home layout (overrides stale DS previews) |
+| `docs/vuka-implementation-plan.md` | Master build plan — phases, CMS split, portfolio |
+| `docs/vuka-information-architecture.md` | Routes, sections, audience journeys |
+| `docs/vuka-website-copy-complete.md` | Production copy — use verbatim |
+| `Vuka Design System/colors_and_type.css` | Tokens, type scale, spacing |
+| `Vuka Design System/assets/` | Logo SVGs — never recreate |
+| `Vuka Design System/preview/` | Component visual reference |
+
+## Project layout
+
+```
+src/
+  components/       # Atomic → composite (see vuka-components rule)
+  layouts/          # BaseLayout, ArticleLayout, PathwayLayout
+  pages/            # File-based routes matching IA
+  content/
+    portfolio/      # MDX case studies (not Medium)
+  config/
+    site.ts         # portfolioEnabled flag
+  lib/              # medium.ts, portfolio.ts, tags.ts, seo.ts
+  styles/           # global.css, fonts.css
+public/
+  fonts/            # Codec Pro TTF files (from design system)
+  assets/
+    portfolio/
+      ventures/     # Venture logos (SVG)
+      clients/      # Per-venture client logo folders
+```
+
+## Architecture principles
+
+1. **Static-first** — pre-render all pages; revalidate on deploy webhook from Medium
+2. **No React by default** — prefer `.astro` components; use `<script>` for interactivity
+3. **Section-driven pages** — each IA section (H1, WD3, A2…) maps to one layout block
+4. **Copy from docs** — never invent marketing copy; pull from `vuka-website-copy-complete.md`
+5. **Portfolio hidden at launch** — `portfolioEnabled: false`; omit `/portfolio` from nav; no placeholder
+6. **Portfolio = MDX + logos** — not Medium; venture logo on cards, client logos on case study only
+7. **Redirects** — `/contact` → `/work-with-us`, `/apply` → `/what-we-do/founder-in-residence`, `/thesis` → `/our-thesis`
+
+## CMS split
+
+| Content | Source | Route |
+|---------|--------|-------|
+| Thesis | Medium (`thesis` tag) | `/our-thesis/[slug]` |
+| Journal | Medium (`journal` tag) | `/studio-journal/[slug]` |
+| Portfolio | MDX + `public/assets/portfolio/` | `/portfolio/[slug]` |
+
+Fetch Medium via `astro-medium-loader` or RSS in `src/lib/medium.ts`. Portfolio via `getCollection('portfolio')` with `published: true` filter.
+
+## Responsive breakpoints
+
+```
+sm: 640px   md: 768px   lg: 1024px   xl: 1280px   2xl: 1440px
+```
+
+Max content width: `1200px`. Section padding: `px-5 md:px-10 lg:px-10`. Hero type uses `clamp()`.
+
+## Do not
+
+- Use pure `#FFFFFF` or `#000000`
+- Add gradients, background images, or emoji
+- Use accelerator language (cohort, demo day, curriculum)
+- Mix typefaces — Codec Pro only
+- Create commits unless explicitly asked

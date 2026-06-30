@@ -2,13 +2,18 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/layout/Section.astro';
 import ContentSection from '@/components/sections/ContentSection.astro';
+import HubLinkList from '@/components/sections/HubLinkList.astro';
 import PageCTA from '@/components/sections/PageCTA.astro';
 import PageHeader from '@/components/sections/PageHeader.astro';
-import PathwayCardFull from '@/components/sections/PathwayCardFull.astro';
-import SectionLabel from '@/components/ui/SectionLabel.astro';
-import { whatWeDo, pathways } from '@/data/copy/pathways';
+import SectionPromo from '@/components/sections/SectionPromo.astro';
+import { homePathways } from '@/data/copy/home';
+import { whatWeDo } from '@/data/copy/pathways';
 
-const pathwayList = Object.values(pathways);
+const pathwayLinks = homePathways.cards.map((card) => ({
+  label: card.title,
+  description: card.body,
+  href: card.cta.href,
+}));
 ---
 
 <BaseLayout title="What we do">
@@ -16,35 +21,30 @@ const pathwayList = Object.values(pathways);
     <PageHeader eyebrow={whatWeDo.eyebrow} headline={whatWeDo.headline} subcopy={whatWeDo.subcopy} headlineSize="hero" />
   </Section>
 
-  <Section>
-    <ContentSection label="The studio model" icon="layers">
-      <p class="max-w-3xl text-xl leading-relaxed whitespace-pre-line">{whatWeDo.modelDistinction}</p>
+  <Section variant="dark">
+    <ContentSection label="The studio model" icon="layers" inverted>
+      <p class="max-w-3xl text-xl leading-relaxed text-sand whitespace-pre-line">{whatWeDo.modelDistinction}</p>
     </ContentSection>
   </Section>
 
-  <Section variant="dark">
-    <SectionLabel text="Four pathways" inverted class="mb-vuka-3xl" />
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-      {pathwayList.map((pathway, index) => (
-        <PathwayCardFull
-          pathway={pathway}
-          variant="dark"
-          icon={(['pathway-origination', 'pathway-founder', 'pathway-spinout', 'pathway-gov'] as const)[index]}
-        />
-      ))}
+  <Section variant="sand">
+    <div class="grid grid-cols-1 gap-vuka-4xl lg:grid-cols-2 lg:items-start">
+      <SectionPromo {...whatWeDo.hubPromo} />
+      <HubLinkList links={pathwayLinks} />
     </div>
   </Section>
 
   <Section>
-    <ContentSection label={whatWeDo.sectorStripLabel} icon="sector-fintech">
-      <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {whatWeDo.sectors.map((sector) => (
-          <div class="vuka-card flex items-center p-4">
-            <span class="text-base font-bold text-vuka-black">{sector}</span>
-          </div>
-        ))}
-      </div>
-    </ContentSection>
+    <HubLinkList
+      links={[
+        {
+          label: whatWeDo.thesisLink.label,
+          description: whatWeDo.thesisLink.description,
+          href: whatWeDo.thesisLink.href,
+        },
+      ]}
+      class="max-w-2xl"
+    />
   </Section>
 
   <Section>
@@ -54,7 +54,6 @@ const pathwayList = Object.values(pathways);
         label: 'Start the conversation →',
         href: '/work-with-us',
       }}
-      variant="dark"
     />
   </Section>
 </BaseLayout>

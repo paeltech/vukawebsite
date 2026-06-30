@@ -3,13 +3,16 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/layout/Section.astro';
 import JoinTeamForm from '@/components/sections/JoinTeamForm.astro';
 import PageHeader from '@/components/sections/PageHeader.astro';
+import ContextNav from '@/components/ui/ContextNav.astro';
 import SectionLabel from '@/components/ui/SectionLabel.astro';
 import { joinTeamPage } from '@/data/copy/join-team';
 ---
 
 <BaseLayout title="Join our team" description={joinTeamPage.header.subcopy}>
   <Section>
-    <PageHeader {...joinTeamPage.header} headlineSize="hero" />
+    <PageHeader {...joinTeamPage.header} headlineSize="hero">
+      <ContextNav links={[{ label: 'Team callout on home', href: '/#join-team' }]} />
+    </PageHeader>
   </Section>
 
   <Section variant="sand">

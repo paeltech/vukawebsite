@@ -1,4 +1,4 @@
-import type { AudienceCard, CtaLink, PageHeader } from './types';
+import type { CtaLink, PageHeader } from './types';
 
 export interface AudiencePageCopy {
   slug: string;
@@ -15,62 +15,15 @@ export interface AudiencePageCopy {
 
 export const whoWeWorkWith = {
   header: {
-    headline: `Five ways to work with Vuka.
-Here is each one.`,
-    subcopy: `Vuka is not a founder-only studio. We build with
-founders, corporates, government agencies, investors,
-and technology partners. Find your entry point below.`,
+    headline: `Five ways to work with Vuka.`,
+    subcopy: `The overview lives on the home page. Choose a route below for the full picture — founders, corporates, government, investors, or technology partners.`,
   },
-  cards: [
-    {
-      title: 'Founders',
-      problemHeadline: "You're ready to build. You need someone to build with.",
-      body: `You have a validated idea and deep market knowledge.
-What you don't have is the full co-founding infrastructure
-to build it alone. Vuka embeds in your venture and builds
-alongside you — with equity, operational capacity, and a
-90-day sprint to first product.`,
-      cta: { label: 'Built for founders →', href: '/founders' },
-    },
-    {
-      title: 'Corporates',
-      problemHeadline: 'Your internal idea keeps dying in committee.',
-      body: `You have a validated internal innovation that can't get
-built through internal processes at the pace the market
-requires. Vuka co-builds it as a standalone venture —
-fee-for-service plus equity warrant. No retainer.
-Real accountability.`,
-      cta: { label: 'Built for corporates →', href: '/corporates' },
-    },
-    {
-      title: 'Government agencies',
-      problemHeadline: 'Your mandate requires a service, not a strategy.',
-      body: `You have a digital transformation mandate and a timeline
-that standard procurement cannot meet. Vuka co-builds
-scoped digital government services — a working service
-in 90 days, not an 18-month plan.`,
-      cta: { label: 'Built for government →', href: '/government' },
-    },
-    {
-      title: 'Investors & DFIs',
-      problemHeadline: "You're funding ecosystem development. The model matters.",
-      body: `You're a DFI, development investor, or impact fund
-evaluating whether the venture builder model produces
-better outcomes per capital deployed than the accelerators
-you've historically funded. Vuka has the argument —
-published, specific, and subject to rebuttal.`,
-      cta: { label: 'Built for investors →', href: '/investors' },
-    },
-    {
-      title: 'Technology partners',
-      problemHeadline: "Your program can't reach the founders it was built for.",
-      body: `You run a startup credits program. East African founders
-can't access your higher-value tiers through the current
-partnership structure. Vuka is building the East African
-partner position that changes that.`,
-      cta: { label: 'Built for tech partners →', href: '/partners' },
-    },
-  ] satisfies AudienceCard[],
+  hubPromo: {
+    eyebrow: 'On the home page',
+    headline: 'Who we work with',
+    body: 'Five audience routes with the same destination: building what East Africa needs.',
+    cta: { label: 'See audiences on home', href: '/#audiences' },
+  },
   bottomNote: `Not sure which fits?
 Tell us where you are and what you're trying to solve.
 We'll find the right entry point together.`,

@@ -42,13 +42,17 @@ capacity, and a co-founder relationship that lasts until
 the company can stand alone.`,
   bottomCta: `Not sure which pathway fits?
 Tell us where you're starting from.`,
-  sectorStripLabel: 'We build in:',
-  sectors: [
-    'B2B Infrastructure & Fintech',
-    'Applied AI',
-    'Climate & Energy Access',
-    'Government Digital Services',
-  ],
+  hubPromo: {
+    eyebrow: 'On the home page',
+    headline: 'How we build',
+    body: 'Four pathways — origination, founder-in-residence, corporate spinouts, and government innovation — with one standard of execution.',
+    cta: { label: 'See pathways on home', href: '/#pathways' },
+  },
+  thesisLink: {
+    label: 'Read our thesis',
+    href: '/our-thesis',
+    description: 'Sector focus and published arguments live in the thesis.',
+  },
 } as const;
 
 export const pathways: Record<PathwaySlug, PathwayCopy> = {

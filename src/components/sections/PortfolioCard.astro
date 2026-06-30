@@ -2,7 +2,7 @@
 import Icon from '@/components/ui/Icon.astro';
 import Tag from '@/components/ui/Tag.astro';
 import { pathwayLabels } from '@/data/copy/portfolio';
-import { portfolioSlug } from '@/lib/portfolio';
+import { portfolioSlug, portfolioTeaser } from '@/lib/portfolio';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -10,40 +10,38 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { title, summary, sector, sectorLabel, pathway, stage, logo, clientLogos } = entry.data;
+const { title, summary, sector, sectorLabel, pathway, stage, logo } = entry.data;
 const href = `/portfolio/${portfolioSlug(entry)}`;
+const teaser = portfolioTeaser(summary);
 ---
 
 <a
   href={href}
-  class="vuka-reveal vuka-card vuka-card-hover group flex h-full flex-col p-8 no-underline"
+  class="vuka-reveal group grid grid-cols-1 items-start gap-6 border border-sand bg-parchment p-6 no-underline transition-colors hover:border-baobab/40 md:grid-cols-[minmax(0,7rem)_1fr_auto] md:items-center md:gap-10 md:p-8"
 >
-  <div class="mb-6 flex items-start justify-between gap-4">
-    <img
-      src={logo}
-      alt={`${title} logo`}
-      class="max-h-12 w-auto max-w-[180px] object-contain object-left"
-      width="180"
-      height="48"
-      loading="lazy"
-      decoding="async"
-    />
-    <div class="icon-well opacity-0 transition-opacity group-hover:opacity-100">
-      <Icon name="arrow-right" class="text-ember" size={18} />
+  <img
+    src={logo}
+    alt=""
+    class="max-h-10 w-auto max-w-[7rem] object-contain object-left"
+    width="112"
+    height="40"
+    loading="lazy"
+    decoding="async"
+  />
+
+  <div class="min-w-0">
+    <h2 class="font-bold text-xl leading-snug text-vuka-black md:text-2xl">{title}</h2>
+    <div class="mt-3 flex flex-wrap gap-2">
+      <Tag variant="sector" label={sectorLabel ?? sector} />
+      <Tag variant="programme" label={pathwayLabels[pathway] ?? pathway} />
+      <Tag variant="status" label={stage} />
     </div>
+    <p class="mt-3 text-lg leading-relaxed text-vuka-black">{teaser}</p>
   </div>
 
-  <div class="mb-4 flex flex-wrap gap-2">
-    <Tag variant="sector" label={sectorLabel ?? sector} />
-    <Tag variant="programme" label={pathwayLabels[pathway] ?? pathway} />
-  </div>
-
-  <p class="mb-2 font-light text-[11px] uppercase tracking-eyebrow text-baobab">{stage}</p>
-
-  <p class="mb-6 flex-1 text-lg leading-relaxed text-vuka-black whitespace-pre-line">{summary}</p>
-
-  <span class="inline-flex items-center gap-2 self-start font-normal text-baobab transition-colors group-hover:text-ember">
-    Read the full story
-    <Icon name="arrow-right" size={16} class="transition-transform group-hover:translate-x-1" />
-  </span>
+  <Icon
+    name="arrow-right"
+    class="shrink-0 text-baobab transition-transform group-hover:translate-x-1 group-hover:text-ember"
+    size={20}
+  />
 </a>

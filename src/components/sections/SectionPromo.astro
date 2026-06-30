@@ -1,0 +1,30 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { cn } from '@/lib/cn';
+
+interface Props {
+  eyebrow: string;
+  headline: string;
+  body: string;
+  cta: { label: string; href: string };
+  inverted?: boolean;
+  class?: string;
+}
+
+const { eyebrow, headline, body, cta, inverted = false, class: className = '' } = Astro.props;
+
+const eyebrowClass = inverted ? 'text-sand' : 'text-baobab';
+const headlineClass = inverted ? 'text-parchment' : 'text-vuka-black';
+const bodyClass = inverted ? 'text-sand' : 'text-vuka-black';
+---
+
+<div class={cn('vuka-reveal max-w-2xl', className)}>
+  <p class={cn('mb-4 font-light text-[11px] uppercase tracking-category', eyebrowClass)}>{eyebrow}</p>
+  <h2 class={cn('mb-vuka-xl font-heavy text-h3 leading-tight', headlineClass)}>{headline}</h2>
+  <p class={cn('mb-vuka-2xl text-lg leading-relaxed', bodyClass)}>{body}</p>
+  <Button href={cta.href} variant="primary" size="md" class="w-fit">
+    {cta.label}
+    <Icon name="arrow-right" size={16} />
+  </Button>
+</div>

@@ -1,0 +1,40 @@
+---
+import Button from '@/components/ui/Button.astro';
+import ClientLogoStrip from '@/components/sections/ClientLogoStrip.astro';
+import ContextNav from '@/components/ui/ContextNav.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { pathwayLabels } from '@/data/copy/portfolio';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'portfolio'>;
+}
+
+const { entry } = Astro.props;
+const { pathway, clientLogos } = entry.data;
+const pathwayHref = `/what-we-do/${pathway}`;
+const pathwayLabel = pathwayLabels[pathway] ?? pathway;
+---
+
+<aside class="venture-aside">
+  <div class="venture-aside-inner flex flex-col gap-vuka-3xl">
+    {
+      clientLogos && clientLogos.length > 0 && (
+        <div class="vuka-card p-6">
+          <p class="mb-4 font-light text-[11px] uppercase tracking-category text-baobab">Deployed with</p>
+          <ClientLogoStrip logos={clientLogos} />
+        </div>
+      )
+    }
+
+    <div class="vuka-card p-6">
+      <p class="mb-4 font-light text-[11px] uppercase tracking-category text-baobab">Pathway</p>
+      <Button href={pathwayHref} variant="secondary" size="md" class="w-full justify-between">
+        {pathwayLabel}
+        <Icon name="arrow-right" size={16} />
+      </Button>
+    </div>
+
+    <ContextNav links={[{ label: 'Back to portfolio', href: '/portfolio' }]} />
+  </div>
+</aside>

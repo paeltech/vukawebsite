@@ -23,7 +23,7 @@ export const homeHero = {
   
   headline: `Building innovative ventures with bold`,
   accentRotate: ['founders', 'corporations', 'governments', 'partners'],
-  primaryCta: { label: 'See who we work with →', href: '/who-we-work-with' },
+  primaryCta: { label: 'See who we work with →', href: '/#audiences' },
   secondaryCta: { label: 'Read our thesis', href: '/our-thesis' },
 } as const;
 
@@ -76,9 +76,10 @@ export const homeAudiences = {
 export const homePathways = {
   headlineAccent: 'How we',
   headline: 'build',
-
+  statement: 'Accelerators teach. VCs invest.',
+  statementAccent: ' Vuka builds.',
   intro:
-    'Accelerators teach. VCs invest. Vuka builds. We don’t just build, we provide co-founder depth from day zero until scale.',
+    'We don’t just build — we provide co-founder depth from day zero until scale.',
 
   cards: [
     {
