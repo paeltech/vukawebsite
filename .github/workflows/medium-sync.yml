@@ -1,0 +1,102 @@
+# Poll Medium RSS on a schedule and rebuild the site only when thesis/journal posts change.
+# Requires GitHub secrets: MEDIUM_USERNAME, CLOUDFLARE_DEPLOY_HOOK_URL
+
+name: Sync Medium posts
+
+on:
+  schedule:
+    # Every hour at :10 — offset from the hour to reduce GitHub Actions queue delays
+    - cron: '10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Restore last RSS fingerprint
+        uses: actions/cache/restore@v4
+        id: cache
+        with:
+          path: medium-fingerprint.txt
+          key: medium-rss-fingerprint
+
+      - name: Check Medium RSS for changes
+        id: rss
+        env:
+          MEDIUM_USERNAME: ${{ secrets.MEDIUM_USERNAME }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${MEDIUM_USERNAME}" ]; then
+            echo "::error::MEDIUM_USERNAME secret is not set in GitHub repository secrets."
+            exit 1
+          fi
+
+          FEED_URL="https://medium.com/feed/@${MEDIUM_USERNAME#@}"
+          curl -fsSL "$FEED_URL" -o feed.xml
+
+          python3 <<'PY'
+          import hashlib
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          tree = ET.parse("feed.xml")
+          channel = tree.getroot().find("channel")
+          if channel is None:
+              raise SystemExit("Invalid RSS feed: missing channel")
+
+          items = []
+          for item in channel.findall("item"):
+              categories = [
+                  (c.text or "").strip().lower()
+                  for c in item.findall("category")
+                  if c.text
+              ]
+              if "thesis" not in categories and "journal" not in categories:
+                  continue
+              link = (item.findtext("link") or "").strip()
+              pub = (item.findtext("pubDate") or "").strip()
+              title = (item.findtext("title") or "").strip()
+              items.append(f"{link}|{pub}|{title}")
+
+          fingerprint = hashlib.sha256("\n".join(sorted(items)).encode()).hexdigest()
+          Path("medium-fingerprint-new.txt").write_text(fingerprint, encoding="utf-8")
+          print(f"Tracked {len(items)} thesis/journal posts.")
+          PY
+
+          NEW=$(cat medium-fingerprint-new.txt)
+          OLD=""
+          if [ -f medium-fingerprint.txt ]; then
+            OLD=$(cat medium-fingerprint.txt)
+          fi
+
+          if [ -z "$OLD" ]; then
+            echo "No cached fingerprint — triggering initial sync deploy."
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          elif [ "$NEW" != "$OLD" ]; then
+            echo "Medium feed changed — deploy required."
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No Medium changes detected."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          cp medium-fingerprint-new.txt medium-fingerprint.txt
+
+      - name: Save RSS fingerprint
+        uses: actions/cache/save@v4
+        with:
+          path: medium-fingerprint.txt
+          key: medium-rss-fingerprint
+
+      - name: Trigger Cloudflare Pages rebuild
+        if: steps.rss.outputs.changed == 'true'
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "${DEPLOY_HOOK_URL}" ]; then
+            echo "::error::CLOUDFLARE_DEPLOY_HOOK_URL secret is not set."
+            exit 1
+          fi
+          curl -fsS -X POST "$DEPLOY_HOOK_URL"
+          echo "Deploy hook triggered."
