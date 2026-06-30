@@ -22,24 +22,65 @@ export interface PathwayCopy {
 }
 
 export const whatWeDo = {
-  eyebrow: 'How the studio works',
-  headline: `Four ways to build inside the studio.
-One standard of execution across all of them.`,
-  subcopy: `Where you enter depends on where you're starting.
-What Vuka commits to is the same regardless: embedded
-operational capacity, hands on the product, and
-accountability that doesn't end when a cheque is signed
-or a programme completes.`,
-  modelDistinction: `The accelerator coaches. The VC watches from a board seat.
-The consultancy delivers the report and invoices the hours.
-None of them stay through the operational build phase —
-the period when a first-time founder most needs someone
-who has built a company before.
+  eyebrow: 'What we do',
+  headline: `A venture studio for co-execution.`,
+  subcopy: `Your entry point depends on where you are starting. Our commitment remains unchangeable: embedded operational capacity, hands on the product, and a level of accountability that doesn't expire when a check clears or a program ends.`,
+  
+  modelDistinction: `The accelerator coaches. The VC watches from a board seat. The consultancy delivers a slide deck and invoices the hours. 
 
-Vuka stays. That is the model. It is not a positioning claim.
-It is a structural commitment: equity alignment, embedded
-capacity, and a co-founder relationship that lasts until
-the company can stand alone.`,
+None of them stay through the operational build phase—the exact window when a founder needs an experienced operator the most.
+
+Vuka stays. That is the model. It is not marketing positioning; it is a structural commitment. We bring equity alignment, embedded capacity, and a co-founder relationship that endures until your company can stand entirely on its own.`,
+  
+  summary: `Vuka embeds deeply across your core functions—product, engineering, go-to-market, and finance—driving a disciplined 90-day sprint to launch a working product. But we don't drop off at the finish line. We stay through your first sales, your first critical hires, and your first institutional fundraise. We operate not as an investor looking down from a board seat, but as a co-founder with hands on the product.`,
+  
+  services: {
+    columnA: [
+      'Market Research & Origination',
+      'Data-Driven Concept Validation',
+      'Technical Product Management',
+      'Full-Stack Engineering',
+      'Go-To-Market Execution',
+      'UI/UX & Product Design',
+    ],
+    columnB: [
+      'Institutional Financial Modeling',
+      'Fundraising Strategy & Support',
+      'Operational & Legal Infrastructure',
+      'East African Regulatory Navigation',
+      'Tier-1 Cloud & Tech Credit Access',
+      'Corporate Formation & Governance',
+    ],
+  },
+  
+  process: {
+    label: 'The Venture Building Process',
+    intro: `The entry path changes. The standard of execution does not. Every venture we back moves through a rigorous, repeatable build rhythm from the first conversation to an independent corporate entity.`,
+    steps: [
+      {
+        title: 'Application & Selection',
+        body: `Bring us your market context, your raw idea, and an honest assessment of your operational gaps. We filter out the noise. Selection is strictly based on market validity, unfair founder advantage, and sector alignment—not how polished your pitch deck looks.`,
+      },
+      {
+        title: 'Scoping & Alignment',
+        body: `A intensive working session to stress-test your market hypothesis, map your idea against Vuka’s immediate build capacity, and align on equity and operational terms. This takes 1–2 weeks. No upfront commitment required.`,
+      },
+      {
+        title: 'The 90-Day Build Sprint',
+        body: `You embed directly inside the studio. Product, architecture, growth strategies, and legal infrastructure are built concurrently over a 90-day sprint. The output: a live, robust product in the hands of real paying users. Not a wireframe. Not a prototype. A business.`,
+      },
+      {
+        title: 'Post-Sprint Co-Execution',
+        body: `We don't exit when the sprint ends. Vuka remains in the room as an active operational co-founder—anchoring your first enterprise sales cycle, de-risking your first key hires, and architecting your seed fundraise.`,
+      },
+    ],
+  },
+  
+  closingCta: {
+    headline: 'Ready to build with Vuka?',
+    label: 'Start the conversation →',
+    href: '/work-with-us',
+  },
   bottomCta: `Not sure which pathway fits?
 Tell us where you're starting from.`,
   hubPromo: {

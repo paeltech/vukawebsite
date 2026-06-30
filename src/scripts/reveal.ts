@@ -21,3 +21,4 @@ export function initReveal() {
 }
 
 initReveal();
+document.addEventListener('astro:page-load', initReveal);

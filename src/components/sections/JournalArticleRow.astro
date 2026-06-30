@@ -1,0 +1,63 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import Tag from '@/components/ui/Tag.astro';
+import type { Article } from '@/lib/articles';
+
+interface Props {
+  article: Pick<Article, 'title' | 'excerpt' | 'date' | 'tag' | 'slug' | 'href' | 'comingSoon' | 'siteTags'>;
+  basePath: string;
+  latest?: boolean;
+}
+
+const { article, basePath, latest = false } = Astro.props;
+const href = article.comingSoon ? '#' : article.href || `${basePath}/${article.slug}`;
+const displayTags = article.siteTags.length > 0 ? article.siteTags : [article.tag];
+
+function cardExcerpt(text: string, max = 160): string {
+  const normalized = text.replace(/\s+/g, ' ').trim();
+  if (normalized.length <= max) return normalized;
+  return `${normalized.slice(0, max).replace(/\s+\S*$/, '').trim()}…`;
+}
+
+const excerpt = cardExcerpt(article.excerpt);
+---
+
+<a
+  href={href}
+  class:list={[
+    'vuka-reveal group grid grid-cols-1 items-start gap-4 border bg-parchment p-6 no-underline transition-colors md:grid-cols-[1fr_auto] md:items-center md:gap-8 md:p-8',
+    latest ? 'border-ember/40' : 'border-sand hover:border-baobab/40',
+  ]}
+>
+  <div class="min-w-0">
+    {
+      latest && (
+        <p class="mb-3 font-light text-[11px] uppercase tracking-category text-ember">Latest</p>
+      )
+    }
+    <div class="mb-3 flex flex-wrap items-center gap-2">
+      {displayTags.map((label) => (
+        <Tag variant="programme" label={label} />
+      ))}
+      <span class="text-sm text-baobab">{article.date}</span>
+    </div>
+    <h2 class="font-bold text-xl leading-snug text-vuka-black md:text-2xl">{article.title}</h2>
+    {
+      excerpt && (
+        <p class="mt-3 line-clamp-2 text-lg leading-relaxed text-vuka-black">{excerpt}</p>
+      )
+    }
+  </div>
+
+  {
+    !article.comingSoon ? (
+      <Icon
+        name="arrow-right"
+        class="shrink-0 text-baobab transition-transform group-hover:translate-x-1 group-hover:text-ember"
+        size={20}
+      />
+    ) : (
+      <span class="shrink-0 text-sm text-baobab">Coming soon</span>
+    )
+  }
+</a>

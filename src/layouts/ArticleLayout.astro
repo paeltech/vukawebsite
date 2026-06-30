@@ -10,6 +10,7 @@ import type { SeoProps } from '@/lib/seo';
 
 interface Props extends SeoProps {
   tag: string;
+  tags?: string[];
   date: string;
   title: string;
   excerpt?: string;
@@ -21,6 +22,7 @@ interface Props extends SeoProps {
 
 const {
   tag,
+  tags,
   date,
   title,
   excerpt,
@@ -28,17 +30,19 @@ const {
   showAuthor = false,
   backHref,
   backLabel,
-  ...seo
+  description,
+  canonical,
+  noindex,
 } = Astro.props;
 ---
 
-<BaseLayout {...seo} ogType="article">
+<BaseLayout title={title} description={description} canonical={canonical} ogType="article" noindex={noindex}>
   {canonicalUrl && <link rel="canonical" href={canonicalUrl} slot="head" />}
 
   <Section class="!pb-vuka-4xl">
-    <article class="article-page vuka-reveal">
+    <article class="article-page">
       <div class:list={['article-canvas', showAuthor && 'article-canvas--with-aside']}>
-        <ArticleHero {tag} {date} {title} {excerpt} class="article-hero" />
+        <ArticleHero {tag} tags={tags} {date} {title} {excerpt} class="article-hero" />
 
         <div class="article-body">
           <div class:list={['article-grid', showAuthor && 'article-grid--with-aside']}>

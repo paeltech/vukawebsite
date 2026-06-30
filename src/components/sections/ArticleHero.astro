@@ -4,17 +4,24 @@ import { cn } from '@/lib/cn';
 
 interface Props {
   tag: string;
+  tags?: string[];
   date: string;
   title: string;
   excerpt?: string;
   class?: string;
 }
 
-const { tag, date, title, excerpt, class: className = '' } = Astro.props;
+const { tag, tags, date, title, excerpt, class: className = '' } = Astro.props;
+const displayTags = tags && tags.length > 0 ? tags : [tag];
 ---
 
 <header class={cn('vuka-reveal', className)}>
-  <Tag variant="status" label={`${tag} · ${date}`} class="mb-6" />
+  <div class="mb-6 flex flex-wrap items-center gap-2">
+    {displayTags.map((label) => (
+      <Tag variant="programme" label={label} />
+    ))}
+    <span class="text-sm text-baobab">{date}</span>
+  </div>
   <h1 class="article-title">{title}</h1>
   {excerpt && (
     <p class="mt-vuka-xl text-xl leading-relaxed text-baobab">{excerpt}</p>

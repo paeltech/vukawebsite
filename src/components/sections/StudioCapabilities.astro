@@ -1,0 +1,34 @@
+---
+interface Props {
+  summary: string;
+  services: {
+    columnA: readonly string[];
+    columnB: readonly string[];
+  };
+}
+
+const { summary, services } = Astro.props;
+---
+
+<div class="vuka-reveal">
+  <p class="max-w-3xl text-xl leading-relaxed text-parchment md:text-2xl md:leading-relaxed">
+    {summary}
+  </p>
+
+  <div class="mt-vuka-4xl grid grid-cols-1 gap-x-16 gap-y-3 sm:grid-cols-2">
+    <ul class="flex flex-col gap-3">
+      {
+        services.columnA.map((item) => (
+          <li class="text-lg leading-relaxed text-sand">{item}</li>
+        ))
+      }
+    </ul>
+    <ul class="flex flex-col gap-3">
+      {
+        services.columnB.map((item) => (
+          <li class="text-lg leading-relaxed text-sand">{item}</li>
+        ))
+      }
+    </ul>
+  </div>
+</div>

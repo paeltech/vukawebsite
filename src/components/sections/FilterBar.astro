@@ -2,28 +2,40 @@
 interface Props {
   tags: readonly string[];
   targetId?: string;
+  emptyMessage?: string;
 }
 
-const { tags, targetId = 'article-grid' } = Astro.props;
+const { tags, targetId = 'article-grid', emptyMessage } = Astro.props;
 ---
 
-<div class="mb-vuka-2xl flex flex-wrap gap-2" data-filter-bar={targetId}>
+<div class="vuka-reveal">
+  <div class="mb-vuka-2xl flex flex-wrap gap-2" data-filter-bar={targetId} role="group" aria-label="Filter entries">
+    {
+      tags.map((tag, index) => (
+        <button
+          type="button"
+          class:list={[
+            'rounded-sm px-4 py-2 font-light text-sm transition-colors',
+            index === 0
+              ? 'bg-surface-dark text-parchment'
+              : 'bg-sand text-baobab hover:bg-baobab/20',
+          ]}
+          data-filter={tag === 'All' ? 'all' : tag}
+          data-active={index === 0 ? 'true' : 'false'}
+          aria-pressed={index === 0 ? 'true' : 'false'}
+        >
+          {tag}
+        </button>
+      ))
+    }
+  </div>
+
   {
-    tags.map((tag, index) => (
-      <button
-        type="button"
-        class:list={[
-          'rounded-sm px-4 py-2 font-light text-sm transition-colors',
-          index === 0
-            ? 'bg-surface-dark text-parchment'
-            : 'bg-sand text-baobab hover:bg-baobab/20',
-        ]}
-        data-filter={tag === 'All' ? 'all' : tag}
-        data-active={index === 0 ? 'true' : 'false'}
-      >
-        {tag}
-      </button>
-    ))
+    emptyMessage && (
+      <p id={`${targetId}-empty`} class="hidden text-lg text-baobab" hidden>
+        {emptyMessage}
+      </p>
+    )
   }
 </div>
 
@@ -36,8 +48,18 @@ const { tags, targetId = 'article-grid' } = Astro.props;
       const grid = document.getElementById(targetId);
       if (!grid) return;
 
+      const emptyMessage = document.getElementById(`${targetId}-empty`);
       const buttons = bar.querySelectorAll<HTMLButtonElement>('button[data-filter]');
       const items = grid.querySelectorAll<HTMLElement>('[data-tags]');
+
+      function updateVisibility() {
+        const visibleCount = [...items].filter((item) => !item.hidden).length;
+        if (emptyMessage) {
+          const showEmpty = visibleCount === 0;
+          emptyMessage.hidden = !showEmpty;
+          emptyMessage.classList.toggle('hidden', !showEmpty);
+        }
+      }
 
       buttons.forEach((button) => {
         button.addEventListener('click', () => {
@@ -46,6 +68,7 @@ const { tags, targetId = 'article-grid' } = Astro.props;
           buttons.forEach((btn) => {
             const active = btn === button;
             btn.dataset.active = String(active);
+            btn.setAttribute('aria-pressed', String(active));
             btn.classList.toggle('bg-surface-dark', active);
             btn.classList.toggle('text-parchment', active);
             btn.classList.toggle('bg-sand', !active);
@@ -60,8 +83,12 @@ const { tags, targetId = 'article-grid' } = Astro.props;
             const tags = (item.dataset.tags ?? '').split('|');
             item.hidden = !tags.includes(filter);
           });
+
+          updateVisibility();
         });
       });
+
+      updateVisibility();
     });
   }
 

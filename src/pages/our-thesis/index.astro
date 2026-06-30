@@ -1,81 +1,41 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/layout/Section.astro';
-import ArticleCard from '@/components/sections/ArticleCard.astro';
-import ContentSection from '@/components/sections/ContentSection.astro';
-import FilterBar from '@/components/sections/FilterBar.astro';
+import EmptyState from '@/components/sections/EmptyState.astro';
 import PageHeader from '@/components/sections/PageHeader.astro';
-import SectionLead from '@/components/sections/SectionLead.astro';
-import SubscribeBlock from '@/components/sections/SubscribeBlock.astro';
+import ThesisEssayCard from '@/components/sections/ThesisEssayCard.astro';
 import SectionLabel from '@/components/ui/SectionLabel.astro';
 import { thesisPage } from '@/data/copy/thesis';
-import { thesisTags } from '@/lib/tags';
 import { getThesisArticles } from '@/lib/articles';
 
 const articles = await getThesisArticles();
-const featured = articles.find((a) => a.featured) ?? articles[0];
-const rest = articles.filter((a) => a.slug !== featured?.slug);
 ---
 
-<BaseLayout title="Our thesis">
+<BaseLayout title="Our thesis" description={thesisPage.summary}>
   <Section>
     <PageHeader {...thesisPage.header} headlineSize="hero" />
-  </Section>
 
-  <Section>
-    <SectionLead>
-      <p class="max-w-3xl text-xl leading-relaxed whitespace-pre-line">{thesisPage.statement}</p>
-    </SectionLead>
-  </Section>
+    <p class="vuka-reveal mt-vuka-4xl max-w-3xl text-xl leading-relaxed text-vuka-black">
+      {thesisPage.summary}
+    </p>
 
-  {
-    featured && (
-      <Section variant="dark">
-        <SectionLabel text="Featured essay" inverted class="mb-vuka-3xl" />
-        <ArticleCard article={featured} basePath="/our-thesis" />
-      </Section>
-    )
-  }
-
-  <Section>
-    <SectionLabel text="More arguments" class="mb-vuka-3xl" />
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-      {
-        rest.map((article) => (
-          <ArticleCard article={article} basePath="/our-thesis" />
-        ))
-      }
-      <ArticleCard
-        article={{
-          slug: 'coming-soon',
-          title: "Nothing here yet. We're writing this one.",
-          excerpt: '',
-          date: 'Coming soon',
-          tag: 'Coming soon',
-          href: '#',
-          comingSoon: true,
-        }}
-        basePath="/our-thesis"
-      />
-    </div>
-  </Section>
-
-  <Section variant="dark">
-    <ContentSection label="All essays" icon="principle" inverted>
-      <FilterBar tags={thesisTags} targetId="thesis-grid" />
-      <div id="thesis-grid" class="mt-vuka-3xl grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {
-          articles.map((article) => (
-            <div data-tags={['All', ...article.siteTags].join('|')}>
-              <ArticleCard article={article} basePath="/our-thesis" />
-            </div>
-          ))
-        }
-      </div>
-    </ContentSection>
-  </Section>
-
-  <Section>
-    <SubscribeBlock {...thesisPage.subscribe} />
+    {
+      articles.length > 0 ? (
+        <div class="mt-vuka-4xl">
+          <SectionLabel text={thesisPage.essaysLabel} class="mb-vuka-3xl" />
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {
+              articles.map((article) => (
+                <ThesisEssayCard article={article} basePath="/our-thesis" />
+              ))
+            }
+          </div>
+        </div>
+      ) : (
+        <div class="mt-vuka-4xl">
+          <EmptyState message={thesisPage.emptyState} />
+        </div>
+      )
+    }
   </Section>
 </BaseLayout>

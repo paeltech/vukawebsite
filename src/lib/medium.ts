@@ -1,5 +1,5 @@
 import Parser from 'rss-parser';
-import { getMediumRouteFromTags, mapMediumTagToSiteTag } from '@/lib/tags';
+import { getMediumRouteFromTags, mediumTagsToSiteTags } from '@/lib/tags';
 import type { MediumRoute } from '@/lib/tags';
 
 export interface MediumPost {
@@ -103,9 +103,7 @@ export async function fetchMediumPosts(): Promise<MediumPost[]> {
           link: item.link ?? '',
           route,
           tags: categories,
-          siteTags: categories
-            .map(mapMediumTagToSiteTag)
-            .filter((tag): tag is string => tag !== null),
+          siteTags: mediumTagsToSiteTags(categories),
           content,
         } satisfies MediumPost;
       })

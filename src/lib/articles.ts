@@ -1,4 +1,3 @@
-import { staticThesisEssays, type StaticEssay } from '@/data/copy/thesis';
 import { sanitizeArticleHtml } from '@/lib/article-content';
 import { fetchMediumPosts, type MediumPost } from '@/lib/medium';
 import type { ArticleCardData } from '@/components/sections/ArticleCard.astro';
@@ -8,25 +7,10 @@ export interface Article extends ArticleCardData {
   canonicalUrl?: string;
   siteTags: string[];
   contentHtml?: string;
+  publishedAt?: Date;
 }
 
-function staticToArticle(essay: StaticEssay, basePath: string): Article {
-  return {
-    slug: essay.slug,
-    title: essay.title,
-    excerpt: essay.excerpt,
-    date: essay.date,
-    tag: essay.tag,
-    href: `${basePath}/${essay.slug}`,
-    featured: essay.featured,
-    comingSoon: essay.comingSoon,
-    paragraphs: essay.paragraphs,
-    canonicalUrl: essay.canonicalUrl,
-    siteTags: [essay.tag],
-  };
-}
-
-function mediumToArticle(post: MediumPost, basePath: string): Article {
+function mediumToArticle(post: MediumPost, basePath: string, fallbackTag: string): Article {
   return {
     slug: post.slug,
     title: post.title,
@@ -36,42 +20,35 @@ function mediumToArticle(post: MediumPost, basePath: string): Article {
       month: 'long',
       day: 'numeric',
     }),
-    tag: post.siteTags[0] ?? 'Essay',
+    tag: post.siteTags[0] ?? fallbackTag,
     href: `${basePath}/${post.slug}`,
-    siteTags: post.siteTags.length ? post.siteTags : ['Essay'],
+    siteTags: post.siteTags,
     canonicalUrl: post.link,
     contentHtml: post.content ? sanitizeArticleHtml(post.content, post.title) : undefined,
+    publishedAt: post.pubDate,
   };
 }
 
-function mergeArticles(staticEssays: StaticEssay[], mediumPosts: MediumPost[], basePath: string): Article[] {
-  const map = new Map<string, Article>();
+function articlesFromMedium(posts: MediumPost[], basePath: string, fallbackTag: string): Article[] {
+  return posts.map((post) => mediumToArticle(post, basePath, fallbackTag));
+}
 
-  for (const essay of staticEssays) {
-    map.set(essay.slug, staticToArticle(essay, basePath));
-  }
-
-  for (const post of mediumPosts) {
-    const existing = map.get(post.slug);
-    const fromMedium = mediumToArticle(post, basePath);
-    map.set(post.slug, existing ? { ...existing, ...fromMedium, featured: existing.featured } : fromMedium);
-  }
-
-  return [...map.values()].sort((a, b) => {
-    if (a.featured && !b.featured) return -1;
-    if (!a.featured && b.featured) return 1;
-    return 0;
+function sortByPublishedAt(articles: Article[]): Article[] {
+  return [...articles].sort((a, b) => {
+    const aTime = a.publishedAt?.getTime() ?? 0;
+    const bTime = b.publishedAt?.getTime() ?? 0;
+    return bTime - aTime;
   });
 }
 
 export async function getThesisArticles(): Promise<Article[]> {
   const medium = (await fetchMediumPosts()).filter((p) => p.route === 'thesis');
-  return mergeArticles(staticThesisEssays, medium, '/our-thesis');
+  return sortByPublishedAt(articlesFromMedium(medium, '/our-thesis', 'Thesis'));
 }
 
 export async function getJournalArticles(): Promise<Article[]> {
   const medium = (await fetchMediumPosts()).filter((p) => p.route === 'journal');
-  return mergeArticles([], medium, '/studio-journal');
+  return sortByPublishedAt(articlesFromMedium(medium, '/studio-journal', 'Journal'));
 }
 
 export async function getArticleBySlug(

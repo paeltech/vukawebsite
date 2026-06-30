@@ -21,8 +21,12 @@ if (!article) {
   canonical={`/our-thesis/${article.slug}`}
   canonicalUrl={article.canonicalUrl}
   tag={article.tag}
+  tags={article.siteTags}
   date={article.date}
+  excerpt={article.excerpt}
   showAuthor
+  backHref="/our-thesis"
+  backLabel="Back to our thesis"
 >
   {
     article.contentHtml ? (

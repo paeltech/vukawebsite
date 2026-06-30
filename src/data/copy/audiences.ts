@@ -164,7 +164,7 @@ Hakiki is the first portfolio venture — operational, established, and document
       question: 'Why fund a studio over funding individual companies or accelerators?',
       answer: `Because capital efficiency matters. The Venture Engines argument applied to capital deployment: 4 companies built right versus 17 polished and abandoned. A venture studio keeps operational capacity in the room — the infrastructure accelerators do not provide.`,
     },
-    pathways: [{ label: 'Read the founding thesis', href: '/our-thesis/venture-engines' }],
+    pathways: [{ label: 'Read the founding thesis', href: '/our-thesis' }],
     cta: {
       headline: 'The thesis is published. The case is live.',
       label: 'Talk to us about studio investment →',
@@ -188,7 +188,7 @@ Not because they are ineligible. Because programs are partnership-gated through 
       question: 'We already accept African applications directly — why do we need a partner?',
       answer: `Because direct application channels do not overcome partnership-gated tier structures. Founders who apply individually often reach only the lowest credit tiers. A local ecosystem partner with operational depth routes qualified ventures into the programs as they were designed to work — at scale, with accountability.`,
     },
-    pathways: [{ label: 'The $100 Problem essay', href: '/our-thesis/the-100-problem' }],
+    pathways: [{ label: 'The $100 Problem essay', href: '/our-thesis' }],
     cta: {
       headline: 'The credits exist. The door is closed.',
       label: 'Explore a partnership →',

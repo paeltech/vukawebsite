@@ -133,7 +133,7 @@ It Needs Venture Engines Instead" — April 2026.
 
 An argument, not a mission statement. Named institutions.
 Specific mechanisms. Subject to rebuttal. That is the point.`,
-  essayCta: { label: 'Read the essay →', href: '/our-thesis/venture-engines' },
+  essayCta: { label: 'Read the essay →', href: '/our-thesis' },
   tags: [
     'Smart Foundry',
     '10+ years East Africa',

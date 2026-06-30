@@ -1,55 +1,53 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/layout/Section.astro';
-import ArticleCard from '@/components/sections/ArticleCard.astro';
-import ContentSection from '@/components/sections/ContentSection.astro';
 import EmptyState from '@/components/sections/EmptyState.astro';
 import FilterBar from '@/components/sections/FilterBar.astro';
+import JournalArticleRow from '@/components/sections/JournalArticleRow.astro';
 import PageHeader from '@/components/sections/PageHeader.astro';
-import SectionLabel from '@/components/ui/SectionLabel.astro';
+import ContextNav from '@/components/ui/ContextNav.astro';
 import { journalPage } from '@/data/copy/thesis';
 import { journalTags } from '@/lib/tags';
 import { getJournalArticles } from '@/lib/articles';
 
 const articles = await getJournalArticles();
-const featured = articles[0];
-const rest = articles.slice(1);
+const latestSlug = articles[0]?.slug;
 ---
 
-<BaseLayout title="Studio journal">
+<BaseLayout title="Studio journal" description={journalPage.header.subcopy}>
   <Section>
-    <PageHeader {...journalPage.header} headlineSize="hero" />
-  </Section>
+    <PageHeader {...journalPage.header} headlineSize="hero">
+      <ContextNav links={[journalPage.thesisLink]} class="mt-vuka-2xl" />
+    </PageHeader>
 
-  {
-    articles.length === 0 ? (
-      <Section>
-        <EmptyState message={journalPage.emptyState} />
-      </Section>
-    ) : (
-      <>
-        {
-          featured && (
-            <Section variant="dark">
-              <SectionLabel text="Latest" inverted class="mb-vuka-3xl" />
-              <ArticleCard article={{ ...featured, featured: true }} basePath="/studio-journal" />
-            </Section>
-          )
-        }
+    {
+      articles.length === 0 ? (
+        <div class="mt-vuka-4xl">
+          <EmptyState message={journalPage.emptyState} />
+        </div>
+      ) : (
+        <div class="mt-vuka-4xl">
+          <FilterBar
+            tags={journalTags}
+            targetId="journal-grid"
+            emptyMessage={journalPage.filterEmpty}
+          />
 
-        <Section>
-          <ContentSection label="All entries" icon="process">
-            <FilterBar tags={journalTags} targetId="journal-grid" />
-            <div id="journal-grid" class="mt-vuka-3xl grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {(featured ? rest : articles).map((article) => (
+          <div id="journal-grid" class="mt-vuka-3xl flex flex-col gap-4">
+            {
+              articles.map((article) => (
                 <div data-tags={['All', ...article.siteTags].join('|')}>
-                  <ArticleCard article={article} basePath="/studio-journal" />
+                  <JournalArticleRow
+                    article={article}
+                    basePath="/studio-journal"
+                    latest={article.slug === latestSlug}
+                  />
                 </div>
-              ))}
-            </div>
-          </ContentSection>
-        </Section>
-      </>
-    )
-  }
+              ))
+            }
+          </div>
+        </div>
+      )
+    }
+  </Section>
 </BaseLayout>

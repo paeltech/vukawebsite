@@ -1,0 +1,68 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import Tag from '@/components/ui/Tag.astro';
+import type { ArticleCardData } from '@/components/sections/ArticleCard.astro';
+
+interface Props {
+  article: ArticleCardData & { siteTags?: string[] };
+  basePath: string;
+}
+
+const { article, basePath } = Astro.props;
+const href = article.comingSoon ? '#' : article.href || `${basePath}/${article.slug}`;
+const displayTags = article.siteTags && article.siteTags.length > 0 ? article.siteTags : [article.tag];
+
+function cardExcerpt(text: string, max = 200): string {
+  const normalized = text.replace(/\s+/g, ' ').trim();
+  if (!normalized) return '';
+  if (normalized.length <= max) return normalized;
+  return `${normalized.slice(0, max).replace(/\s+\S*$/, '').trim()}…`;
+}
+
+const excerpt = cardExcerpt(article.excerpt);
+---
+
+<a
+  href={href}
+  class:list={[
+    'vuka-reveal group flex h-full flex-col border bg-parchment p-8 no-underline transition-colors',
+    article.featured
+      ? 'border-ember/40 hover:border-ember/60'
+      : 'border-sand hover:border-baobab/40',
+    article.comingSoon && 'pointer-events-none opacity-80',
+  ]}
+>
+  {
+    article.featured && (
+      <p class="mb-3 font-light text-[11px] uppercase tracking-category text-ember">Founding thesis</p>
+    )
+  }
+
+  <div class="mb-4 flex flex-wrap items-center gap-2">
+    {displayTags.map((label) => (
+      <Tag variant={article.featured ? 'sector' : 'programme'} label={label} />
+    ))}
+    <span class="text-sm text-baobab">{article.date}</span>
+  </div>
+
+  <h2 class="mb-4 flex-1 font-bold text-xl leading-snug text-vuka-black">{article.title}</h2>
+
+  {
+    excerpt ? (
+      <p class="mb-6 line-clamp-3 text-lg leading-relaxed text-vuka-black">{excerpt}</p>
+    ) : (
+      <p class="mb-6 flex-1" />
+    )
+  }
+
+  {
+    !article.comingSoon ? (
+      <span class="inline-flex items-center gap-2 font-bold text-ember transition-colors group-hover:text-ember-hover">
+        Read essay
+        <Icon name="arrow-right" size={16} class="transition-transform group-hover:translate-x-1" />
+      </span>
+    ) : (
+      <span class="font-light text-baobab">Coming soon</span>
+    )
+  }
+</a>
