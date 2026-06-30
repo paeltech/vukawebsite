@@ -1,0 +1,28 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+---
+
+<div class="vuka-reveal vuka-card border-l-4 border-l-ember p-8 md:p-10">
+  <div class="flex items-start gap-5">
+    <div class="icon-well shrink-0">
+      <Icon name="founder" class="text-ember" size={22} />
+    </div>
+    <div>
+      <p class="mb-2 font-light text-[11px] uppercase tracking-category text-baobab">Author</p>
+      <p class="mb-2 font-bold text-xl">Paul Mandele</p>
+      <p class="mb-6 max-w-md text-lg leading-relaxed text-vuka-black">
+        Venture Builder and founder of vuka. A decade inside the East African startup ecosystem as
+        an operator — not an observer.
+      </p>
+      <a
+        href="https://paulmandele.co"
+        class="inline-flex items-center gap-2 font-bold text-ember hover:text-ember-hover"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        paulmandele.co
+        <Icon name="arrow-right" size={16} />
+      </a>
+    </div>
+  </div>
+</div>

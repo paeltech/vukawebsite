@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Type" name="Type Scale" subtitle="Display → H1 → H2 → Body → Label" viewport="700x320" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Codec Pro', sans-serif; background: #F5EFE6; color: #1A1008; padding: 24px 36px 28px; display: flex; flex-direction: column; gap: 0; }
+
+  .phi-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 14px;
+  }
+  .phi-note {
+    font-weight: 300; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #D4C4A8;
+  }
+
+  .row {
+    display: flex; align-items: baseline; gap: 12px;
+    border-bottom: 1px solid #D4C4A8; padding: 6px 0;
+    overflow: hidden;
+  }
+  .row:last-child { border-bottom: none; }
+
+  .specimen { font-weight: 800; color: #1A1008; line-height: 1; white-space: nowrap; overflow: hidden; }
+  .meta { margin-left: auto; display: flex; gap: 16px; align-items: baseline; flex-shrink: 0; }
+  .step-label { font-weight: 300; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: #C4581C; }
+  .role-label  { font-weight: 300; font-size: 9px; letter-spacing: 0.10em; color: #8B5A2B; }
+  .px-label    { font-weight: 300; font-size: 9px; letter-spacing: 0.06em; color: #D4C4A8; }
+</style>
+</head>
+<body>
+
+  <div class="phi-header">
+    <span style="font-weight:300;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:#8B5A2B;">Type scale</span>
+    <span class="phi-note">φ = 1.618 &nbsp;·&nbsp; each step × φ from 11px</span>
+  </div>
+
+  <!-- 11px = base label -->
+  <div class="row">
+    <div class="specimen" style="font-size:11px;font-weight:300;letter-spacing:0.18em;text-transform:uppercase;color:#8B5A2B;">Venture Studio · East Africa</div>
+    <div class="meta">
+      <span class="step-label">φ⁰</span>
+      <span class="role-label">Label</span>
+      <span class="px-label">11px</span>
+    </div>
+  </div>
+
+  <!-- 18px = 11 × φ -->
+  <div class="row">
+    <div class="specimen" style="font-size:18px;font-weight:400;letter-spacing:0;color:#1A1008;">We build with founders, not for them.</div>
+    <div class="meta">
+      <span class="step-label">φ¹</span>
+      <span class="role-label">Body</span>
+      <span class="px-label">18px</span>
+    </div>
+  </div>
+
+  <!-- 29px = 11 × φ² -->
+  <div class="row">
+    <div class="specimen" style="font-size:29px;font-weight:700;letter-spacing:-0.01em;">Callout / H4</div>
+    <div class="meta">
+      <span class="step-label">φ²</span>
+      <span class="role-label">H4</span>
+      <span class="px-label">29px</span>
+    </div>
+  </div>
+
+  <!-- 47px = 11 × φ³ -->
+  <div class="row">
+    <div class="specimen" style="font-size:47px;font-weight:800;letter-spacing:-0.02em;">Heading three</div>
+    <div class="meta">
+      <span class="step-label">φ³</span>
+      <span class="role-label">H3</span>
+      <span class="px-label">47px</span>
+    </div>
+  </div>
+
+  <!-- 76px = 11 × φ⁴ -->
+  <div class="row">
+    <div class="specimen" style="font-size:76px;font-weight:800;letter-spacing:-0.03em;">Heading two</div>
+    <div class="meta">
+      <span class="step-label">φ⁴</span>
+      <span class="role-label">H2</span>
+      <span class="px-label">76px</span>
+    </div>
+  </div>
+
+  <!-- 123px = 11 × φ⁵ -->
+  <div class="row">
+    <div class="specimen" style="font-size:123px;font-weight:900;letter-spacing:-0.04em;color:#C4581C;">vuka.</div>
+    <div class="meta">
+      <span class="step-label">φ⁵</span>
+      <span class="role-label">Display</span>
+      <span class="px-label">123px</span>
+    </div>
+  </div>
+
+</body>
+</html>

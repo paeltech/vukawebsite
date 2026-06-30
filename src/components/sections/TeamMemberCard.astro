@@ -1,0 +1,40 @@
+---
+import Tag from '@/components/ui/Tag.astro';
+import type { TeamMember } from '@/data/copy/about';
+
+interface Props extends TeamMember {}
+
+const { name, role, bio, href, credentials } = Astro.props;
+---
+
+<article class="border-t-2 border-ember pt-vuka-2xl">
+  <div class="mb-4">
+    <h3 class="font-heavy text-2xl lowercase tracking-tight text-vuka-black">{name}</h3>
+    <p class="mt-1 font-light text-[11px] uppercase tracking-category text-baobab">{role}</p>
+  </div>
+
+  <p class="mb-vuka-2xl max-w-2xl text-lg leading-relaxed whitespace-pre-line">{bio}</p>
+
+  {
+    credentials.length > 0 && (
+      <div class="mb-vuka-2xl flex flex-wrap gap-2">
+        {credentials.map((credential) => (
+          <Tag variant="status" label={credential} />
+        ))}
+      </div>
+    )
+  }
+
+  {
+    href && (
+      <a
+        href={href}
+        class="font-bold text-lg text-vuka-black underline decoration-ember decoration-2 underline-offset-4 transition-colors hover:text-ember"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {name.split(' ')[0]}'s writing →
+      </a>
+    )
+  }
+</article>

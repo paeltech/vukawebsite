@@ -1,0 +1,78 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/layout/Section.astro';
+import ArticleCTA from '@/components/sections/ArticleCTA.astro';
+import ArticleHero from '@/components/sections/ArticleHero.astro';
+import AuthorCard from '@/components/sections/AuthorCard.astro';
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import type { SeoProps } from '@/lib/seo';
+
+interface Props extends SeoProps {
+  tag: string;
+  date: string;
+  title: string;
+  excerpt?: string;
+  canonicalUrl?: string;
+  showAuthor?: boolean;
+  backHref?: string;
+  backLabel?: string;
+}
+
+const {
+  tag,
+  date,
+  title,
+  excerpt,
+  canonicalUrl,
+  showAuthor = false,
+  backHref,
+  backLabel,
+  ...seo
+} = Astro.props;
+---
+
+<BaseLayout {...seo} ogType="article">
+  {canonicalUrl && <link rel="canonical" href={canonicalUrl} slot="head" />}
+
+  <Section class="!pb-vuka-4xl">
+    <article class="article-page vuka-reveal">
+      <div class:list={['article-canvas', showAuthor && 'article-canvas--with-aside']}>
+        <ArticleHero {tag} {date} {title} {excerpt} class="article-hero" />
+
+        <div class="article-body">
+          <div class:list={['article-grid', showAuthor && 'article-grid--with-aside']}>
+            <div class="prose-vuka min-w-0">
+              <slot />
+            </div>
+            {
+              showAuthor && (
+                <aside class="article-aside">
+                  <div class="article-aside-inner">
+                    <AuthorCard />
+                  </div>
+                </aside>
+              )
+            }
+          </div>
+        </div>
+
+        {
+          (showAuthor || (backHref && backLabel)) && (
+            <footer class="article-footer">
+              {showAuthor && <ArticleCTA />}
+              {
+                backHref && backLabel && (
+                  <Button href={backHref} variant="text" class={showAuthor ? 'mt-vuka-2xl' : ''}>
+                    <Icon name="arrow-right" size={16} class="rotate-180" />
+                    {backLabel}
+                  </Button>
+                )
+              }
+            </footer>
+          )
+        }
+      </div>
+    </article>
+  </Section>
+</BaseLayout>

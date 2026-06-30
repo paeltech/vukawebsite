@@ -1,0 +1,191 @@
+---
+import Button from '@/components/ui/Button.astro';
+import { siteConfig } from '@/config/site';
+import { joinTeamPage } from '@/data/copy/join-team';
+
+const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT_TEAM ?? import.meta.env.PUBLIC_FORM_ENDPOINT;
+const { fields, expertiseOptions, motiveOptions, submitLabel, success, errors } = joinTeamPage;
+---
+
+<div id="join-team-form-root">
+  <form
+    id="join-team-form"
+    class="space-y-6"
+    method="POST"
+    action={formEndpoint || undefined}
+    data-has-endpoint={formEndpoint ? 'true' : 'false'}
+  >
+    <input type="hidden" name="_subject" value="Vuka join team interest" />
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div>
+        <label for="join-name" class="mb-2 block font-light text-sm text-baobab">
+          {fields.name.label}
+        </label>
+        <input
+          id="join-name"
+          name="name"
+          type="text"
+          required
+          placeholder={fields.name.placeholder}
+          class="w-full border border-sand bg-parchment px-4 py-3 text-lg text-vuka-black outline-none transition-colors focus:border-ember"
+        />
+        <p class="mt-1 hidden text-sm text-ember" data-error="join-name">{errors.required}</p>
+      </div>
+
+      <div>
+        <label for="join-email" class="mb-2 block font-light text-sm text-baobab">
+          {fields.email.label}
+        </label>
+        <input
+          id="join-email"
+          name="email"
+          type="email"
+          required
+          placeholder={fields.email.placeholder}
+          class="w-full border border-sand bg-parchment px-4 py-3 text-lg text-vuka-black outline-none transition-colors focus:border-ember"
+        />
+        <p class="mt-1 hidden text-sm text-ember" data-error="join-email">{errors.email}</p>
+      </div>
+    </div>
+
+    <div>
+      <label for="join-organisation" class="mb-2 block font-light text-sm text-baobab">
+        {fields.organisation.label}
+      </label>
+      <input
+        id="join-organisation"
+        name="organisation"
+        type="text"
+        placeholder={fields.organisation.placeholder}
+        class="w-full border border-sand bg-parchment px-4 py-3 text-lg text-vuka-black outline-none transition-colors focus:border-ember"
+      />
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div>
+        <label for="join-expertise" class="mb-2 block font-light text-sm text-baobab">
+          {fields.expertise.label}
+        </label>
+        <select
+          id="join-expertise"
+          name="expertise"
+          required
+          class="w-full border border-sand bg-parchment px-4 py-3 text-lg text-vuka-black outline-none transition-colors focus:border-ember"
+        >
+          <option value="" disabled selected>Select an option</option>
+          {expertiseOptions.map((option) => <option value={option}>{option}</option>)}
+        </select>
+        <p class="mt-1 hidden text-sm text-ember" data-error="join-expertise">{errors.required}</p>
+      </div>
+
+      <div>
+        <label for="join-motive" class="mb-2 block font-light text-sm text-baobab">
+          {fields.motive.label}
+        </label>
+        <select
+          id="join-motive"
+          name="motive"
+          required
+          class="w-full border border-sand bg-parchment px-4 py-3 text-lg text-vuka-black outline-none transition-colors focus:border-ember"
+        >
+          <option value="" disabled selected>Select an option</option>
+          {motiveOptions.map((option) => <option value={option}>{option}</option>)}
+        </select>
+        <p class="mt-1 hidden text-sm text-ember" data-error="join-motive">{errors.required}</p>
+      </div>
+    </div>
+
+    <div>
+      <label for="join-message" class="mb-2 block font-light text-sm text-baobab">
+        {fields.message.label}
+      </label>
+      <textarea
+        id="join-message"
+        name="message"
+        required
+        rows="6"
+        placeholder={fields.message.placeholder}
+        class="w-full resize-y border border-sand bg-parchment px-4 py-3 text-lg text-vuka-black outline-none transition-colors focus:border-ember"
+      ></textarea>
+      <p class="mt-1 hidden text-sm text-ember" data-error="join-message">{errors.required}</p>
+    </div>
+
+    <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
+
+    <p id="join-form-general-error" class="hidden text-sm text-ember">{errors.general}</p>
+
+    <Button type="submit" variant="primary" size="lg">{submitLabel}</Button>
+  </form>
+
+  <div id="join-form-success" class="hidden rounded-sm border border-sand bg-parchment p-8">
+    <h3 class="mb-4 font-bold text-2xl">{success.title}</h3>
+    <p class="text-lg leading-relaxed">{success.body}</p>
+  </div>
+</div>
+
+<script define:vars={{ email: siteConfig.email, successCopy: success }}>
+  function initJoinTeamForm() {
+    const form = document.getElementById('join-team-form');
+    const successEl = document.getElementById('join-form-success');
+    const generalError = document.getElementById('join-form-general-error');
+    if (!form || !successEl) return;
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('submitted') === 'true') {
+      form.classList.add('hidden');
+      successEl.classList.remove('hidden');
+      return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    form.addEventListener('submit', (event) => {
+      const hasEndpoint = form.dataset.hasEndpoint === 'true';
+      let valid = true;
+
+      form.querySelectorAll('[data-error]').forEach((el) => el.classList.add('hidden'));
+      generalError?.classList.add('hidden');
+
+      const requiredFields = ['join-name', 'join-email', 'join-expertise', 'join-motive', 'join-message'];
+      requiredFields.forEach((id) => {
+        const input = form.querySelector(`#${id}`);
+        if (
+          input instanceof HTMLInputElement ||
+          input instanceof HTMLTextAreaElement ||
+          input instanceof HTMLSelectElement
+        ) {
+          if (!input.value.trim()) {
+            valid = false;
+            form.querySelector(`[data-error="${id}"]`)?.classList.remove('hidden');
+          }
+        }
+      });
+
+      const emailInput = form.querySelector('#join-email');
+      if (emailInput instanceof HTMLInputElement && emailInput.value.trim() && !emailPattern.test(emailInput.value.trim())) {
+        valid = false;
+        form.querySelector('[data-error="join-email"]')?.classList.remove('hidden');
+      }
+
+      if (!valid) {
+        event.preventDefault();
+        generalError?.classList.remove('hidden');
+        return;
+      }
+
+      if (!hasEndpoint) {
+        event.preventDefault();
+        const data = new FormData(form);
+        const subject = encodeURIComponent(`Vuka team interest: ${data.get('motive')}`);
+        const body = encodeURIComponent(
+          `Name: ${data.get('name')}\nEmail: ${data.get('email')}\nOrganisation: ${data.get('organisation') || '—'}\nExpertise: ${data.get('expertise')}\nMotive: ${data.get('motive')}\n\n${data.get('message')}`,
+        );
+        window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+      }
+    });
+  }
+
+  initJoinTeamForm();
+  document.addEventListener('astro:page-load', initJoinTeamForm);
+</script>

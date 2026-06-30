@@ -1,0 +1,111 @@
+---
+interface Props {
+  words: readonly string[];
+  class?: string;
+}
+
+const { words, class: className = '' } = Astro.props;
+const wordsJson = JSON.stringify(words);
+---
+
+<span
+  class:list={['typewriter-accent text-accent', className]}
+  data-typewriter-words={wordsJson}
+  aria-live="polite"
+>
+  <span data-typewriter-text></span><span class="typewriter-cursor" aria-hidden="true"></span>
+</span>
+
+<script>
+  function initTypewriters() {
+    document.querySelectorAll<HTMLElement>('[data-typewriter-words]').forEach((el) => {
+      if (el.dataset.typewriterInit) return;
+      el.dataset.typewriterInit = 'true';
+
+      const words = JSON.parse(el.dataset.typewriterWords || '[]') as string[];
+      const textEl = el.querySelector('[data-typewriter-text]');
+      const cursorEl = el.querySelector('.typewriter-cursor');
+      if (!textEl || !words.length) return;
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        textEl.textContent = `${words[0]}.`;
+        cursorEl?.remove();
+        return;
+      }
+
+      let wordIndex = 0;
+      let charIndex = 0;
+      let deleting = false;
+      let timer: ReturnType<typeof setTimeout>;
+
+      const typeSpeed = 95;
+      const deleteSpeed = 65;
+      const pauseAfterType = 3000;
+      const pauseAfterDelete = 600;
+
+      const tick = () => {
+        const word = `${words[wordIndex]}.`;
+
+        if (!deleting) {
+          charIndex += 1;
+          textEl.textContent = word.slice(0, charIndex);
+          if (charIndex >= word.length) {
+            deleting = true;
+            timer = setTimeout(tick, pauseAfterType);
+            return;
+          }
+          timer = setTimeout(tick, typeSpeed);
+        } else {
+          charIndex -= 1;
+          textEl.textContent = word.slice(0, charIndex);
+          if (charIndex <= 0) {
+            deleting = false;
+            wordIndex = (wordIndex + 1) % words.length;
+            timer = setTimeout(tick, pauseAfterDelete);
+            return;
+          }
+          timer = setTimeout(tick, deleteSpeed);
+        }
+      };
+
+      tick();
+
+      document.addEventListener(
+        'astro:before-swap',
+        () => clearTimeout(timer),
+        { once: true },
+      );
+    });
+  }
+
+  initTypewriters();
+  document.addEventListener('astro:page-load', initTypewriters);
+</script>
+
+<style>
+  .typewriter-accent {
+    white-space: nowrap;
+  }
+
+  .typewriter-cursor {
+    display: inline-block;
+    width: 0.06em;
+    height: 0.85em;
+    margin-left: 2px;
+    vertical-align: -0.05em;
+    background-color: currentColor;
+    animation: typewriter-blink 1s step-end infinite;
+  }
+
+  @keyframes typewriter-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .typewriter-cursor {
+      display: none;
+    }
+  }
+</style>

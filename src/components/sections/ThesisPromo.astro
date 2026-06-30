@@ -1,0 +1,31 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import Mark from '@/components/ui/Mark.astro';
+
+interface Props {
+  sectionLabel: string;
+  headline: string;
+  body: string;
+  cta: { label: string; href: string };
+}
+
+const { sectionLabel, headline, body, cta } = Astro.props;
+---
+
+<div class="vuka-reveal relative">
+  <div class="absolute -right-4 top-0 hidden w-24 opacity-10 md:block" aria-hidden="true">
+    <Mark variant="ember" decorative />
+  </div>
+  <div class="border-l-4 border-ember pl-8 md:pl-12">
+    <p class="mb-4 font-light text-[11px] uppercase tracking-category text-sand">{sectionLabel}</p>
+    <h2 class="mb-6 max-w-3xl font-heavy text-h2 leading-tight text-parchment whitespace-pre-line">
+      {headline}
+    </h2>
+    <p class="mb-8 max-w-2xl text-lg leading-relaxed text-sand whitespace-pre-line">{body}</p>
+    <Button href={cta.href} variant="primary" size="lg">
+      {cta.label}
+      <Icon name="arrow-right" size={18} />
+    </Button>
+  </div>
+</div>

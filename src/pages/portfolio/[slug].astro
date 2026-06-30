@@ -1,0 +1,27 @@
+---
+import { render } from 'astro:content';
+import VentureLayout from '@/layouts/VentureLayout.astro';
+import { getPortfolioEntry, getPortfolioSlugs, isPortfolioEnabled } from '@/lib/portfolio';
+
+export async function getStaticPaths() {
+  if (!isPortfolioEnabled()) {
+    return [];
+  }
+
+  const slugs = await getPortfolioSlugs();
+  return slugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const entry = slug ? await getPortfolioEntry(slug) : undefined;
+
+if (!entry) {
+  return Astro.redirect('/portfolio');
+}
+
+const { Content } = await render(entry);
+---
+
+<VentureLayout entry={entry}>
+  <Content />
+</VentureLayout>

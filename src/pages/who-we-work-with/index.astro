@@ -1,0 +1,42 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/layout/Section.astro';
+import AudienceCard from '@/components/sections/AudienceCard.astro';
+import PageHeader from '@/components/sections/PageHeader.astro';
+import Button from '@/components/ui/Button.astro';
+import { whoWeWorkWith } from '@/data/copy/audiences';
+
+const audienceIcons = ['founder', 'corporate', 'government', 'investor', 'partner'] as const;
+---
+
+<BaseLayout title="Who we work with">
+  <Section>
+    <PageHeader {...whoWeWorkWith.header} headlineSize="hero" />
+  </Section>
+
+  <Section>
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        whoWeWorkWith.cards.map((card, index) => (
+          <AudienceCard
+            eyebrow={card.title}
+            headline={card.problemHeadline}
+            body={card.body}
+            cta={card.cta}
+            icon={audienceIcons[index]}
+            index={index}
+          />
+        ))
+      }
+    </div>
+  </Section>
+
+  <Section variant="dark">
+    <p class="vuka-reveal mb-6 max-w-xl text-h4 font-bold leading-snug text-parchment whitespace-pre-line">
+      {whoWeWorkWith.bottomNote}
+    </p>
+    <Button href={whoWeWorkWith.bottomCta.href} variant="primary">
+      {whoWeWorkWith.bottomCta.label}
+    </Button>
+  </Section>
+</BaseLayout>

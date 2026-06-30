@@ -1,0 +1,20 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import type { IconName } from '@/lib/icons';
+
+interface Props {
+  title: string;
+  body: string;
+  icon?: IconName;
+}
+
+const { title, body, icon = 'principle' } = Astro.props;
+---
+
+<article class="vuka-reveal vuka-card vuka-card-hover group p-8">
+  <div class="icon-well mb-6 group-hover:border-ember">
+    <Icon name={icon} class="text-ember" size={22} />
+  </div>
+  <h3 class="mb-3 font-bold text-xl">{title}</h3>
+  <p class="text-lg leading-relaxed whitespace-pre-line">{body}</p>
+</article>

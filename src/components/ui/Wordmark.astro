@@ -1,0 +1,65 @@
+---
+import { cn } from '@/lib/cn';
+
+type Variant = 'default' | 'parchment';
+
+interface Props {
+  variant?: Variant;
+  /** Swap to parchment logo when the site header is scrolled (dark background) */
+  scrollAware?: boolean;
+  class?: string;
+  easterEgg?: boolean;
+}
+
+const {
+  variant = 'default',
+  scrollAware = false,
+  class: className = '',
+  easterEgg = false,
+} = Astro.props;
+
+const logos = {
+  default: '/assets/logo-default.svg',
+  parchment: '/assets/logo-parchment.svg',
+} as const;
+
+/** Width-led sizing — SVG viewBox is cropped to the lockup artwork */
+const logoClass = 'block h-auto w-[7.75rem] md:w-[8.25rem]';
+const easterEggTitle =
+  'In Swahili: cross over. In Zulu: wake up. In Shona: awaken.';
+---
+
+<a
+  href="/"
+  class={cn('inline-flex shrink-0 no-underline', className)}
+  title={easterEgg ? easterEggTitle : undefined}
+>
+  {
+    scrollAware ? (
+      <>
+        <img
+          src={logos.default}
+          alt="vuka."
+          class={cn('site-logo site-logo--default', logoClass)}
+          width="132"
+          height="40"
+        />
+        <img
+          src={logos.parchment}
+          alt="vuka."
+          class={cn('site-logo site-logo--parchment', logoClass)}
+          width="132"
+          height="40"
+        />
+      </>
+    ) : (
+      <img
+        src={logos[variant]}
+        alt="vuka."
+        class={logoClass}
+        width="132"
+        height="40"
+      />
+    )
+  }
+</a>

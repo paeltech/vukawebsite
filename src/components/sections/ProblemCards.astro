@@ -1,0 +1,39 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+
+interface Props {
+  body: string;
+  statement: string;
+  statementAccent: string;
+  cta: { label: string; href: string };
+}
+
+const { body, statement, statementAccent, cta } = Astro.props;
+---
+
+<div class="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16 lg:items-start">
+  <div class="vuka-reveal flex flex-col justify-between gap-vuka-2xl">
+    <p
+      class="why-statement max-w-xl text-balance font-heavy leading-none tracking-tight text-vuka-black lg:max-w-none"
+    >
+      {statement}
+      {' '}
+      <span class="text-accent">{statementAccent}</span>
+    </p>
+    <Button href={cta.href} variant="secondary" size="md" class="w-fit self-start">
+      {cta.label}
+      <Icon name="arrow-right" size={16} />
+    </Button>
+  </div>
+
+  <div class="vuka-reveal">
+    <p class="max-w-xl text-lg leading-relaxed text-vuka-black md:text-xl">{body}</p>
+  </div>
+</div>
+
+<style>
+  .why-statement {
+    font-size: clamp(2.25rem, 5.5vw, 4.25rem);
+  }
+</style>

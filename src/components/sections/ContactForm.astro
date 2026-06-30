@@ -1,0 +1,163 @@
+---
+import Button from '@/components/ui/Button.astro';
+import { siteConfig } from '@/config/site';
+import { workWithUs, enquiryTypeMap } from '@/data/copy/work-with-us';
+
+interface Props {
+  preselectedType?: string;
+}
+
+const { preselectedType = '' } = Astro.props;
+const mappedEnquiry = enquiryTypeMap[preselectedType] ?? '';
+const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
+---
+
+<div id="contact-form-root">
+  <form
+    id="contact-form"
+    class="space-y-6"
+    method="POST"
+    action={formEndpoint || undefined}
+    data-has-endpoint={formEndpoint ? 'true' : 'false'}
+  >
+    <div>
+      <label for="name" class="mb-2 block font-light text-sm text-baobab">
+        {workWithUs.fields.name.label}
+      </label>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        required
+        placeholder={workWithUs.fields.name.placeholder}
+        class="w-full border border-sand bg-parchment px-4 py-3 text-lg text-vuka-black outline-none transition-colors focus:border-ember"
+      />
+      <p class="mt-1 hidden text-sm text-ember" data-error="name">{workWithUs.errors.required}</p>
+    </div>
+
+    <div>
+      <label for="organisation" class="mb-2 block font-light text-sm text-baobab">
+        {workWithUs.fields.organisation.label}
+        <span class="text-sand"> (optional)</span>
+      </label>
+      <input
+        id="organisation"
+        name="organisation"
+        type="text"
+        placeholder={workWithUs.fields.organisation.placeholder}
+        class="w-full border border-sand bg-parchment px-4 py-3 text-lg text-vuka-black outline-none transition-colors focus:border-ember"
+      />
+    </div>
+
+    <div>
+      <label for="enquiry" class="mb-2 block font-light text-sm text-baobab">
+        {workWithUs.fields.enquiry.label}
+      </label>
+      <select
+        id="enquiry"
+        name="enquiry"
+        required
+        class="w-full border border-sand bg-parchment px-4 py-3 text-lg text-vuka-black outline-none transition-colors focus:border-ember"
+        data-default={mappedEnquiry}
+      >
+        <option value="" disabled selected={!mappedEnquiry}>Select an option</option>
+        {
+          workWithUs.enquiryOptions.map((option) => (
+            <option value={option} selected={option === mappedEnquiry}>
+              {option}
+            </option>
+          ))
+        }
+      </select>
+      <p class="mt-1 hidden text-sm text-ember" data-error="enquiry">{workWithUs.errors.required}</p>
+    </div>
+
+    <div>
+      <label for="message" class="mb-2 block font-light text-sm text-baobab">
+        {workWithUs.fields.message.label}
+      </label>
+      <textarea
+        id="message"
+        name="message"
+        required
+        rows="6"
+        placeholder={workWithUs.fields.message.placeholder}
+        class="w-full resize-y border border-sand bg-parchment px-4 py-3 text-lg text-vuka-black outline-none transition-colors focus:border-ember"
+      ></textarea>
+      <p class="mt-1 hidden text-sm text-ember" data-error="message">{workWithUs.errors.required}</p>
+    </div>
+
+    <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
+
+    <p id="form-general-error" class="hidden text-sm text-ember">{workWithUs.errors.general}</p>
+
+    <Button type="submit" variant="primary">{workWithUs.submitLabel}</Button>
+  </form>
+
+  <div id="form-success" class="hidden border border-sand bg-parchment p-8 rounded-sm">
+    <h3 class="mb-4 font-bold text-2xl">{workWithUs.success.title}</h3>
+    <p class="text-lg leading-relaxed whitespace-pre-line">{workWithUs.success.body}</p>
+    <Button href={workWithUs.success.thesisLink} variant="text" class="mt-6">
+      Read our thesis →
+    </Button>
+  </div>
+</div>
+
+<script define:vars={{ email: siteConfig.email, successCopy: workWithUs.success }}>
+  function initContactForm() {
+    const form = document.getElementById('contact-form');
+    const success = document.getElementById('form-success');
+    const generalError = document.getElementById('form-general-error');
+    if (!form || !success) return;
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('submitted') === 'true') {
+      form.classList.add('hidden');
+      success.classList.remove('hidden');
+      return;
+    }
+
+    const enquirySelect = form.querySelector('#enquiry');
+    const defaultEnquiry = enquirySelect?.dataset.default;
+    if (defaultEnquiry && enquirySelect instanceof HTMLSelectElement) {
+      enquirySelect.value = defaultEnquiry;
+    }
+
+    form.addEventListener('submit', (event) => {
+      const hasEndpoint = form.dataset.hasEndpoint === 'true';
+      let valid = true;
+
+      form.querySelectorAll('[data-error]').forEach((el) => el.classList.add('hidden'));
+      generalError?.classList.add('hidden');
+
+      ['name', 'enquiry', 'message'].forEach((field) => {
+        const input = form.querySelector(`#${field}`);
+        if (input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement || input instanceof HTMLSelectElement) {
+          if (!input.value.trim()) {
+            valid = false;
+            form.querySelector(`[data-error="${field}"]`)?.classList.remove('hidden');
+          }
+        }
+      });
+
+      if (!valid) {
+        event.preventDefault();
+        generalError?.classList.remove('hidden');
+        return;
+      }
+
+      if (!hasEndpoint) {
+        event.preventDefault();
+        const data = new FormData(form);
+        const subject = encodeURIComponent(`Vuka enquiry: ${data.get('enquiry')}`);
+        const body = encodeURIComponent(
+          `Name: ${data.get('name')}\nOrganisation: ${data.get('organisation') || '—'}\n\n${data.get('message')}`,
+        );
+        window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+      }
+    });
+  }
+
+  initContactForm();
+  document.addEventListener('astro:page-load', initContactForm);
+</script>

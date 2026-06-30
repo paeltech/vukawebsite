@@ -1,0 +1,22 @@
+---
+import Tag from '@/components/ui/Tag.astro';
+import { cn } from '@/lib/cn';
+
+interface Props {
+  tag: string;
+  date: string;
+  title: string;
+  excerpt?: string;
+  class?: string;
+}
+
+const { tag, date, title, excerpt, class: className = '' } = Astro.props;
+---
+
+<header class={cn('vuka-reveal', className)}>
+  <Tag variant="status" label={`${tag} · ${date}`} class="mb-6" />
+  <h1 class="article-title">{title}</h1>
+  {excerpt && (
+    <p class="mt-vuka-xl text-xl leading-relaxed text-baobab">{excerpt}</p>
+  )}
+</header>

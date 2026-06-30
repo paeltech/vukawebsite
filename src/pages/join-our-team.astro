@@ -1,0 +1,33 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/layout/Section.astro';
+import JoinTeamForm from '@/components/sections/JoinTeamForm.astro';
+import PageHeader from '@/components/sections/PageHeader.astro';
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+import { joinTeamPage } from '@/data/copy/join-team';
+---
+
+<BaseLayout title="Join our team" description={joinTeamPage.header.subcopy}>
+  <Section>
+    <PageHeader {...joinTeamPage.header} headlineSize="hero" />
+  </Section>
+
+  <Section variant="sand">
+    <SectionLabel text={joinTeamPage.formIntro.headline} class="mb-4" />
+    <p class="vuka-reveal mb-vuka-3xl max-w-xl text-lg text-vuka-black">
+      {joinTeamPage.formIntro.subcopy}
+    </p>
+    <div class="max-w-2xl">
+      <JoinTeamForm />
+    </div>
+    <div class="vuka-reveal mt-vuka-3xl">
+      <p class="mb-2 font-light text-baobab">{joinTeamPage.directContact.label}</p>
+      <a
+        href={`mailto:${joinTeamPage.directContact.email}`}
+        class="font-bold text-xl text-ember hover:text-ember-hover"
+      >
+        {joinTeamPage.directContact.email}
+      </a>
+    </div>
+  </Section>
+</BaseLayout>

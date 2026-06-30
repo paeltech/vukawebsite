@@ -1,0 +1,56 @@
+---
+import { cn } from '@/lib/cn';
+
+type Variant = 'primary' | 'secondary' | 'ghost' | 'inverse' | 'text' | 'disabled';
+type Size = 'sm' | 'md' | 'lg';
+
+interface Props {
+  variant?: Variant;
+  size?: Size;
+  href?: string;
+  class?: string;
+  disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  class: className = '',
+  disabled = false,
+  type = 'button',
+} = Astro.props;
+
+const isDisabled = disabled || variant === 'disabled';
+const Tag = href && !isDisabled ? 'a' : 'button';
+
+const base =
+  'inline-flex items-center justify-center gap-2 rounded-sm font-bold transition-all duration-150 active:scale-[0.97] disabled:cursor-not-allowed disabled:active:scale-100';
+
+const variants: Record<Variant, string> = {
+  primary: 'bg-ember text-parchment hover:bg-ember-hover',
+  secondary:
+    'border-[1.5px] border-baobab bg-transparent text-vuka-black shadow-none hover:border-vuka-black hover:shadow-none',
+  ghost: 'bg-transparent text-baobab hover:text-vuka-black',
+  text: 'rounded-none border-b border-sand bg-transparent px-0 py-0 pb-0.5 font-normal text-baobab hover:border-baobab hover:text-vuka-black active:scale-100',
+  inverse: 'bg-surface-dark text-parchment hover:bg-baobab/20',
+  disabled: 'cursor-not-allowed bg-sand text-baobab',
+};
+
+const sizes: Record<Size, string> = {
+  sm: 'px-5 py-2 text-base',
+  md: 'px-8 py-3.5 text-lg',
+  lg: 'px-10 py-4 text-lg',
+};
+---
+
+<Tag
+  class={cn(base, variants[isDisabled ? 'disabled' : variant], sizes[size], className)}
+  href={Tag === 'a' ? href : undefined}
+  type={Tag === 'button' ? type : undefined}
+  disabled={Tag === 'button' ? isDisabled : undefined}
+  aria-disabled={isDisabled ? 'true' : undefined}
+>
+  <slot />
+</Tag>

@@ -1,0 +1,61 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/layout/Section.astro';
+import PageCTA from '@/components/sections/PageCTA.astro';
+import PageHeader from '@/components/sections/PageHeader.astro';
+import PrincipleCard from '@/components/sections/PrincipleCard.astro';
+import TeamMemberCard from '@/components/sections/TeamMemberCard.astro';
+import ContentSection from '@/components/sections/ContentSection.astro';
+import { aboutPage } from '@/data/copy/about';
+import { isAboutEnabled } from '@/config/site';
+
+if (!isAboutEnabled()) {
+  return Astro.redirect('/');
+}
+
+const principleIcons = ['principle', 'layers', 'process', 'proof'] as const;
+---
+
+<BaseLayout title="About" description={aboutPage.header.subcopy}>
+  <Section>
+    <PageHeader {...aboutPage.header} headlineSize="hero" />
+  </Section>
+
+  <Section variant="dark">
+    <ContentSection label="The studio" icon="situation" inverted>
+      <p class="max-w-3xl text-xl leading-relaxed text-sand whitespace-pre-line">
+        {aboutPage.story}
+      </p>
+    </ContentSection>
+  </Section>
+
+  <Section>
+    <ContentSection label="How we operate" icon="process">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {
+          aboutPage.principles.map((principle, index) => (
+            <PrincipleCard
+              title={principle.title}
+              body={principle.body}
+              icon={principleIcons[index % principleIcons.length]}
+            />
+          ))
+        }
+      </div>
+    </ContentSection>
+  </Section>
+
+  <Section variant="dark">
+    <ContentSection label="Team" icon="founder" inverted>
+      <div class="flex flex-col gap-vuka-4xl">
+        {aboutPage.team.map((member) => (
+          <TeamMemberCard {...member} />
+        ))}
+      </div>
+    </ContentSection>
+  </Section>
+
+  <Section>
+    <PageCTA cta={aboutPage.cta} />
+  </Section>
+</BaseLayout>

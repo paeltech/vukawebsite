@@ -1,0 +1,50 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/layout/Section.astro';
+import ContentSection from '@/components/sections/ContentSection.astro';
+import PageCTA from '@/components/sections/PageCTA.astro';
+import PageHeader from '@/components/sections/PageHeader.astro';
+import PortfolioCard from '@/components/sections/PortfolioCard.astro';
+import { portfolioPage } from '@/data/copy/portfolio';
+import { getPublishedPortfolio, isPortfolioEnabled } from '@/lib/portfolio';
+
+if (!isPortfolioEnabled()) {
+  return Astro.redirect('/');
+}
+
+const ventures = await getPublishedPortfolio();
+---
+
+<BaseLayout title="Portfolio" description={portfolioPage.header.subcopy}>
+  <Section>
+    <PageHeader {...portfolioPage.header} headlineSize="hero" />
+  </Section>
+
+  <Section>
+    <ContentSection label="Portfolio companies" icon="layers">
+      {
+        ventures.length > 0 ? (
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {ventures.map((entry) => (
+              <PortfolioCard entry={entry} />
+            ))}
+          </div>
+        ) : (
+          <p class="text-lg text-baobab">No ventures published yet.</p>
+        )
+      }
+    </ContentSection>
+  </Section>
+
+  <Section variant="bold" fullWidth>
+    <div class="mx-auto max-w-[1200px] px-5 md:px-10">
+      <PageCTA
+        cta={{
+          headline: portfolioPage.bottomCta.headline,
+          label: portfolioPage.bottomCta.label,
+          href: portfolioPage.bottomCta.href,
+        }}
+      />
+    </div>
+  </Section>
+</BaseLayout>

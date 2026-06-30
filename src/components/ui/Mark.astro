@@ -1,0 +1,32 @@
+---
+import { cn } from '@/lib/cn';
+
+type Variant = 'ember' | 'sand' | 'parchment' | 'rift-green';
+
+interface Props {
+  variant?: Variant;
+  class?: string;
+  decorative?: boolean;
+}
+
+const { variant = 'ember', class: className = '', decorative = false } = Astro.props;
+
+const srcMap: Record<Variant, string> = {
+  ember: '/assets/mark-ember.svg',
+  sand: '/assets/mark-sand.svg',
+  parchment: '/assets/mark-ember.svg',
+  'rift-green': '/assets/mark-riftgreen.svg',
+};
+
+const opacityClass =
+  variant === 'sand' ? 'opacity-20' : variant === 'parchment' ? 'opacity-15' : 'opacity-100';
+---
+
+<img
+  src={srcMap[variant]}
+  alt=""
+  aria-hidden={decorative ? 'true' : undefined}
+  class={cn('h-auto w-full max-w-[120px] object-contain', opacityClass, className)}
+  loading="lazy"
+  decoding="async"
+/>

@@ -1,0 +1,281 @@
+@import "tailwindcss";
+@import "./prose.css";
+
+/* --- Codec Pro @font-face ----------------------------------- */
+
+@font-face {
+  font-family: "Codec Pro";
+  src: url("/fonts/CodecPro-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Codec Pro";
+  src: url("/fonts/CodecPro-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Codec Pro";
+  src: url("/fonts/CodecPro-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Codec Pro";
+  src: url("/fonts/CodecPro-News.ttf") format("truetype");
+  font-weight: 350;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Codec Pro";
+  src: url("/fonts/CodecPro-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Codec Pro";
+  src: url("/fonts/CodecPro-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Codec Pro";
+  src: url("/fonts/CodecPro-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Codec Pro";
+  src: url("/fonts/CodecPro-Heavy.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Codec Pro";
+  src: url("/fonts/CodecPro-Fat.ttf") format("truetype");
+  font-weight: 950;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --- Vuka design tokens → Tailwind theme ------------------- */
+
+@theme {
+  /* Brand colours */
+  --color-ember: #c4581c;
+  --color-parchment: #f5efe6;
+  --color-vuka-black: #1a1008;
+  --color-surface-dark: #1a1008;
+  --color-baobab: #8b5a2b;
+  --color-sand: #d4c4a8;
+  --color-rift-green: #2a4a3a;
+  --color-ember-hover: #a8490f;
+
+  /* Typography */
+  --font-codec: "Codec Pro", sans-serif;
+  --font-weight-heavy: 900;
+
+  /* Golden-ratio type scale */
+  --text-display: clamp(3.5rem, 9vw, 7.6875rem);
+  --text-h2: clamp(2rem, 5vw, 4.75rem);
+  --text-h3: clamp(1.5rem, 3vw, 2.9375rem);
+  --text-h4: clamp(1.25rem, 2vw, 1.8125rem);
+
+  /* Fibonacci spacing (px) */
+  --spacing-vuka-xs: 3px;
+  --spacing-vuka-sm: 5px;
+  --spacing-vuka-md: 8px;
+  --spacing-vuka-lg: 13px;
+  --spacing-vuka-xl: 21px;
+  --spacing-vuka-2xl: 34px;
+  --spacing-vuka-3xl: 55px;
+  --spacing-vuka-4xl: 89px;
+  --spacing-vuka-5xl: 144px;
+
+  /* Shadows — warm-toned */
+  --shadow-vuka-sm: 0 1px 3px rgba(26, 16, 8, 0.08);
+  --shadow-vuka-md: 0 4px 12px rgba(26, 16, 8, 0.1);
+  --shadow-vuka-lg: 0 12px 32px rgba(26, 16, 8, 0.14);
+
+  /* Motion */
+  --ease-vuka-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --- Base styles ------------------------------------------- */
+
+@layer base {
+  html {
+    @apply scroll-smooth antialiased;
+  }
+
+  :root {
+    --color-vuka-black: #1a1008;
+    --color-surface-dark: #1a1008;
+  }
+
+  body {
+    @apply bg-parchment font-codec text-lg font-normal leading-relaxed text-vuka-black;
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    @apply bg-ember/20 text-vuka-black;
+  }
+
+  a {
+    @apply transition-colors duration-150;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ember;
+  }
+}
+
+/* --- Site chrome ------------------------------------------- */
+
+.site-footer {
+  background-color: #1a1008;
+}
+
+@utility bg-surface-dark {
+  background-color: #1a1008;
+}
+
+/* --- Utility aliases --------------------------------------- */
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility tracking-category {
+  letter-spacing: 0.18em;
+}
+
+@utility tracking-eyebrow {
+  letter-spacing: 0.12em;
+}
+
+@utility font-heavy {
+  font-weight: var(--font-weight-heavy);
+}
+
+@utility text-display {
+  font-size: var(--text-display);
+}
+
+@utility text-h2 {
+  font-size: var(--text-h2);
+}
+
+@utility text-h3 {
+  font-size: var(--text-h3);
+}
+
+@utility text-h4 {
+  font-size: var(--text-h4);
+}
+
+@utility text-accent {
+  color: var(--color-ember);
+}
+
+/* Interactive card surface */
+@utility vuka-card {
+  border: 1px solid var(--color-sand);
+  border-radius: 2px;
+  background: var(--color-parchment);
+  transition:
+    border-color 200ms var(--ease-vuka-out),
+    box-shadow 200ms var(--ease-vuka-out),
+    transform 200ms var(--ease-vuka-out);
+}
+
+@utility vuka-card-hover {
+  &:hover {
+    border-color: var(--color-baobab);
+    box-shadow: var(--shadow-vuka-md);
+    transform: translateY(-2px);
+  }
+}
+
+@utility vuka-card-dark {
+  border: 1px solid color-mix(in srgb, var(--color-baobab) 40%, transparent);
+  border-radius: 2px;
+  background: #1a1008;
+  transition:
+    border-color 200ms var(--ease-vuka-out),
+    box-shadow 200ms var(--ease-vuka-out),
+    transform 200ms var(--ease-vuka-out);
+}
+
+@utility vuka-card-dark-hover {
+  &:hover {
+    border-color: var(--color-ember);
+    box-shadow: var(--shadow-vuka-lg);
+    transform: translateY(-2px);
+  }
+}
+
+/* Icon well — consistent icon container */
+@utility icon-well {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 2px;
+  border: 1px solid var(--color-sand);
+  background: color-mix(in srgb, var(--color-parchment) 80%, var(--color-sand));
+}
+
+@utility icon-well-dark {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 2px;
+  border: 1px solid color-mix(in srgb, var(--color-baobab) 40%, transparent);
+  background: #1a1008;
+}
+
+/* Scroll reveal — progressive enhancement */
+@utility vuka-reveal {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition:
+    opacity 600ms var(--ease-vuka-out),
+    transform 600ms var(--ease-vuka-out);
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vuka-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

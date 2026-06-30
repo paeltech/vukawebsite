@@ -1,0 +1,45 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+
+interface Props {
+  copy: string;
+  placeholder: string;
+  cta: string;
+}
+
+const { copy, placeholder, cta } = Astro.props;
+---
+
+<div class="vuka-reveal vuka-card p-8 md:p-10">
+  <div class="grid grid-cols-1 gap-vuka-3xl lg:grid-cols-[1fr_auto] lg:items-end">
+    <div>
+      <SectionLabel text="Stay informed" class="mb-4" />
+      <p class="max-w-xl text-lg leading-relaxed whitespace-pre-line">{copy}</p>
+    </div>
+    <form class="flex w-full max-w-md flex-col gap-3 sm:flex-row lg:max-w-none lg:min-w-[360px]" id="thesis-subscribe">
+      <input
+        type="email"
+        required
+        placeholder={placeholder}
+        class="flex-1 border border-sand bg-parchment px-4 py-3 text-lg outline-none transition-colors focus:border-ember"
+      />
+      <Button type="submit" variant="primary">
+        {cta}
+        <Icon name="arrow-right" size={16} />
+      </Button>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.getElementById('thesis-subscribe')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = e.target?.querySelector('input[type="email"]');
+    if (!(input instanceof HTMLInputElement)) return;
+    const subject = encodeURIComponent('Notify me — Vuka thesis updates');
+    const body = encodeURIComponent(`Please notify me at: ${input.value}`);
+    window.location.href = `mailto:hello@vukaventures.co?subject=${subject}&body=${body}`;
+  });
+</script>

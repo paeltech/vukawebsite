@@ -1,0 +1,37 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+
+interface Props {
+  headline?: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+
+const {
+  headline = 'Want to build on this argument?',
+  primaryLabel = 'Work with us →',
+  primaryHref = '/work-with-us',
+  secondaryLabel,
+  secondaryHref,
+} = Astro.props;
+---
+
+<div class="vuka-reveal flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+  <p class="font-heavy text-h4 leading-snug">{headline}</p>
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+    <Button href={primaryHref} variant="primary" size="lg">
+      {primaryLabel}
+      <Icon name="arrow-right" size={18} />
+    </Button>
+    {
+      secondaryLabel && secondaryHref && (
+        <Button href={secondaryHref} variant="text">
+          {secondaryLabel}
+        </Button>
+      )
+    }
+  </div>
+</div>

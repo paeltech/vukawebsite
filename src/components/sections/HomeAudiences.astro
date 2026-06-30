@@ -1,0 +1,71 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import Tag from '@/components/ui/Tag.astro';
+
+interface AudienceItem {
+  tag: string;
+  headline: string;
+  body: string;
+  cta: { label: string; href: string };
+}
+
+interface Props {
+  headlineAccent: string;
+  headline: string;
+  intro: string;
+  sectionCta: { label: string; href: string };
+  cards: readonly AudienceItem[];
+}
+
+const { headlineAccent, headline, intro, sectionCta, cards } = Astro.props;
+---
+
+<div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16 xl:gap-20">
+  <div class="audiences-sidebar vuka-reveal flex flex-col gap-vuka-3xl lg:sticky lg:col-span-5 lg:self-start">
+    <div>
+      <h2 class="text-h2 font-heavy leading-[0.95] tracking-tight text-vuka-black">
+        <span class="text-accent">{headlineAccent}</span>
+        <br />
+        {headline}
+      </h2>
+      <p class="mt-vuka-2xl max-w-md text-lg leading-relaxed text-vuka-black">{intro}</p>
+    </div>
+    <Button href={sectionCta.href} variant="secondary" size="md" class="w-fit self-start">
+      {sectionCta.label}
+      <Icon name="arrow-right" size={16} />
+    </Button>
+  </div>
+
+  <div class="vuka-reveal flex flex-col gap-4 lg:col-span-7">
+    {
+      cards.map((card) => (
+        <article class="grid grid-cols-1 gap-4 border border-sand bg-parchment p-6 md:grid-cols-2 md:items-start md:gap-10 md:p-8">
+          <div>
+            <Tag label={card.tag} variant="programme" class="mb-4" />
+            <h3 class="font-bold text-xl leading-snug text-vuka-black md:text-2xl">{card.headline}</h3>
+          </div>
+          <div class="flex flex-col gap-vuka-lg">
+            <p class="text-lg leading-relaxed text-vuka-black">{card.body}</p>
+            <a
+              href={card.cta.href}
+              class="inline-flex w-fit items-center gap-2 font-normal text-baobab transition-colors hover:text-ember"
+            >
+              {card.cta.label}
+              <Icon name="arrow-right" size={16} />
+            </a>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  /* Header (68px + top padding) + section top padding — keeps headline offset when stuck */
+  @media (min-width: 1024px) {
+    .audiences-sidebar {
+      top: calc(68px + var(--spacing-vuka-2xl) + 6rem);
+    }
+  }
+</style>

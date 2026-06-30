@@ -1,0 +1,83 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/layout/Section.astro';
+import Button from '@/components/ui/Button.astro';
+import Divider from '@/components/ui/Divider.astro';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+import Tag from '@/components/ui/Tag.astro';
+import Wordmark from '@/components/ui/Wordmark.astro';
+---
+
+<BaseLayout title="Design system" description="Internal component reference for vuka." noindex>
+
+  <Section>
+    <Eyebrow text="Phase 1 · Component reference" class="mb-vuka-xl" />
+    <h1 class="font-extrabold text-4xl tracking-tight">Design system</h1>
+    <p class="mt-4 max-w-xl text-baobab">
+      Internal verification page — buttons, tags, sections, and layout primitives mapped to the
+      Vuka brand system.
+    </p>
+  </Section>
+
+  <Section variant="dark">
+    <SectionLabel text="Logo" inverted class="mb-6" />
+    <div class="flex flex-wrap items-center gap-10">
+      <div class="rounded-sm bg-parchment px-6 py-4">
+        <Wordmark />
+      </div>
+      <Wordmark variant="parchment" easterEgg />
+    </div>
+  </Section>
+
+  <Section>
+    <SectionLabel text="Buttons" class="mb-6" />
+    <div class="flex flex-wrap items-center gap-4">
+      <Button variant="primary">work with us</Button>
+      <Button variant="secondary">Learn more</Button>
+      <Button variant="ghost">Read more</Button>
+      <Button variant="inverse">Contact us</Button>
+      <Button variant="disabled" disabled>Closed</Button>
+      <Button variant="text">Read our thesis</Button>
+    </div>
+  </Section>
+
+  <Section variant="dark">
+    <SectionLabel text="Buttons on dark" inverted class="mb-6" />
+    <div class="flex flex-wrap items-center gap-4">
+      <Button variant="primary">work with us</Button>
+      <Button variant="secondary" class="border-parchment/25 text-parchment hover:border-parchment">
+        Learn more
+      </Button>
+    </div>
+  </Section>
+
+  <Section>
+    <SectionLabel text="Tags" class="mb-6" />
+    <div class="flex flex-wrap gap-3">
+      <Tag variant="sector" label="B2B Fintech" />
+      <Tag variant="climate" label="Climate & Energy" />
+      <Tag variant="programme" label="Founder-in-Residence" />
+      <Tag variant="status" label="In progress" />
+    </div>
+  </Section>
+
+  <Section variant="bold" fullWidth>
+    <div class="mx-auto max-w-[1200px] px-5 md:px-10">
+      <SectionLabel text="Bold section" inverted class="mb-4" />
+      <p class="max-w-lg text-xl leading-relaxed">
+        Whatever you're building toward — the conversation starts here.
+      </p>
+      <Button href="/work-with-us" variant="inverse" class="mt-8 bg-parchment text-vuka-black hover:bg-sand">
+        Work with us →
+      </Button>
+    </div>
+  </Section>
+
+  <Section>
+    <SectionLabel text="Dividers" class="mb-6" />
+    <Divider variant="ember" class="mb-6" />
+    <Divider variant="sand" class="mb-6" />
+    <Divider variant="subtle" />
+  </Section>
+</BaseLayout>

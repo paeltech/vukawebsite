@@ -1,0 +1,26 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import type { CtaLink } from '@/data/copy/types';
+
+interface Props {
+  cta: CtaLink;
+  /** @deprecated Both variants now use surface-dark; kept for call-site compatibility */
+  variant?: 'ember' | 'dark';
+}
+
+const { cta } = Astro.props;
+---
+
+<div class="vuka-reveal rounded-sm bg-surface-dark p-10 text-parchment md:p-14">
+  <div class="grid grid-cols-1 gap-vuka-3xl lg:grid-cols-[1fr_auto] lg:items-center">
+    <h2 class="font-heavy text-h3 leading-tight whitespace-pre-line">{cta.headline}</h2>
+    <div>
+      <Button href={cta.href} variant="primary" size="lg">
+        {cta.label}
+        <Icon name="arrow-right" size={18} />
+      </Button>
+      {cta.microcopy && <p class="mt-4 font-light text-sm text-sand">{cta.microcopy}</p>}
+    </div>
+  </div>
+</div>

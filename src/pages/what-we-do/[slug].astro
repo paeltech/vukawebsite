@@ -1,0 +1,82 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/layout/Section.astro';
+import ContentSection from '@/components/sections/ContentSection.astro';
+import FAQ from '@/components/sections/FAQ.astro';
+import PageCTA from '@/components/sections/PageCTA.astro';
+import PageHeader from '@/components/sections/PageHeader.astro';
+import ProcessSteps from '@/components/sections/ProcessSteps.astro';
+import TwoColumn from '@/components/sections/TwoColumn.astro';
+import { pathways, type PathwaySlug } from '@/data/copy/pathways';
+
+export function getStaticPaths() {
+  return (Object.keys(pathways) as PathwaySlug[]).map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params as { slug: PathwaySlug };
+const pathway = pathways[slug];
+
+if (!pathway) {
+  return Astro.redirect('/what-we-do');
+}
+
+const ctaHref = `/work-with-us?type=${encodeURIComponent(
+  slug === 'studio-origination'
+    ? 'origination'
+    : slug === 'founder-in-residence'
+      ? 'founder'
+      : slug === 'corporate-spinout'
+        ? 'corporate'
+        : 'government',
+)}`;
+---
+
+<BaseLayout title={pathway.eyebrow}>
+  <Section>
+    <PageHeader
+      eyebrow={pathway.eyebrow}
+      headline={pathway.headline}
+      subcopy={pathway.subcopy}
+      headlineSize="hero"
+    />
+  </Section>
+
+  <Section variant="dark">
+    <ContentSection label="The problem this pathway solves" icon="situation" inverted>
+      <p class="max-w-3xl text-xl leading-relaxed text-sand whitespace-pre-line">{pathway.problem}</p>
+    </ContentSection>
+  </Section>
+
+  <Section>
+    <ContentSection label="How it works" icon="process">
+      <ProcessSteps steps={pathway.steps} />
+    </ContentSection>
+  </Section>
+
+  <Section variant="dark">
+    <ContentSection label="What each side brings" icon="layers" inverted>
+      <TwoColumn youBring={pathway.youBring} weBring={pathway.weBring} />
+    </ContentSection>
+  </Section>
+
+  <Section>
+    <ContentSection label="Commercial terms" icon="investor">
+      <p class="max-w-3xl text-xl leading-relaxed whitespace-pre-line">{pathway.commercialTerms}</p>
+    </ContentSection>
+  </Section>
+
+  <Section variant="dark">
+    <ContentSection label="FAQ" icon="quote" inverted>
+      <FAQ items={pathway.faqs} />
+    </ContentSection>
+  </Section>
+
+  <Section>
+    <PageCTA
+      cta={{
+        ...pathway.cta,
+        href: ctaHref,
+      }}
+    />
+  </Section>
+</BaseLayout>

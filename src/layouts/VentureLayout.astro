@@ -1,0 +1,78 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/layout/Section.astro';
+import Button from '@/components/ui/Button.astro';
+import ContentSection from '@/components/sections/ContentSection.astro';
+import Icon from '@/components/ui/Icon.astro';
+import VentureHero from '@/components/sections/VentureHero.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'portfolio'>;
+}
+
+const { entry } = Astro.props;
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.summary}>
+  <Section>
+    <VentureHero entry={entry} />
+  </Section>
+
+  <Section>
+    <div class="grid grid-cols-1 gap-vuka-4xl lg:grid-cols-[minmax(0,42rem)_1fr]">
+      <div class="venture-prose vuka-reveal min-w-0">
+        <slot />
+      </div>
+      <aside class="hidden lg:block">
+        <div class="vuka-card sticky top-28 p-6">
+          <p class="mb-4 font-light text-[11px] uppercase tracking-category text-baobab">Venture</p>
+          <p class="mb-2 font-bold text-xl">{entry.data.title}</p>
+          <p class="text-lg leading-relaxed text-vuka-black">{entry.data.stage}</p>
+        </div>
+      </aside>
+    </div>
+  </Section>
+
+  <Section variant="dark">
+    <ContentSection label="Build with us" icon="founder" inverted>
+      <p class="mb-6 max-w-xl text-xl leading-relaxed text-sand">
+        Every venture in this portfolio was co-executed from inside the studio. If you are building
+        toward something similar — the conversation starts here.
+      </p>
+      <Button href="/work-with-us" variant="primary" size="lg">
+        Work with us
+        <Icon name="arrow-right" size={18} />
+      </Button>
+    </ContentSection>
+  </Section>
+
+  <Section>
+    <Button href="/portfolio" variant="text" class="vuka-reveal">
+      <Icon name="arrow-right" size={16} class="rotate-180" />
+      Back to portfolio
+    </Button>
+  </Section>
+</BaseLayout>
+
+<style>
+  .venture-prose :global(h2) {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--color-vuka-black);
+  }
+
+  .venture-prose :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .venture-prose :global(p) {
+    margin-bottom: 1.25rem;
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: var(--color-vuka-black);
+  }
+</style>

@@ -1,0 +1,43 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Mark from '@/components/ui/Mark.astro';
+import PageHeader from '@/components/sections/PageHeader.astro';
+import StatStrip from '@/components/sections/StatStrip.astro';
+import type { LinkCta } from '@/data/copy/types';
+
+interface Stat {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  headline: string;
+  subcopy?: string;
+  accent?: string;
+  accentRotate?: readonly string[];
+  primaryCta: LinkCta;
+  secondaryCta: LinkCta;
+  stats?: Stat[];
+}
+
+const { eyebrow, headline, subcopy, accent, accentRotate, primaryCta, secondaryCta, stats } =
+  Astro.props;
+---
+
+<div class="relative">
+  <div
+    class="pointer-events-none absolute -right-4 -top-8 hidden w-[min(280px,35vw)] lg:block xl:-right-8"
+    aria-hidden="true"
+  >
+    
+  </div>
+
+  <PageHeader {eyebrow} {headline} {subcopy} {accent} {accentRotate} headlineSize="hero">
+    <div class="mt-vuka-3xl flex flex-col gap-4 sm:flex-row sm:items-center">
+      <Button href={primaryCta.href} variant="primary" size="lg">{primaryCta.label}</Button>
+      <Button href={secondaryCta.href} variant="secondary" size="lg">{secondaryCta.label}</Button>
+    </div>
+    {stats && stats.length > 0 && <StatStrip {stats} />}
+  </PageHeader>
+</div>

@@ -1,0 +1,70 @@
+---
+interface Props {
+  tags: readonly string[];
+  targetId?: string;
+}
+
+const { tags, targetId = 'article-grid' } = Astro.props;
+---
+
+<div class="mb-vuka-2xl flex flex-wrap gap-2" data-filter-bar={targetId}>
+  {
+    tags.map((tag, index) => (
+      <button
+        type="button"
+        class:list={[
+          'rounded-sm px-4 py-2 font-light text-sm transition-colors',
+          index === 0
+            ? 'bg-surface-dark text-parchment'
+            : 'bg-sand text-baobab hover:bg-baobab/20',
+        ]}
+        data-filter={tag === 'All' ? 'all' : tag}
+        data-active={index === 0 ? 'true' : 'false'}
+      >
+        {tag}
+      </button>
+    ))
+  }
+</div>
+
+<script>
+  function initFilterBars() {
+    document.querySelectorAll('[data-filter-bar]').forEach((bar) => {
+      const targetId = bar.getAttribute('data-filter-bar');
+      if (!targetId) return;
+
+      const grid = document.getElementById(targetId);
+      if (!grid) return;
+
+      const buttons = bar.querySelectorAll<HTMLButtonElement>('button[data-filter]');
+      const items = grid.querySelectorAll<HTMLElement>('[data-tags]');
+
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const filter = button.dataset.filter ?? 'all';
+
+          buttons.forEach((btn) => {
+            const active = btn === button;
+            btn.dataset.active = String(active);
+            btn.classList.toggle('bg-surface-dark', active);
+            btn.classList.toggle('text-parchment', active);
+            btn.classList.toggle('bg-sand', !active);
+            btn.classList.toggle('text-baobab', !active);
+          });
+
+          items.forEach((item) => {
+            if (filter === 'all') {
+              item.hidden = false;
+              return;
+            }
+            const tags = (item.dataset.tags ?? '').split('|');
+            item.hidden = !tags.includes(filter);
+          });
+        });
+      });
+    });
+  }
+
+  initFilterBars();
+  document.addEventListener('astro:page-load', initFilterBars);
+</script>

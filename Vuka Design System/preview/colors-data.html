@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Colors" name="Data Palette" subtitle="Chart series hierarchy" viewport="700x180" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Codec Pro', sans-serif; background: #F5EFE6; padding: 32px; display: flex; align-items: flex-end; gap: 20px; height: 180px; }
+  .bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .bar { width: 64px; border-radius: 2px 2px 0 0; }
+  .s1 { height: 80px; background: #C4581C; }
+  .s2 { height: 58px; background: #8B5A2B; }
+  .s3 { height: 44px; background: #2A4A3A; }
+  .s4 { height: 28px; background: #D4C4A8; }
+  .info { display: flex; flex-direction: column; gap: 2px; }
+  .name { font-weight: 700; font-size: 12px; color: #1A1008; }
+  .label { font-weight: 300; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #8B5A2B; }
+  .spacer { flex: 1; }
+  .legend { display: flex; flex-direction: column; gap: 10px; justify-content: flex-end; padding-bottom: 4px; margin-left: 12px; }
+  .row { display: flex; align-items: center; gap: 8px; }
+  .dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+  .legend-text { font-weight: 300; font-size: 11px; color: #1A1008; letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+  <div class="bar-wrap"><div class="bar s1"></div></div>
+  <div class="bar-wrap"><div class="bar s2"></div></div>
+  <div class="bar-wrap"><div class="bar s3"></div></div>
+  <div class="bar-wrap"><div class="bar s4"></div></div>
+  <div class="spacer"></div>
+  <div class="legend">
+    <div class="row"><div class="dot" style="background:#C4581C"></div><div class="legend-text">Ember — primary series</div></div>
+    <div class="row"><div class="dot" style="background:#8B5A2B"></div><div class="legend-text">Baobab — secondary</div></div>
+    <div class="row"><div class="dot" style="background:#2A4A3A"></div><div class="legend-text">Rift Green — climate</div></div>
+    <div class="row"><div class="dot" style="background:#D4C4A8"></div><div class="legend-text">Sand — baseline</div></div>
+  </div>
+</body>
+</html>

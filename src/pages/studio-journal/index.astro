@@ -1,0 +1,55 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/layout/Section.astro';
+import ArticleCard from '@/components/sections/ArticleCard.astro';
+import ContentSection from '@/components/sections/ContentSection.astro';
+import EmptyState from '@/components/sections/EmptyState.astro';
+import FilterBar from '@/components/sections/FilterBar.astro';
+import PageHeader from '@/components/sections/PageHeader.astro';
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+import { journalPage } from '@/data/copy/thesis';
+import { journalTags } from '@/lib/tags';
+import { getJournalArticles } from '@/lib/articles';
+
+const articles = await getJournalArticles();
+const featured = articles[0];
+const rest = articles.slice(1);
+---
+
+<BaseLayout title="Studio journal">
+  <Section>
+    <PageHeader {...journalPage.header} headlineSize="hero" />
+  </Section>
+
+  {
+    articles.length === 0 ? (
+      <Section>
+        <EmptyState message={journalPage.emptyState} />
+      </Section>
+    ) : (
+      <>
+        {
+          featured && (
+            <Section variant="dark">
+              <SectionLabel text="Latest" inverted class="mb-vuka-3xl" />
+              <ArticleCard article={{ ...featured, featured: true }} basePath="/studio-journal" />
+            </Section>
+          )
+        }
+
+        <Section>
+          <ContentSection label="All entries" icon="process">
+            <FilterBar tags={journalTags} targetId="journal-grid" />
+            <div id="journal-grid" class="mt-vuka-3xl grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {(featured ? rest : articles).map((article) => (
+                <div data-tags={['All', ...article.siteTags].join('|')}>
+                  <ArticleCard article={article} basePath="/studio-journal" />
+                </div>
+              ))}
+            </div>
+          </ContentSection>
+        </Section>
+      </>
+    )
+  }
+</BaseLayout>

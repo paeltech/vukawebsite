@@ -1,0 +1,102 @@
+---
+import Container from '@/components/layout/Container.astro';
+import Divider from '@/components/ui/Divider.astro';
+import Wordmark from '@/components/ui/Wordmark.astro';
+import { footerLinks, siteConfig } from '@/config/site';
+---
+
+<footer class="site-footer text-parchment">
+  <Divider variant="ember" />
+
+  <Container class="py-vuka-3xl md:py-vuka-4xl">
+    <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+      <!-- Brand -->
+      <div class="lg:col-span-1">
+        <Wordmark variant="parchment" easterEgg class="mb-5" />
+        <p class="max-w-xs font-light text-lg leading-relaxed text-baobab">
+          A venture builder, co-building companies with bold founders,
+          governments, organisations, and partners
+        </p>
+      </div>
+
+      <!-- Studio links -->
+      <div>
+        <p class="mb-5 font-light text-[11px] uppercase tracking-category text-baobab">Studio</p>
+        <ul class="flex flex-col gap-3">
+          {
+            footerLinks.studio.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="font-light text-lg text-sand transition-colors hover:text-parchment"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Work with us links -->
+      <div>
+        <p class="mb-5 font-light text-[11px] uppercase tracking-category text-baobab">Work with us</p>
+        <ul class="flex flex-col gap-3">
+          {
+            footerLinks.workWithUs.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="font-light text-lg text-sand transition-colors hover:text-parchment"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <p class="mb-5 font-light text-[11px] uppercase tracking-category text-baobab">Contact</p>
+        <ul class="flex flex-col gap-3">
+          <li>
+            <a
+              href={`mailto:${siteConfig.email}`}
+              class="font-bold text-lg text-parchment transition-colors hover:text-sand"
+            >
+              {siteConfig.email}
+            </a>
+          </li>
+          <li>
+            <a
+              href={siteConfig.social.linkedin}
+              class="font-light text-lg text-sand transition-colors hover:text-parchment"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a
+              href={siteConfig.social.paul}
+              class="font-light text-lg text-sand transition-colors hover:text-parchment"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              paulmandele.co
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <Divider variant="subtle" class="my-10" />
+
+    <p class="font-light text-[11px] tracking-eyebrow text-baobab">
+      © 2026 Vuka Ventures · {siteConfig.location}
+    </p>
+  </Container>
+</footer>

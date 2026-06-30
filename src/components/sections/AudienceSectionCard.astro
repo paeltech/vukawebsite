@@ -1,0 +1,66 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import type { IconName } from '@/lib/icons';
+import { cn } from '@/lib/cn';
+
+interface Props {
+  label: string;
+  icon: IconName;
+  body: string;
+  headline?: string;
+  variant?: 'default' | 'dark' | 'accent';
+  index?: number;
+  class?: string;
+}
+
+const {
+  label,
+  icon,
+  body,
+  headline,
+  variant = 'default',
+  index,
+  class: className = '',
+} = Astro.props;
+
+const cardClass =
+  variant === 'dark'
+    ? 'vuka-card-dark'
+    : variant === 'accent'
+      ? 'vuka-card border-l-4 border-l-ember'
+      : 'vuka-card';
+
+const labelClass =
+  variant === 'dark' ? 'text-sand' : 'text-baobab';
+
+const headlineClass =
+  variant === 'dark' ? 'text-parchment' : 'text-vuka-black';
+
+const bodyClass =
+  variant === 'dark' ? 'text-sand' : 'text-vuka-black';
+
+const iconWellClass = variant === 'dark' ? 'icon-well-dark' : 'icon-well';
+---
+
+<article class={cn('vuka-reveal flex h-full flex-col p-8', cardClass, className)}>
+  <div class="mb-6 flex items-start justify-between gap-4">
+    <div class={iconWellClass}>
+      <Icon name={icon} class="text-ember" size={22} />
+    </div>
+    {
+      index !== undefined && (
+        <span class={cn('font-light text-[11px] tracking-category', labelClass)}>
+          {String(index).padStart(2, '0')}
+        </span>
+      )
+    }
+  </div>
+  <p class={cn('mb-4 font-light text-[11px] uppercase tracking-category', labelClass)}>{label}</p>
+  {
+    headline && (
+      <h2 class={cn('mb-4 font-bold text-h4 leading-snug', headlineClass)}>{headline}</h2>
+    )
+  }
+  <p class={cn('flex-1 text-lg leading-relaxed whitespace-pre-line', bodyClass)}>{body}</p>
+  <slot />
+</article>

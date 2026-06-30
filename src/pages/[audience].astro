@@ -1,0 +1,92 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/layout/Section.astro';
+import AudienceSectionCard from '@/components/sections/AudienceSectionCard.astro';
+import PageCTA from '@/components/sections/PageCTA.astro';
+import PageHeader from '@/components/sections/PageHeader.astro';
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { audiences, audienceSlugs } from '@/data/copy/audiences';
+
+export function getStaticPaths() {
+  return audienceSlugs.map((slug) => ({ params: { audience: slug } }));
+}
+
+const { audience } = Astro.params;
+const page = audiences[audience as string];
+
+if (!page) {
+  return Astro.redirect('/who-we-work-with');
+}
+
+const typeMap: Record<string, string> = {
+  founders: 'founder',
+  corporates: 'corporate',
+  government: 'government',
+  investors: 'investor',
+  partners: 'partner',
+};
+---
+
+<BaseLayout title={page.header.headline.split('\n')[0]}>
+  <Section class="relative overflow-hidden">
+    <PageHeader {...page.header} headlineSize="hero" />
+  </Section>
+
+  <Section variant="dark">
+    <AudienceSectionCard
+      label="Your situation"
+      icon="situation"
+      body={page.problem}
+      variant="dark"
+      index={1}
+    />
+  </Section>
+
+  <Section>
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <AudienceSectionCard label="What Vuka offers" icon="offer" body={page.offer} index={2} />
+      <AudienceSectionCard label="How it works" icon="process" body={page.howItWorks} index={3}>
+        {
+          page.pathways.length > 0 && (
+            <div class="mt-vuka-2xl flex flex-col gap-3 border-t border-sand pt-vuka-2xl">
+              <p class="font-light text-[11px] uppercase tracking-category text-baobab">Related pathways</p>
+              <div class="flex flex-col gap-3">
+                {page.pathways.map((pathway) => (
+                  <Button href={pathway.href} variant="secondary" class="justify-between">
+                    {pathway.label}
+                    <Icon name="arrow-right" size={16} />
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )
+        }
+      </AudienceSectionCard>
+    </div>
+  </Section>
+
+  <Section variant="dark">
+    <AudienceSectionCard label="Proof" icon="proof" body={page.proof} variant="dark" index={4} />
+  </Section>
+
+  <Section>
+    <AudienceSectionCard
+      label="A question we hear"
+      icon="quote"
+      headline={page.objection.question}
+      body={page.objection.answer}
+      variant="accent"
+      index={5}
+    />
+  </Section>
+
+  <Section>
+    <PageCTA
+      cta={{
+        ...page.cta,
+        href: `/work-with-us?type=${typeMap[page.slug] ?? ''}`,
+      }}
+    />
+  </Section>
+</BaseLayout>

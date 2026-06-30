@@ -1,0 +1,53 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import type { IconName } from '@/lib/icons';
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+
+interface Sector {
+  title: string;
+  body: string;
+}
+
+interface Props {
+  sectionLabel: string;
+  intro: string;
+  cards: Sector[];
+}
+
+const { sectionLabel, intro, cards } = Astro.props;
+
+const sectorIcons: IconName[] = ['sector-fintech', 'sector-ai', 'sector-climate', 'sector-gov'];
+const sectorAccents = [
+  'group-hover:border-ember',
+  'group-hover:border-ember',
+  'group-hover:border-rift-green',
+  'group-hover:border-ember',
+];
+---
+
+<div>
+  <SectionLabel text={sectionLabel} class="mb-4" />
+  <p class="vuka-reveal mb-vuka-3xl text-lg text-baobab">{intro}</p>
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+    {
+      cards.map((sector, index) => (
+        <article
+          class:list={[
+            'vuka-reveal vuka-card vuka-card-hover group flex flex-col p-8',
+            sectorAccents[index],
+          ]}
+        >
+          <div class="icon-well mb-6 group-hover:border-ember">
+            <Icon
+              name={sectorIcons[index] ?? 'sector-fintech'}
+              class={index === 2 ? 'text-rift-green' : 'text-ember'}
+              size={22}
+            />
+          </div>
+          <h3 class="mb-4 font-bold text-h4 leading-snug">{sector.title}</h3>
+          <p class="text-lg leading-relaxed text-vuka-black whitespace-pre-line">{sector.body}</p>
+        </article>
+      ))
+    }
+  </div>
+</div>

@@ -1,0 +1,43 @@
+---
+interface Stat {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  stats: Stat[];
+  inverted?: boolean;
+}
+
+const { stats, inverted = false } = Astro.props;
+---
+
+<div
+  class:list={[
+    'mt-vuka-4xl flex flex-wrap gap-vuka-3xl border-t pt-vuka-2xl md:gap-vuka-4xl md:pt-vuka-3xl',
+    inverted ? 'border-baobab/40' : 'border-sand',
+  ]}
+>
+  {
+    stats.map((stat) => (
+      <div>
+        <p
+          class:list={[
+            'font-extrabold text-h3 leading-none tracking-tight',
+            inverted ? 'text-parchment' : 'text-vuka-black',
+          ]}
+        >
+          {stat.value}
+        </p>
+        <p
+          class:list={[
+            'mt-2 font-light text-[11px] uppercase tracking-eyebrow',
+            inverted ? 'text-sand' : 'text-baobab',
+          ]}
+        >
+          {stat.label}
+        </p>
+      </div>
+    ))
+  }
+</div>

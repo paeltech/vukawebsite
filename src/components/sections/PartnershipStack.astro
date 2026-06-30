@@ -1,0 +1,43 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+import Tag from '@/components/ui/Tag.astro';
+
+interface Props {
+  sectionLabel: string;
+  headline: string;
+  body: string;
+  programs: string[];
+  statusNote: string;
+  cta: { label: string; href: string };
+}
+
+const { sectionLabel, headline, body, programs, statusNote, cta } = Astro.props;
+---
+
+<div class="vuka-reveal">
+  <SectionLabel text={sectionLabel} class="mb-4" />
+  <div class="mb-vuka-2xl flex items-start gap-5">
+    <div class="icon-well">
+      <Icon name="unlock" class="text-ember" size={22} />
+    </div>
+    <h2 class="max-w-xl font-heavy text-h2 leading-tight whitespace-pre-line">{headline}</h2>
+  </div>
+  <p class="mb-vuka-2xl max-w-2xl text-lg leading-relaxed text-vuka-black whitespace-pre-line">{body}</p>
+  <div class="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    {
+      programs.map((program) => (
+        <div class="vuka-card flex items-center gap-3 p-4">
+          <Icon name="layers" class="shrink-0 text-baobab" size={18} />
+          <span class="text-base text-vuka-black">{program}</span>
+        </div>
+      ))
+    }
+  </div>
+  <p class="mb-vuka-2xl font-light text-sm text-baobab">{statusNote}</p>
+  <Button href={cta.href} variant="primary" size="lg">
+    {cta.label}
+    <Icon name="arrow-right" size={18} />
+  </Button>
+</div>

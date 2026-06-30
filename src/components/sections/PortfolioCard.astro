@@ -1,0 +1,49 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import Tag from '@/components/ui/Tag.astro';
+import { pathwayLabels } from '@/data/copy/portfolio';
+import { portfolioSlug } from '@/lib/portfolio';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'portfolio'>;
+}
+
+const { entry } = Astro.props;
+const { title, summary, sector, sectorLabel, pathway, stage, logo, clientLogos } = entry.data;
+const href = `/portfolio/${portfolioSlug(entry)}`;
+---
+
+<a
+  href={href}
+  class="vuka-reveal vuka-card vuka-card-hover group flex h-full flex-col p-8 no-underline"
+>
+  <div class="mb-6 flex items-start justify-between gap-4">
+    <img
+      src={logo}
+      alt={`${title} logo`}
+      class="max-h-12 w-auto max-w-[180px] object-contain object-left"
+      width="180"
+      height="48"
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="icon-well opacity-0 transition-opacity group-hover:opacity-100">
+      <Icon name="arrow-right" class="text-ember" size={18} />
+    </div>
+  </div>
+
+  <div class="mb-4 flex flex-wrap gap-2">
+    <Tag variant="sector" label={sectorLabel ?? sector} />
+    <Tag variant="programme" label={pathwayLabels[pathway] ?? pathway} />
+  </div>
+
+  <p class="mb-2 font-light text-[11px] uppercase tracking-eyebrow text-baobab">{stage}</p>
+
+  <p class="mb-6 flex-1 text-lg leading-relaxed text-vuka-black whitespace-pre-line">{summary}</p>
+
+  <span class="inline-flex items-center gap-2 self-start font-normal text-baobab transition-colors group-hover:text-ember">
+    Read the full story
+    <Icon name="arrow-right" size={16} class="transition-transform group-hover:translate-x-1" />
+  </span>
+</a>

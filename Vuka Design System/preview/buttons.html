@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Buttons" subtitle="Primary · Secondary · Ghost · Inverse · Disabled" viewport="700x220" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Codec Pro', sans-serif; background: #F5EFE6; padding: 32px 36px; display: flex; flex-direction: column; gap: 20px; }
+  .section-label { font-weight: 300; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #8B5A2B; margin-bottom: 12px; }
+  .buttons-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+  .btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'Codec Pro', sans-serif; font-weight: 700; font-size: 14px; padding: 10px 22px; border-radius: 2px; border: none; cursor: pointer; text-decoration: none; transition: all 150ms ease; letter-spacing: 0.01em; }
+
+  .btn-primary  { background: #C4581C; color: #F5EFE6; }
+  .btn-secondary { background: transparent; color: #1A1008; border: 1.5px solid #8B5A2B; padding: 8.5px 20.5px; }
+  .btn-ghost    { background: transparent; color: #8B5A2B; }
+  .btn-inverse  { background: #1A1008; color: #F5EFE6; }
+  .btn-disabled { background: #D4C4A8; color: #8B5A2B; cursor: not-allowed; }
+
+  hr { border: none; border-top: 1px solid #D4C4A8; }
+
+  .dark-row { background: #3D2B0E; padding: 16px 20px; border-radius: 2px; display: flex; gap: 10px; align-items: center; }
+  .btn-primary-dark { background: #C4581C; color: #F5EFE6; }
+  .btn-ghost-dark   { background: transparent; color: #F5EFE6; border: 1.5px solid rgba(245,239,230,0.25); padding: 8.5px 20.5px; }
+</style>
+</head>
+<body>
+  <div>
+    <div class="section-label">Buttons — light surface</div>
+    <div class="buttons-row">
+      <button class="btn btn-primary">Apply now</button>
+      <button class="btn btn-secondary">Learn more</button>
+      <button class="btn btn-ghost">Read more</button>
+      <button class="btn btn-inverse">Contact us</button>
+      <button class="btn btn-disabled" disabled>Closed</button>
+    </div>
+  </div>
+  <hr>
+  <div>
+    <div class="section-label">Buttons — dark surface</div>
+    <div class="dark-row">
+      <button class="btn btn-primary-dark">Apply now</button>
+      <button class="btn btn-ghost-dark">Learn more</button>
+    </div>
+  </div>
+</body>
+</html>

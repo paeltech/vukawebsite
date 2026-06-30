@@ -1,0 +1,51 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/layout/Section.astro';
+import AudienceCard from '@/components/sections/AudienceCard.astro';
+import ContactForm from '@/components/sections/ContactForm.astro';
+import PageHeader from '@/components/sections/PageHeader.astro';
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+import { workWithUs } from '@/data/copy/work-with-us';
+
+const preselectedType = Astro.url.searchParams.get('type') ?? '';
+const routingIcons = ['founder', 'corporate', 'government', 'investor', 'partner'] as const;
+---
+
+<BaseLayout title="Work with us">
+  <Section>
+    <PageHeader {...workWithUs.header} headlineSize="hero" />
+  </Section>
+
+  <Section variant="dark">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        workWithUs.routingCards.map((card, index) => (
+          <AudienceCard
+            variant="dark"
+            headline={card.headline}
+            body={card.body}
+            cta={card.cta}
+            icon={routingIcons[index % routingIcons.length]}
+            index={index}
+          />
+        ))
+      }
+    </div>
+  </Section>
+
+  <Section>
+    <SectionLabel text={workWithUs.formHeader.headline} class="mb-4" />
+    <p class="vuka-reveal mb-vuka-3xl max-w-xl text-lg text-vuka-black whitespace-pre-line">
+      {workWithUs.formHeader.subcopy}
+    </p>
+    <div class="max-w-2xl">
+      <ContactForm preselectedType={preselectedType} />
+    </div>
+    <div class="vuka-reveal mt-vuka-3xl">
+      <p class="mb-2 font-light text-baobab">{workWithUs.directContact.label}</p>
+      <a href={`mailto:${workWithUs.directContact.email}`} class="font-bold text-xl text-ember hover:text-ember-hover">
+        {workWithUs.directContact.email}
+      </a>
+    </div>
+  </Section>
+</BaseLayout>

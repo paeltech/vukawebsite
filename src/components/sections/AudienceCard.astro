@@ -1,0 +1,62 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import type { IconName } from '@/lib/icons';
+
+interface Props {
+  headline: string;
+  body: string;
+  cta: { label: string; href: string };
+  icon?: IconName;
+  index?: number;
+  eyebrow?: string;
+  variant?: 'default' | 'dark';
+}
+
+const { headline, body, cta, icon = 'founder', index, eyebrow, variant = 'default' } = Astro.props;
+
+const cardClass =
+  variant === 'dark'
+    ? 'vuka-card-dark vuka-card-dark-hover'
+    : 'vuka-card vuka-card-hover';
+const iconWellClass = variant === 'dark' ? 'icon-well-dark' : 'icon-well';
+const eyebrowClass = variant === 'dark' ? 'text-sand' : 'text-baobab';
+const headlineClass =
+  variant === 'dark'
+    ? 'text-parchment group-hover:text-ember'
+    : 'text-vuka-black group-hover:text-ember';
+const bodyClass = variant === 'dark' ? 'text-sand' : 'text-vuka-black';
+const ctaClass =
+  variant === 'dark'
+    ? 'text-sand group-hover:text-ember'
+    : 'text-baobab group-hover:text-ember';
+---
+
+<a
+  href={cta.href}
+  class:list={['vuka-reveal group flex h-full flex-col p-8 no-underline', cardClass]}
+>
+  <div class="mb-6 flex items-start justify-between gap-4">
+    <div class:list={[iconWellClass, 'group-hover:border-ember']}>
+      <Icon name={icon} class="text-ember" size={22} />
+    </div>
+    {
+      index !== undefined && (
+        <span class="font-light text-[11px] tracking-category text-sand">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+      )
+    }
+  </div>
+  {eyebrow && (
+    <p class:list={['mb-2 font-light text-[11px] uppercase tracking-category', eyebrowClass]}>
+      {eyebrow}
+    </p>
+  )}
+  <h3 class:list={['mb-4 font-bold text-xl transition-colors', headlineClass]}>{headline}</h3>
+  <p class:list={['mb-6 flex-1 text-lg leading-relaxed whitespace-pre-line', bodyClass]}>{body}</p>
+  <span class:list={['inline-flex items-center gap-2 self-start font-normal transition-colors', ctaClass]}>
+    {cta.label}
+    <Icon name="arrow-right" size={16} class="transition-transform group-hover:translate-x-1" />
+  </span>
+</a>

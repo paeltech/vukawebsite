@@ -1,0 +1,47 @@
+---
+import { cn } from '@/lib/cn';
+
+interface ChildLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  label: string;
+  href: string;
+  items: readonly ChildLink[];
+  class?: string;
+}
+
+const { label, href, items, class: className = '' } = Astro.props;
+---
+
+<div class={cn('group relative hidden lg:block', className)}>
+  <a
+    href={href}
+    class="nav-link inline-flex items-center gap-1 font-light text-lg tracking-wide transition-colors"
+    aria-haspopup="true"
+  >
+    {label}
+    <span class="text-sm opacity-70" aria-hidden="true">▾</span>
+  </a>
+
+  <div
+    class="invisible absolute top-full left-0 z-50 min-w-[240px] pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
+    role="menu"
+  >
+    <div class="rounded-sm border border-baobab/40 bg-surface-dark py-2 shadow-vuka-lg">
+      {
+        items.map((child) => (
+          <a
+            href={child.href}
+            role="menuitem"
+            class="block px-5 py-2.5 font-light text-base text-sand transition-colors hover:bg-baobab/20 hover:text-parchment"
+          >
+            {child.label}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</div>

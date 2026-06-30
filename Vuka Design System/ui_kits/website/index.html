@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<!-- @dsCard group="UI Kit — Website" name="Vuka Website UI Kit" subtitle="Full scrollable marketing site — Nav · Hero · Portfolio · Programmes · CTA · Footer" viewport="1280x900" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>vuka. — Venture Studio</title>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+@font-face { font-family: 'Codec Pro'; src: url('../../fonts/CodecPro-Thin.ttf'); font-weight: 100; font-style: normal; }
+@font-face { font-family: 'Codec Pro'; src: url('../../fonts/CodecPro-ExtraLight.ttf'); font-weight: 200; font-style: normal; }
+@font-face { font-family: 'Codec Pro'; src: url('../../fonts/CodecPro-Light.ttf'); font-weight: 300; font-style: normal; }
+@font-face { font-family: 'Codec Pro'; src: url('../../fonts/CodecPro-Regular.ttf'); font-weight: 400; font-style: normal; }
+@font-face { font-family: 'Codec Pro'; src: url('../../fonts/CodecPro-Bold.ttf'); font-weight: 700; font-style: normal; }
+@font-face { font-family: 'Codec Pro'; src: url('../../fonts/CodecPro-ExtraBold.ttf'); font-weight: 800; font-style: normal; }
+@font-face { font-family: 'Codec Pro'; src: url('../../fonts/CodecPro-Heavy.ttf'); font-weight: 900; font-style: normal; }
+@font-face { font-family: 'Codec Pro'; src: url('../../fonts/CodecPro-Fat.ttf'); font-weight: 950; font-style: normal; }
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Codec Pro', sans-serif; background: #F5EFE6; color: #1A1008; -webkit-font-smoothing: antialiased; }
+a { cursor: pointer; }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel" src="components/SectorTag.jsx"></script>
+<script type="text/babel" src="components/Header.jsx"></script>
+<script type="text/babel" src="components/Hero.jsx"></script>
+<script type="text/babel" src="components/PortfolioCard.jsx"></script>
+<script type="text/babel" src="components/Footer.jsx"></script>
+
+<script type="text/babel">
+/* ── Studio Model Section ──────────────────────────────────── */
+const StudioModel = () => {
+  const pillars = [
+    {
+      num: '01',
+      title: 'Patient capital',
+      body: 'We bring long-horizon investment that matches the reality of building in East Africa — not 18-month venture cycles designed for a different market.',
+    },
+    {
+      num: '02',
+      title: 'Co-building',
+      body: 'We sit inside companies at the earliest stage. Product, hiring, go-to-market — we build alongside founders, not from a board seat.',
+    },
+    {
+      num: '03',
+      title: 'Infrastructure removal',
+      body: 'Regulatory, financial, technical — we identify the structural barriers that slow every founder in the region and we dismantle them systematically.',
+    },
+  ];
+
+  return (
+    <section style={{ background: '#F5EFE6', padding: '96px 0', borderTop: '1px solid #D4C4A8' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
+        <div style={{
+          fontFamily: 'Codec Pro, sans-serif', fontWeight: 300,
+          fontSize: '11px', letterSpacing: '0.22em', textTransform: 'uppercase',
+          color: '#8B5A2B', marginBottom: '14px',
+        }}>
+          How we build
+        </div>
+        <h2 style={{
+          fontFamily: 'Codec Pro, sans-serif', fontWeight: 800,
+          fontSize: '47px', letterSpacing: '-0.03em', color: '#1A1008',
+          lineHeight: 1.05, marginBottom: '64px', maxWidth: '560px',
+        }}>
+          The studio model,<br />applied to East Africa.
+        </h2>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0' }}>
+          {pillars.map((p, i) => (
+            <div key={p.num} style={{
+              padding: '40px 40px 40px 0',
+              borderRight: i < pillars.length - 1 ? '1px solid #D4C4A8' : 'none',
+              paddingLeft: i > 0 ? '40px' : '0',
+            }}>
+              <div style={{
+                fontFamily: 'Codec Pro, sans-serif', fontWeight: 300,
+                fontSize: '11px', letterSpacing: '0.18em', color: '#C4581C',
+                marginBottom: '20px',
+              }}>
+                {p.num}
+              </div>
+              <div style={{
+                fontFamily: 'Codec Pro, sans-serif', fontWeight: 700,
+                fontSize: '29px', letterSpacing: '-0.02em', color: '#1A1008',
+                marginBottom: '16px', lineHeight: 1.2,
+              }}>
+                {p.title}
+              </div>
+              <div style={{
+                fontFamily: 'Codec Pro, sans-serif', fontWeight: 400,
+                fontSize: '18px', lineHeight: 1.7, color: '#3D2B0E',
+              }}>
+                {p.body}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ── Prestige / CTA Section ────────────────────────────────── */
+const PrestigeCTA = () => (
+  <section style={{ background: '#3D2B0E', padding: '120px 0' }}>
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
+      <div style={{
+        fontFamily: 'Codec Pro, sans-serif', fontWeight: 300,
+        fontSize: '11px', letterSpacing: '0.22em', textTransform: 'uppercase',
+        color: '#8B5A2B', marginBottom: '32px',
+      }}>
+        Cohort 05 · Now open
+      </div>
+      <h2 style={{
+        fontFamily: 'Codec Pro, sans-serif', fontWeight: 800,
+        fontSize: '76px', letterSpacing: '-0.03em',
+        color: '#F5EFE6', lineHeight: 1.05,
+        maxWidth: '720px', marginBottom: '28px',
+      }}>
+        The infrastructure was never supposed to be the barrier.
+        <span style={{ color: '#C4581C' }}> We remove it.</span>
+      </h2>
+      <p style={{
+        fontFamily: 'Codec Pro, sans-serif', fontWeight: 400,
+        fontSize: '18px', lineHeight: 1.7, color: '#D4C4A8',
+        maxWidth: '480px', marginBottom: '52px',
+      }}>
+        Applications for Cohort 05 are open. We work with founders
+        building technology companies across East Africa — at the
+        earliest possible stage.
+      </p>
+      <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+        <a href="#" style={{
+          fontFamily: 'Codec Pro, sans-serif', fontWeight: 700,
+          fontSize: '18px', letterSpacing: '0.02em',
+          background: '#C4581C', color: '#F5EFE6',
+          padding: '14px 32px', borderRadius: '2px',
+          textDecoration: 'none',
+          transition: 'background 150ms ease',
+        }}
+          onMouseEnter={e => e.currentTarget.style.background = '#a8490f'}
+          onMouseLeave={e => e.currentTarget.style.background = '#C4581C'}
+        >
+          Apply to Cohort 05
+        </a>
+        <a href="#" style={{
+          fontFamily: 'Codec Pro, sans-serif', fontWeight: 400,
+          fontSize: '18px', color: '#D4C4A8', textDecoration: 'none',
+          borderBottom: '1px solid rgba(212,196,168,0.3)', paddingBottom: '2px',
+        }}>
+          What to expect →
+        </a>
+      </div>
+    </div>
+  </section>
+);
+
+/* ── Programmes Strip ───────────────────────────────────────── */
+const ProgrammesStrip = () => {
+  const programmes = [
+    { badge: 'Studio Build', title: 'Zero to one', desc: 'For founders at concept or early MVP stage. We co-build for 12 months.' },
+    { badge: 'Growth', title: 'Scaling infrastructure', desc: 'For companies with product-market fit, ready to scale across borders.' },
+    { badge: 'DFI Connect', title: 'Patient capital', desc: 'Structured blended finance pathways for climate and frontier sectors.' },
+  ];
+
+  const badgeStyle = {
+    display: 'inline-flex', alignItems: 'center',
+    fontFamily: 'Codec Pro, sans-serif', fontWeight: 300,
+    fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase',
+    background: '#1A1008', color: '#F5EFE6',
+    padding: '4px 10px', borderRadius: '2px',
+  };
+
+  return (
+    <section style={{ background: '#F5EFE6', padding: '96px 0', borderTop: '1px solid #D4C4A8' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
+        <div style={{
+          fontFamily: 'Codec Pro, sans-serif', fontWeight: 300,
+          fontSize: '11px', letterSpacing: '0.22em', textTransform: 'uppercase',
+          color: '#8B5A2B', marginBottom: '14px',
+        }}>
+          Programmes
+        </div>
+        <h2 style={{
+          fontFamily: 'Codec Pro, sans-serif', fontWeight: 800,
+          fontSize: '47px', letterSpacing: '-0.03em', color: '#1A1008',
+          lineHeight: 1.05, marginBottom: '52px',
+        }}>
+          Built for where<br />you actually are.
+        </h2>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+          {programmes.map(p => (
+            <div key={p.badge} style={{
+              background: '#F5EFE6', border: '1px solid #D4C4A8', borderRadius: '2px',
+              padding: '28px', display: 'flex', flexDirection: 'column', gap: '16px',
+              transition: 'border-color 200ms ease',
+              cursor: 'pointer',
+            }}
+              onMouseEnter={e => e.currentTarget.style.borderColor = '#8B5A2B'}
+              onMouseLeave={e => e.currentTarget.style.borderColor = '#D4C4A8'}
+            >
+              <span style={badgeStyle}>{p.badge}</span>
+              <div style={{
+                fontFamily: 'Codec Pro, sans-serif', fontWeight: 800,
+                fontSize: '29px', letterSpacing: '-0.02em', color: '#1A1008', lineHeight: 1.15,
+              }}>
+                {p.title}
+              </div>
+              <div style={{
+                fontFamily: 'Codec Pro, sans-serif', fontWeight: 400,
+                fontSize: '18px', lineHeight: 1.65, color: '#3D2B0E',
+              }}>
+                {p.desc}
+              </div>
+              <a href="#" style={{
+                fontFamily: 'Codec Pro, sans-serif', fontWeight: 300,
+                fontSize: '11px', letterSpacing: '0.08em', color: '#C4581C',
+                textDecoration: 'none', marginTop: 'auto',
+              }}>
+                Learn more →
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ── App Root ───────────────────────────────────────────────── */
+const App = () => (
+  <React.Fragment>
+    <Header />
+    <main>
+      <Hero />
+      <StudioModel />
+      <PortfolioGrid />
+      <ProgrammesStrip />
+      <PrestigeCTA />
+    </main>
+    <Footer />
+  </React.Fragment>
+);
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+</body>
+</html>

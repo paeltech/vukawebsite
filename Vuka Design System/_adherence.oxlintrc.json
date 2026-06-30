@@ -1,0 +1,230 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "ui_kits/website/components/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Codec Pro))/i]",
+        "message": "Font not provided by the design system. Available: Codec Pro."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {},
+    "tokens": [
+      "--accent",
+      "--accent-secondary",
+      "--accent-tertiary",
+      "--badge-programme-bg",
+      "--badge-programme-fg",
+      "--baobab",
+      "--bg",
+      "--bg-bold",
+      "--bg-dark",
+      "--border",
+      "--border-strong",
+      "--data-1",
+      "--data-2",
+      "--data-3",
+      "--data-4",
+      "--deep-soil",
+      "--disabled-bg",
+      "--disabled-fg",
+      "--duration-base",
+      "--duration-fast",
+      "--duration-slow",
+      "--ease-in",
+      "--ease-out",
+      "--ember",
+      "--fg",
+      "--fg-inverse",
+      "--fg-muted",
+      "--fg-subtle",
+      "--font",
+      "--leading-loose",
+      "--leading-none",
+      "--leading-normal",
+      "--leading-relaxed",
+      "--leading-snug",
+      "--leading-tight",
+      "--parchment",
+      "--radius-lg",
+      "--radius-md",
+      "--radius-none",
+      "--radius-pill",
+      "--radius-sm",
+      "--rift-green",
+      "--sand",
+      "--shadow-lg",
+      "--shadow-md",
+      "--shadow-sm",
+      "--space-2xl",
+      "--space-3xl",
+      "--space-4xl",
+      "--space-5xl",
+      "--space-lg",
+      "--space-md",
+      "--space-sm",
+      "--space-xl",
+      "--space-xs",
+      "--status-bg",
+      "--status-fg",
+      "--tag-climate-bg",
+      "--tag-climate-fg",
+      "--tag-sector-bg",
+      "--tag-sector-fg",
+      "--text-body",
+      "--text-display",
+      "--text-h2",
+      "--text-h3",
+      "--text-h4",
+      "--text-label",
+      "--tracking-normal",
+      "--tracking-snug",
+      "--tracking-tight",
+      "--tracking-wide",
+      "--tracking-wider",
+      "--tracking-widest",
+      "--vuka-black",
+      "--weight-bold",
+      "--weight-extrabold",
+      "--weight-extralight",
+      "--weight-fat",
+      "--weight-heavy",
+      "--weight-light",
+      "--weight-news",
+      "--weight-regular",
+      "--weight-thin",
+      "--weight-ultrablack"
+    ],
+    "tokenKinds": {
+      "--ember": "color",
+      "--parchment": "color",
+      "--vuka-black": "color",
+      "--deep-soil": "color",
+      "--baobab": "color",
+      "--sand": "color",
+      "--rift-green": "color",
+      "--bg": "color",
+      "--bg-dark": "color",
+      "--bg-bold": "color",
+      "--fg": "color",
+      "--fg-muted": "color",
+      "--fg-subtle": "color",
+      "--fg-inverse": "color",
+      "--accent": "color",
+      "--accent-secondary": "color",
+      "--accent-tertiary": "color",
+      "--border": "color",
+      "--border-strong": "color",
+      "--disabled-bg": "color",
+      "--disabled-fg": "color",
+      "--data-1": "color",
+      "--data-2": "color",
+      "--data-3": "color",
+      "--data-4": "color",
+      "--tag-sector-bg": "color",
+      "--tag-sector-fg": "color",
+      "--tag-climate-bg": "color",
+      "--tag-climate-fg": "color",
+      "--badge-programme-bg": "color",
+      "--badge-programme-fg": "color",
+      "--status-bg": "color",
+      "--status-fg": "color",
+      "--font": "font",
+      "--weight-thin": "font",
+      "--weight-extralight": "font",
+      "--weight-light": "font",
+      "--weight-news": "font",
+      "--weight-regular": "font",
+      "--weight-bold": "font",
+      "--weight-extrabold": "font",
+      "--weight-heavy": "font",
+      "--weight-fat": "font",
+      "--weight-ultrablack": "font",
+      "--text-label": "font",
+      "--text-body": "font",
+      "--text-h4": "font",
+      "--text-h3": "font",
+      "--text-h2": "font",
+      "--text-display": "font",
+      "--tracking-tight": "font",
+      "--tracking-snug": "font",
+      "--tracking-normal": "font",
+      "--tracking-wide": "font",
+      "--tracking-wider": "font",
+      "--tracking-widest": "font",
+      "--leading-none": "font",
+      "--leading-tight": "font",
+      "--leading-snug": "font",
+      "--leading-normal": "font",
+      "--leading-relaxed": "font",
+      "--leading-loose": "font",
+      "--space-xs": "spacing",
+      "--space-sm": "spacing",
+      "--space-md": "spacing",
+      "--space-lg": "spacing",
+      "--space-xl": "spacing",
+      "--space-2xl": "spacing",
+      "--space-3xl": "spacing",
+      "--space-4xl": "spacing",
+      "--space-5xl": "spacing",
+      "--radius-none": "radius",
+      "--radius-sm": "radius",
+      "--radius-md": "radius",
+      "--radius-lg": "radius",
+      "--radius-pill": "radius",
+      "--shadow-sm": "shadow",
+      "--shadow-md": "shadow",
+      "--shadow-lg": "shadow",
+      "--ease-out": "other",
+      "--ease-in": "other",
+      "--duration-fast": "other",
+      "--duration-base": "other",
+      "--duration-slow": "other"
+    },
+    "fontFamilies": [
+      "Codec Pro"
+    ]
+  }
+}

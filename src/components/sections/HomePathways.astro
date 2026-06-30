@@ -1,0 +1,120 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import Tag from '@/components/ui/Tag.astro';
+
+interface PathwayItem {
+  tag: string;
+  title: string;
+  body: string;
+  cta: { label: string; href: string };
+}
+
+interface Props {
+  headlineAccent: string;
+  headline: string;
+  statement: string;
+  statementAccent: string;
+  intro: string;
+  sectionCta?: { label: string; href: string };
+  portfolioCta?: { label: string; href: string };
+  cards: readonly PathwayItem[];
+}
+
+const { headlineAccent, headline, statement, statementAccent, intro, sectionCta, portfolioCta, cards } =
+  Astro.props;
+
+const hasSidebarCtas = sectionCta || portfolioCta;
+---
+
+<div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16 xl:gap-20">
+  <div class="vuka-reveal relative lg:order-1 lg:col-span-7">
+    <div
+      class="pointer-events-none absolute bottom-0 left-7 top-0 hidden w-px bg-ember/30 lg:block"
+      aria-hidden="true"
+    >
+    </div>
+    <ol class="flex flex-col gap-4">
+      {
+        cards.map((card, index) => (
+          <li>
+            <article class="grid grid-cols-1 gap-4 border border-sand bg-parchment p-6 sm:grid-cols-[4.5rem_1fr] sm:items-start sm:gap-6 md:p-8">
+              <span
+                class="pathway-index font-bold tabular-nums leading-none text-ember"
+                aria-hidden="true"
+              >
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <div class="min-w-0">
+                <Tag label={card.tag} variant="vuka-dark" class="mb-3" />
+                <h3 class="mb-3 font-bold text-xl leading-snug text-vuka-black">{card.title}</h3>
+                <p class="mb-4 text-lg leading-relaxed text-vuka-black">{card.body}</p>
+                <a
+                  href={card.cta.href}
+                  class="inline-flex w-fit items-center gap-2 font-bold text-ember transition-colors hover:text-ember-hover"
+                >
+                  {card.cta.label}
+                  <Icon name="arrow-right" size={16} />
+                </a>
+              </div>
+            </article>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+
+  <div class="pathways-sidebar vuka-reveal flex flex-col gap-vuka-3xl lg:order-2 lg:col-span-5 lg:self-start">
+    <div>
+      <h2 class="text-h2 font-heavy leading-[0.95] tracking-tight text-vuka-black">
+        <span class="text-accent">{headlineAccent}</span>
+        <br />
+        {headline}
+      </h2>
+      <p class="pathways-statement mt-vuka-2xl text-balance font-heavy leading-none tracking-tight text-vuka-black">
+        {statement}
+        <span class="text-accent">{statementAccent}</span>
+      </p>
+      <p class="mt-vuka-xl max-w-md text-lg leading-relaxed text-vuka-black">{intro}</p>
+    </div>
+    {
+      hasSidebarCtas && (
+        <div class="flex flex-col gap-4">
+          {
+            sectionCta && (
+              <Button href={sectionCta.href} variant="primary" size="md" class="w-fit self-start">
+                {sectionCta.label}
+                <Icon name="arrow-right" size={16} />
+              </Button>
+            )
+          }
+          {
+            portfolioCta && (
+              <Button href={portfolioCta.href} variant="primary" size="md" class="w-fit self-start">
+                {portfolioCta.label}
+                <Icon name="arrow-right" size={16} />
+              </Button>
+            )
+          }
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .pathways-statement {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+  }
+
+  .pathway-index {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  @media (min-width: 1024px) {
+    .pathways-sidebar {
+      position: sticky;
+      top: calc(68px + var(--spacing-vuka-2xl) + 6rem);
+    }
+  }
+</style>

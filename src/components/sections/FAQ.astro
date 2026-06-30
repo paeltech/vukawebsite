@@ -1,0 +1,37 @@
+---
+import type { FaqItem } from '@/data/copy/types';
+
+interface Props {
+  items: FaqItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="vuka-reveal divide-y divide-sand overflow-hidden border border-sand rounded-sm bg-parchment">
+  {
+    items.map((item, index) => (
+      <details class="group p-6 transition-colors open:bg-parchment/80 md:p-8">
+        <summary class="cursor-pointer list-none font-bold text-lg marker:content-none [&::-webkit-details-marker]:hidden">
+          <span class="flex items-start justify-between gap-4">
+            <span class="flex items-start gap-4">
+              <span class="mt-0.5 font-light text-sm text-baobab">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              {item.question}
+            </span>
+            <span
+              class="flex h-8 w-8 shrink-0 items-center justify-center border border-sand text-ember transition-all group-open:rotate-45 group-open:border-ember group-open:bg-ember group-open:text-parchment"
+              aria-hidden="true"
+            >
+              +
+            </span>
+          </span>
+        </summary>
+        <p class="mt-4 pl-10 text-lg leading-relaxed text-vuka-black whitespace-pre-line">
+          {item.answer}
+        </p>
+      </details>
+    ))
+  }
+</div>

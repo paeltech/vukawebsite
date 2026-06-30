@@ -1,0 +1,33 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/layout/Section.astro';
+import Hero from '@/components/sections/Hero.astro';
+import ProblemCards from '@/components/sections/ProblemCards.astro';
+import HomeAudiences from '@/components/sections/HomeAudiences.astro';
+import HomePathways from '@/components/sections/HomePathways.astro';
+import TeamCallout from '@/components/sections/TeamCallout.astro';
+import { homeHero, homeWhy, homeAudiences, homePathways } from '@/data/copy/home';
+import { teamCallout } from '@/data/copy/join-team';
+---
+
+<BaseLayout>
+  <Section class="flex min-h-dvh items-center">
+    <Hero {...homeHero} />
+  </Section>
+
+  <Section variant="sand">
+    <ProblemCards {...homeWhy} />
+  </Section>
+
+  <Section>
+    <HomeAudiences {...homeAudiences} />
+  </Section>
+
+  <Section variant="sand">
+    <HomePathways {...homePathways} />
+  </Section>
+
+  <Section variant="parchment">
+    <TeamCallout {...teamCallout} />
+  </Section>
+</BaseLayout>

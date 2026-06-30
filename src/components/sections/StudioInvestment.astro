@@ -1,0 +1,35 @@
+---
+import Button from '@/components/ui/Button.astro';
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+import Icon from '@/components/ui/Icon.astro';
+
+interface Props {
+  sectionLabel: string;
+  headline: string;
+  body: string;
+  stat: { value: string; caption: string };
+  cta: { label: string; href: string };
+}
+
+const { sectionLabel, headline, body, stat, cta } = Astro.props;
+---
+
+<div class="vuka-reveal">
+  <SectionLabel text={sectionLabel} inverted class="mb-4" />
+  <h2 class="mb-vuka-2xl max-w-2xl font-heavy text-h2 leading-tight text-parchment whitespace-pre-line">
+    {headline}
+  </h2>
+  <div class="grid grid-cols-1 gap-vuka-3xl lg:grid-cols-[1fr_auto] lg:items-start">
+    <p class="max-w-2xl text-lg leading-relaxed text-sand whitespace-pre-line">{body}</p>
+    <div class="border border-baobab/30 border-l-4 border-l-ember px-8 py-6 lg:min-w-[280px]">
+      <p class="font-heavy text-display leading-none text-ember">{stat.value}</p>
+      <p class="mt-4 max-w-xs font-light text-base leading-relaxed text-sand whitespace-pre-line">
+        {stat.caption}
+      </p>
+    </div>
+  </div>
+  <Button href={cta.href} variant="primary" size="lg" class="mt-vuka-3xl">
+    {cta.label}
+    <Icon name="arrow-right" size={18} />
+  </Button>
+</div>

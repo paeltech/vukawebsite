@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Tags & Badges" subtitle="Sector · Climate · Programme · Status" viewport="700x260" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Codec Pro', sans-serif; background: #F5EFE6; color: #1A1008; padding: 28px 36px; }
+
+  .section { margin-bottom: 20px; }
+  .section-label { font-weight: 300; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #8B5A2B; margin-bottom: 10px; }
+
+  .tags-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+  .tag {
+    display: inline-flex; align-items: center;
+    font-weight: 300; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 2px;
+  }
+  .badge {
+    display: inline-flex; align-items: center;
+    font-weight: 300; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 2px;
+  }
+
+  .tag-sector   { background: #C4581C; color: #F5EFE6; }
+  .tag-climate  { background: #2A4A3A; color: #D4C4A8; }
+  .tag-status   { background: #D4C4A8; color: #8B5A2B; }
+  .badge-prog   { background: #1A1008; color: #F5EFE6; }
+
+  .divider { border: none; border-top: 1px solid #D4C4A8; margin: 16px 0; }
+</style>
+</head>
+<body>
+  <div class="section">
+    <div class="section-label">Sector tags</div>
+    <div class="tags-row">
+      <span class="tag tag-sector">Fintech</span>
+      <span class="tag tag-sector">Agritech</span>
+      <span class="tag tag-sector">Healthtech</span>
+      <span class="tag tag-sector">Logistics</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">Climate &amp; energy tags</div>
+    <div class="tags-row">
+      <span class="tag tag-climate">Climate</span>
+      <span class="tag tag-climate">Clean Energy</span>
+      <span class="tag tag-climate">Carbon</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">Programme badges &amp; status</div>
+    <div class="tags-row">
+      <span class="badge badge-prog">Cohort 04</span>
+      <span class="badge badge-prog">Portfolio</span>
+      <span class="badge badge-prog">Studio Build</span>
+      <span class="tag tag-status">Active</span>
+      <span class="tag tag-status">Fundraising</span>
+    </div>
+  </div>
+</body>
+</html>

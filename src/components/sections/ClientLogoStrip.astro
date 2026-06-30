@@ -1,0 +1,34 @@
+---
+interface ClientLogo {
+  name: string;
+  src: string;
+}
+
+interface Props {
+  logos: ClientLogo[];
+  inverted?: boolean;
+}
+
+const { logos, inverted = false } = Astro.props;
+---
+
+<ul class="flex flex-wrap items-center gap-8 md:gap-12">
+  {
+    logos.map((logo) => (
+      <li>
+        <img
+          src={logo.src}
+          alt={logo.name}
+          class:list={[
+            'h-8 w-auto max-w-[120px] object-contain object-left opacity-80 transition-opacity hover:opacity-100 md:h-10 md:max-w-[140px]',
+            !inverted && 'grayscale hover:grayscale-0',
+          ]}
+          width="140"
+          height="40"
+          loading="lazy"
+          decoding="async"
+        />
+      </li>
+    ))
+  }
+</ul>

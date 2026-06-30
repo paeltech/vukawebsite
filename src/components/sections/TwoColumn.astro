@@ -1,0 +1,49 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+
+interface Props {
+  youBring: string[];
+  weBring: string[];
+}
+
+const { youBring, weBring } = Astro.props;
+---
+
+<div class="vuka-reveal grid grid-cols-1 gap-6 md:grid-cols-2">
+  <div class="vuka-card p-8">
+    <div class="mb-6 flex items-center gap-4">
+      <div class="icon-well">
+        <Icon name="founder" class="text-ember" size={20} />
+      </div>
+      <h3 class="font-bold text-xl">You bring</h3>
+    </div>
+    <ul class="space-y-4">
+      {
+        youBring.map((item) => (
+          <li class="flex gap-3 text-lg leading-relaxed text-vuka-black">
+            <Icon name="proof" class="mt-1 shrink-0 text-ember" size={18} />
+            <span class="whitespace-pre-line">{item}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <div class="vuka-card border-l-4 border-l-ember p-8">
+    <div class="mb-6 flex items-center gap-4">
+      <div class="icon-well">
+        <Icon name="layers" class="text-ember" size={20} />
+      </div>
+      <h3 class="font-bold text-xl">We bring</h3>
+    </div>
+    <ul class="space-y-4">
+      {
+        weBring.map((item) => (
+          <li class="flex gap-3 text-lg leading-relaxed text-vuka-black">
+            <Icon name="proof" class="mt-1 shrink-0 text-ember" size={18} />
+            <span class="whitespace-pre-line">{item}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>

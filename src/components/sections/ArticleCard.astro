@@ -1,0 +1,75 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import Tag from '@/components/ui/Tag.astro';
+
+export interface ArticleCardData {
+  slug: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  tag: string;
+  href: string;
+  featured?: boolean;
+  comingSoon?: boolean;
+}
+
+interface Props {
+  article: ArticleCardData;
+  basePath: string;
+}
+
+const { article, basePath } = Astro.props;
+const href = article.comingSoon ? '#' : article.href || `${basePath}/${article.slug}`;
+---
+
+<article
+  class:list={[
+    'vuka-reveal group flex h-full flex-col p-8 rounded-sm transition-all duration-200',
+    article.featured
+      ? 'border-2 border-ember bg-surface-dark text-parchment shadow-vuka-lg'
+      : 'vuka-card vuka-card-hover',
+  ]}
+>
+  {
+    article.featured && (
+      <p class="mb-3 font-light text-[11px] uppercase tracking-category text-ember">Featured</p>
+    )
+  }
+  <Tag
+    variant={article.featured ? 'sector' : 'status'}
+    label={`${article.tag} · ${article.date}`}
+    class="mb-4 self-start"
+  />
+  <h3
+    class:list={[
+      'mb-4 font-bold text-xl leading-snug',
+      article.featured ? 'text-parchment' : 'text-vuka-black',
+    ]}
+  >
+    {article.title}
+  </h3>
+  <p
+    class:list={[
+      'mb-6 flex-1 text-lg leading-relaxed whitespace-pre-line',
+      article.featured ? 'text-sand' : 'text-vuka-black',
+    ]}
+  >
+    {article.excerpt}
+  </p>
+  {
+    !article.comingSoon ? (
+      <a
+        href={href}
+        class:list={[
+          'inline-flex items-center gap-2 font-bold text-lg transition-colors',
+          article.featured ? 'text-parchment hover:text-ember' : 'text-ember',
+        ]}
+      >
+        Read
+        <Icon name="arrow-right" size={16} class="transition-transform group-hover:translate-x-1" />
+      </a>
+    ) : (
+      <span class="font-light text-baobab">Coming soon</span>
+    )
+  }
+</article>

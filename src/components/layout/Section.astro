@@ -1,0 +1,42 @@
+---
+import Container from '@/components/layout/Container.astro';
+import { cn } from '@/lib/cn';
+
+type Variant = 'default' | 'dark' | 'bold' | 'parchment' | 'sand';
+
+interface Props {
+  variant?: Variant;
+  class?: string;
+  containerClass?: string;
+  fullWidth?: boolean;
+  id?: string;
+}
+
+const {
+  variant = 'default',
+  class: className = '',
+  containerClass = '',
+  fullWidth = false,
+  id,
+} = Astro.props;
+
+const variants: Record<Variant, string> = {
+  default: 'bg-parchment text-vuka-black',
+  parchment: 'bg-parchment text-vuka-black',
+  sand: 'bg-sand text-vuka-black',
+  dark: 'bg-surface-dark text-parchment',
+  bold: 'bg-surface-dark text-parchment',
+};
+---
+
+<section id={id} class={cn('py-16 md:py-24', variants[variant], className)}>
+  {
+    fullWidth ? (
+      <slot />
+    ) : (
+      <Container class={containerClass}>
+        <slot />
+      </Container>
+    )
+  }
+</section>

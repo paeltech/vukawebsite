@@ -1,0 +1,83 @@
+---
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import TypewriterAccent from '@/components/ui/TypewriterAccent.astro';
+import type { PageHeader } from '@/data/copy/types';
+
+interface Props extends PageHeader {
+  class?: string;
+  inverted?: boolean;
+  headlineSize?: 'hero' | 'page';
+}
+
+const {
+  eyebrow,
+  headline,
+  subcopy,
+  accent,
+  accentRotate,
+  class: className = '',
+  inverted = false,
+  headlineSize = 'page',
+} = Astro.props;
+
+const headlineClass =
+  headlineSize === 'hero'
+    ? 'text-balance font-heavy leading-none tracking-tight text-display'
+    : 'text-balance font-extrabold text-h2 leading-tight tracking-snug';
+
+const hasAccent = accent && headline.includes(accent);
+const headlineParts = hasAccent ? headline.split(accent) : [headline];
+---
+
+<header class={className}>
+  {eyebrow && <Eyebrow text={eyebrow} inverted={inverted} class="mb-vuka-2xl" />}
+  <h1 class:list={[headlineClass, inverted ? 'text-parchment' : 'text-vuka-black']}>
+    {
+      hasAccent ? (
+        headlineParts.map((part, i) => (
+          <>
+            {part.split('\n').map((line, j, lines) => (
+              <>
+                {line}
+                {j < lines.length - 1 && <br />}
+              </>
+            ))}
+            {i < headlineParts.length - 1 && <span class="text-accent">{accent}</span>}
+          </>
+        ))
+      ) : (
+        headline.split('\n').map((line, i, arr) => (
+          <>
+            {line}
+            {i < arr.length - 1 && <br />}
+          </>
+        ))
+      )
+    }
+    {accentRotate && accentRotate.length > 0 && (
+      <span class="accent-rotate-line">
+        <TypewriterAccent words={accentRotate} />
+      </span>
+    )}
+  </h1>
+  {
+    subcopy && (
+      <p
+        class:list={[
+          'mt-vuka-xl max-w-2xl text-lg leading-relaxed',
+          inverted ? 'text-sand' : 'text-vuka-black',
+        ]}
+      >
+        {subcopy}
+      </p>
+    )
+  }
+  <slot />
+</header>
+
+<style>
+  .accent-rotate-line {
+    display: block;
+    margin-top: 0.12em;
+  }
+</style>

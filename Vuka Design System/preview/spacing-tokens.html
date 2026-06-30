@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Spacing" name="Spacing & Radius" subtitle="4–128px scale · border-radius system" viewport="700x240" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Codec Pro', sans-serif; background: #F5EFE6; padding: 28px 36px; display: flex; flex-direction: column; gap: 22px; }
+
+  .section-label { font-weight: 300; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #8B5A2B; margin-bottom: 14px; }
+  .phi-note { font-weight: 300; font-size: 9px; letter-spacing: 0.08em; color: #D4C4A8; float: right; margin-top: 1px; }
+
+  .spacing-row { display: flex; align-items: flex-end; gap: 8px; }
+  .block-wrap { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .block { background: #C4581C; border-radius: 1px; }
+
+  .token { font-weight: 300; font-size: 9px; letter-spacing: 0.10em; color: #8B5A2B; white-space: nowrap; }
+  .px    { font-weight: 300; font-size: 9px; letter-spacing: 0.04em; color: #D4C4A8; white-space: nowrap; }
+
+  .connector { display: flex; align-items: center; gap: 2px; margin-bottom: 5px; align-self: flex-end; padding-bottom: 20px; }
+  .phi-arrow { font-weight: 300; font-size: 8px; color: #D4C4A8; letter-spacing: 0; }
+
+  hr { border: none; border-top: 1px solid #D4C4A8; }
+
+  .radius-row { display: flex; gap: 20px; align-items: flex-end; }
+  .rbox { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .rsq { background: #1A1008; }
+  .rlabel { font-weight: 300; font-size: 9px; letter-spacing: 0.12em; color: #8B5A2B; text-align: center; }
+  .rpx { font-weight: 300; font-size: 9px; color: #D4C4A8; text-align: center; }
+</style>
+</head>
+<body>
+  <!-- Spacing scale: Fibonacci sequence 3→5→8→13→21→34→55→89→144 (each step × φ ≈ 1.618) -->
+  <div>
+    <div class="section-label">
+      Spacing scale
+      <span class="phi-note">φ = 1.618 · each step × φ</span>
+    </div>
+    <div class="spacing-row">
+      <div class="block-wrap">
+        <div class="block" style="width:3px; height:3px;"></div>
+        <div class="token">xs</div><div class="px">3</div>
+      </div>
+      <div class="connector"><div class="phi-arrow">→</div></div>
+      <div class="block-wrap">
+        <div class="block" style="width:5px; height:5px;"></div>
+        <div class="token">sm</div><div class="px">5</div>
+      </div>
+      <div class="connector"><div class="phi-arrow">→</div></div>
+      <div class="block-wrap">
+        <div class="block" style="width:8px; height:8px;"></div>
+        <div class="token">md</div><div class="px">8</div>
+      </div>
+      <div class="connector"><div class="phi-arrow">→</div></div>
+      <div class="block-wrap">
+        <div class="block" style="width:13px; height:13px;"></div>
+        <div class="token">lg</div><div class="px">13</div>
+      </div>
+      <div class="connector"><div class="phi-arrow">→</div></div>
+      <div class="block-wrap">
+        <div class="block" style="width:21px; height:21px;"></div>
+        <div class="token">xl</div><div class="px">21</div>
+      </div>
+      <div class="connector"><div class="phi-arrow">→</div></div>
+      <div class="block-wrap">
+        <div class="block" style="width:34px; height:34px;"></div>
+        <div class="token">2xl</div><div class="px">34</div>
+      </div>
+      <div class="connector"><div class="phi-arrow">→</div></div>
+      <div class="block-wrap">
+        <div class="block" style="width:55px; height:55px;"></div>
+        <div class="token">3xl</div><div class="px">55</div>
+      </div>
+      <div class="connector"><div class="phi-arrow">→</div></div>
+      <div class="block-wrap">
+        <div class="block" style="width:89px; height:89px;"></div>
+        <div class="token">4xl</div><div class="px">89</div>
+      </div>
+      <div class="connector"><div class="phi-arrow">→</div></div>
+      <div class="block-wrap">
+        <div class="block" style="width:55px; height:144px;"></div>
+        <div class="token">5xl</div><div class="px">144</div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div>
+    <div class="section-label">Border radius</div>
+    <div class="radius-row">
+      <div class="rbox"><div class="rsq" style="width:34px;height:34px;border-radius:0px;"></div><div class="rlabel">none</div><div class="rpx">0px</div></div>
+      <div class="rbox"><div class="rsq" style="width:34px;height:34px;border-radius:2px;"></div><div class="rlabel">sm</div><div class="rpx">2px</div></div>
+      <div class="rbox"><div class="rsq" style="width:34px;height:34px;border-radius:4px;"></div><div class="rlabel">md</div><div class="rpx">4px</div></div>
+      <div class="rbox"><div class="rsq" style="width:34px;height:34px;border-radius:8px;"></div><div class="rlabel">lg</div><div class="rpx">8px</div></div>
+      <div class="rbox"><div class="rsq" style="width:55px;height:34px;border-radius:9999px;"></div><div class="rlabel">pill</div><div class="rpx">∞</div></div>
+    </div>
+  </div>
+</body>
+</html>

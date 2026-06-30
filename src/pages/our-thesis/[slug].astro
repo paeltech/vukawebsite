@@ -1,0 +1,36 @@
+---
+import ArticleLayout from '@/layouts/ArticleLayout.astro';
+import { getAllArticleSlugs, getArticleBySlug } from '@/lib/articles';
+
+export async function getStaticPaths() {
+  const slugs = await getAllArticleSlugs('thesis');
+  return slugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const article = await getArticleBySlug(slug!, 'thesis');
+
+if (!article) {
+  return Astro.redirect('/our-thesis');
+}
+---
+
+<ArticleLayout
+  title={article.title}
+  description={article.excerpt}
+  canonical={`/our-thesis/${article.slug}`}
+  canonicalUrl={article.canonicalUrl}
+  tag={article.tag}
+  date={article.date}
+  showAuthor
+>
+  {
+    article.contentHtml ? (
+      <div class="contents" set:html={article.contentHtml} />
+    ) : (
+      article.paragraphs?.map((paragraph) => (
+        <p class="whitespace-pre-line">{paragraph}</p>
+      ))
+    )
+  }
+</ArticleLayout>

@@ -1,0 +1,33 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import type { IconName } from '@/lib/icons';
+import Tag from '@/components/ui/Tag.astro';
+
+interface Props {
+  tag: string;
+  body: string;
+  cta: { label: string; href: string };
+  title?: string;
+  icon?: IconName;
+}
+
+const { tag, body, cta, title, icon = 'pathway-founder' } = Astro.props;
+---
+
+<a
+  href={cta.href}
+  class="vuka-reveal vuka-card vuka-card-hover group flex h-full flex-col p-8 no-underline"
+>
+  <div class="mb-5 flex items-start justify-between gap-4">
+    <Tag variant="programme" label={tag} class="self-start" />
+    <div class="icon-well group-hover:border-ember">
+      <Icon name={icon} class="text-ember" size={20} />
+    </div>
+  </div>
+  {title && <h3 class="mb-3 font-bold text-xl">{title}</h3>}
+  <p class="mb-6 flex-1 text-lg leading-relaxed text-vuka-black whitespace-pre-line">{body}</p>
+  <span class="inline-flex items-center gap-2 self-start font-normal text-baobab transition-colors group-hover:text-ember">
+    {cta.label}
+    <Icon name="arrow-right" size={16} class="transition-transform group-hover:translate-x-1" />
+  </span>
+</a>

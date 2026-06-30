@@ -1,0 +1,129 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Wordmark from '@/components/ui/Wordmark.astro';
+import { navLinks, primaryCta } from '@/config/site';
+
+interface ChildLink {
+  label: string;
+  href: string;
+}
+
+type NavEntry =
+  | { label: string; href: string }
+  | { label: string; href: string; children: readonly ChildLink[] };
+
+function hasChildren(link: NavEntry): link is NavEntry & { children: readonly ChildLink[] } {
+  return 'children' in link && Array.isArray(link.children);
+}
+---
+
+<div
+  id="mobile-nav"
+  class="fixed inset-0 z-[200] hidden bg-surface-dark/98 backdrop-blur-sm lg:hidden"
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Site navigation"
+>
+  <div class="flex h-full flex-col overflow-y-auto px-5 pb-10 pt-6">
+    <div class="mb-8 flex items-center justify-between">
+      <Wordmark variant="parchment" />
+      <button
+        type="button"
+        id="mobile-nav-close"
+        class="flex h-11 w-11 items-center justify-center rounded-sm text-parchment transition-colors hover:bg-baobab/20"
+        aria-label="Close menu"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+    </div>
+
+    <nav class="flex flex-col gap-1" aria-label="Mobile">
+      {
+        navLinks.map((link) =>
+          hasChildren(link) ? (
+            <details class="group border-b border-baobab/30 py-2">
+              <summary class="flex cursor-pointer list-none items-center justify-between font-light text-xl text-parchment [&::-webkit-details-marker]:hidden">
+                {link.label}
+                <span class="text-baobab transition-transform group-open:rotate-180" aria-hidden="true">▾</span>
+              </summary>
+              <div class="mt-2 flex flex-col gap-1 pb-3 pl-2">
+                <a
+                  href={link.href}
+                  class="py-2 font-light text-base text-sand hover:text-parchment"
+                >
+                  Overview
+                </a>
+                {link.children.map((child) => (
+                  <a
+                    href={child.href}
+                    class="py-2 font-light text-base text-sand hover:text-parchment"
+                  >
+                    {child.label}
+                  </a>
+                ))}
+              </div>
+            </details>
+          ) : (
+            <a
+              href={link.href}
+              class="border-b border-baobab/30 py-4 font-light text-xl text-parchment hover:text-sand"
+            >
+              {link.label}
+            </a>
+          ),
+        )
+      }
+    </nav>
+
+    <div class="mt-auto pt-10">
+      <Button href={primaryCta.href} size="md" class="w-full">
+        {primaryCta.label} →
+      </Button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initMobileNav() {
+    const openBtn = document.getElementById('mobile-nav-open');
+    const closeBtn = document.getElementById('mobile-nav-close');
+    const panel = document.getElementById('mobile-nav');
+
+    if (!openBtn || !closeBtn || !panel) return;
+
+    const open = () => {
+      panel.classList.remove('hidden');
+      panel.setAttribute('aria-hidden', 'false');
+      openBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    };
+
+    const close = () => {
+      panel.classList.add('hidden');
+      panel.setAttribute('aria-hidden', 'true');
+      openBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      openBtn.focus();
+    };
+
+    openBtn.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+
+    panel.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', close);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !panel.classList.contains('hidden')) {
+        close();
+      }
+    });
+  }
+
+  initMobileNav();
+  document.addEventListener('astro:page-load', initMobileNav);
+</script>

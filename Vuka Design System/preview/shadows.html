@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Spacing" name="Shadows & Elevation" subtitle="sm · md · lg — warm-toned shadow system" viewport="700x200" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Codec Pro', sans-serif; background: #F5EFE6; padding: 36px 36px 32px; display: flex; gap: 32px; align-items: flex-end; }
+  .card-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .card { background: #F5EFE6; border-radius: 4px; width: 140px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; }
+  .card-title { font-weight: 700; font-size: 13px; color: #1A1008; }
+  .card-body  { font-weight: 300; font-size: 11px; color: #8B5A2B; line-height: 1.5; }
+  .shadow-sm { box-shadow: 0 1px 3px rgba(26,16,8,0.08); }
+  .shadow-md { box-shadow: 0 4px 12px rgba(26,16,8,0.10); }
+  .shadow-lg { box-shadow: 0 12px 32px rgba(26,16,8,0.14); }
+  .label { font-weight: 300; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #8B5A2B; }
+  .val   { font-weight: 300; font-size: 9px; letter-spacing: 0.08em; color: #D4C4A8; margin-top: 2px; }
+  .spacer { flex: 1; }
+  .note { font-weight: 300; font-size: 11px; color: #8B5A2B; line-height: 1.6; max-width: 200px; align-self: flex-start; padding-top: 8px; }
+</style>
+</head>
+<body>
+  <div class="card-wrap">
+    <div class="card shadow-sm">
+      <div class="card-title">Card</div>
+      <div class="card-body">Subtle elevation</div>
+    </div>
+    <div class="label">shadow-sm</div>
+    <div class="val">0 1px 3px / 8%</div>
+  </div>
+  <div class="card-wrap">
+    <div class="card shadow-md">
+      <div class="card-title">Card</div>
+      <div class="card-body">Moderate elevation</div>
+    </div>
+    <div class="label">shadow-md</div>
+    <div class="val">0 4px 12px / 10%</div>
+  </div>
+  <div class="card-wrap">
+    <div class="card shadow-lg">
+      <div class="card-title">Card</div>
+      <div class="card-body">Strong elevation</div>
+    </div>
+    <div class="label">shadow-lg</div>
+    <div class="val">0 12px 32px / 14%</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="note">Shadows are warm-toned (Vuka Black base, not grey). Used sparingly — prefer surface colour distinction for depth.</div>
+</body>
+</html>

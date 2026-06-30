@@ -1,0 +1,27 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import type { IconName } from '@/lib/icons';
+import SectionLabel from '@/components/ui/SectionLabel.astro';
+import { cn } from '@/lib/cn';
+
+interface Props {
+  label: string;
+  icon: IconName;
+  inverted?: boolean;
+  class?: string;
+}
+
+const { label, icon, inverted = false, class: className = '' } = Astro.props;
+---
+
+<div class={cn('vuka-reveal', className)}>
+  <div class="flex items-start gap-5 md:gap-8">
+    <div class={inverted ? 'icon-well-dark' : 'icon-well'}>
+      <Icon name={icon} class={inverted ? 'text-ember' : 'text-ember'} size={22} />
+    </div>
+    <div class="min-w-0 flex-1">
+      <SectionLabel text={label} inverted={inverted} class="mb-5" />
+      <slot />
+    </div>
+  </div>
+</div>

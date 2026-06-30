@@ -1,0 +1,39 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+
+interface Props {
+  headline: string;
+  body: string;
+  primaryCta: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const { headline, body, primaryCta, secondaryCta } = Astro.props;
+---
+
+<div class="vuka-reveal text-center md:text-left">
+  <h2 class="text-balance font-heavy text-h2 leading-tight whitespace-pre-line">{headline}</h2>
+  <p class="mx-auto mt-vuka-2xl max-w-2xl text-lg leading-relaxed md:mx-0 whitespace-pre-line">
+    {body}
+  </p>
+  <div class="mt-vuka-3xl flex flex-col items-center gap-4 sm:flex-row md:items-start">
+    <Button
+      href={primaryCta.href}
+      variant="primary"
+      size="lg"
+      class="bg-parchment text-ember hover:bg-sand"
+    >
+      {primaryCta.label}
+      <Icon name="arrow-right" size={18} />
+    </Button>
+    {
+      secondaryCta && (
+        <Button href={secondaryCta.href} variant="primary" size="lg" class="bg-parchment text-ember hover:bg-sand">
+          {secondaryCta.label}
+          <Icon name="arrow-right" size={18} />
+        </Button>
+      )
+    }
+  </div>
+</div>
