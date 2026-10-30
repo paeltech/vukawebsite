@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/layout/Section.astro';
-import Container from '@/components/layout/Container.astro';
 import ReferenceHero from '@/components/reference/ReferenceHero.astro';
 import Partners from '@/components/reference/Partners.astro';
 import Services from '@/components/reference/Services.astro';
@@ -14,13 +13,9 @@ import { isPortfolioEnabled } from '@/config/site';
 const copy = referenceCopy.home;
 ---
 <BaseLayout class="reference-page">
-  <Section class="reference-page-intro overflow-hidden">
+  <Section class="reference-page-intro reference-home-intro overflow-hidden">
     <ReferenceHero {...copy.hero} home cta={copy.hero.primary} href="/work-with-us" secondary={copy.hero.secondary} />
   </Section>
-  <Container>
-    <div class="reference-context">{copy.context.filter(item => isPortfolioEnabled() || item.label !== 'Portfolio').map(item => <div><p class="reference-label">{item.label}</p><p>{item.body}</p></div>)}</div>
-    <figure class="reference-photo"><img src="/assets/photos/dar-es-salaam-harbour.webp" alt="Dar es Salaam harbour and city skyline" width="1280" height="430" /><figcaption><span>{copy.photo.caption}</span><span>{copy.photo.credit}</span></figcaption></figure>
-  </Container>
   <Section id="why" class="reference-section">
     <div class="reference-proposition">
       <div><p class="reference-label">{copy.why.label}</p><h2 class="reference-h2">{copy.why.headline}</h2></div>
@@ -31,7 +26,11 @@ const copy = referenceCopy.home;
   <Section id="services" class="reference-section"><span id="pathways" aria-hidden="true"></span><Services home /></Section>
   <Section id="process" variant="dark" class="reference-section"><BuildProcess /></Section>
   <Section id="difference" class="reference-section">
-    <div class="reference-editorial"><p class="reference-label">{copy.difference.label}</p><div class="reference-stack"><h2 class="reference-h2">{copy.difference.headline}</h2><div class="reference-comparisons">{copy.difference.comparisons.map(item => <div><h3>{item.title}</h3><p>{item.body}</p></div>)}</div><div class="reference-reading"><p class="reference-lead">{copy.difference.lead}</p><p>{copy.difference.body}</p></div><a href="/about" class="editorial-link">{copy.difference.cta}</a></div></div>
+    <div class="reference-difference">
+      <div class="reference-difference-heading"><p class="reference-label">{copy.difference.label}</p><h2 class="reference-h2">{copy.difference.headline}</h2></div>
+      <div class="reference-comparisons">{copy.difference.comparisons.map(item => <div><h3>{item.title}</h3><p>{item.body}</p></div>)}</div>
+      <div class="reference-difference-bottom"><p class="reference-lead">{copy.difference.lead}</p><div class="reference-difference-body"><p>{copy.difference.body}</p><a href="/about" class="editorial-link">{copy.difference.cta}</a></div></div>
+    </div>
   </Section>
   {isPortfolioEnabled() && <Section id="portfolio" variant="sand" class="reference-section"><VentureFeature /></Section>}
   <Section id="studio" class="reference-section"><span id="join-team" aria-hidden="true"></span><StudioFeature /></Section>

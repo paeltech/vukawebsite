@@ -33,6 +33,7 @@ export const navLinks = [
   { label: 'What we do', href: '/what-we-do' },
   { label: 'How we work', href: '/what-we-do#process' },
   ...(siteConfig.portfolioEnabled ? [{ label: 'Portfolio', href: '/portfolio' }] : []),
+  { label: 'Journal', href: '/studio-journal' },
   ...(siteConfig.aboutEnabled ? [{ label: 'Studio', href: '/about' }] : []),
 ] as const;
 

@@ -7,29 +7,34 @@ import AuthorCard from '@/components/sections/AuthorCard.astro';
 import Button from '@/components/ui/Button.astro';
 import Icon from '@/components/ui/Icon.astro';
 import type { SeoProps } from '@/lib/seo';
+import type { Article } from '@/lib/articles';
 
 interface Props extends SeoProps {
   tag: string;
   tags?: string[];
   date: string;
+  publishedAt?: Date;
   title: string;
   excerpt?: string;
   canonicalUrl?: string;
   showAuthor?: boolean;
   backHref?: string;
   backLabel?: string;
+  relatedArticles?: Pick<Article, 'title' | 'excerpt' | 'href' | 'tag'>[];
 }
 
 const {
   tag,
   tags,
   date,
+  publishedAt,
   title,
   excerpt,
   canonicalUrl,
   showAuthor = false,
   backHref,
   backLabel,
+  relatedArticles = [],
   description,
   canonical,
   noindex,
@@ -41,7 +46,7 @@ const {
   <Section class="!pb-vuka-4xl">
     <article class="article-page">
       <div class:list={['article-canvas', 'article-canvas--with-aside']}>
-        <ArticleHero {tag} tags={tags} {date} {title} {excerpt} class="article-hero" />
+        <ArticleHero {tag} tags={tags} {date} {publishedAt} {title} {excerpt} class="article-hero" />
 
         <div class="article-body">
           <div class:list={['article-grid', 'article-grid--with-aside']}>
@@ -51,6 +56,7 @@ const {
             <aside class="article-aside"><div class="article-aside-inner">
               {showAuthor && <AuthorCard />}
               <nav class="article-toc mt-8" aria-label="In this article" hidden><p class="reference-label mb-4">In this article</p><ul class="space-y-3"></ul></nav>
+              <details class="article-mobile-toc" hidden><summary>Jump to a section <span aria-hidden="true">⌄</span></summary><nav aria-label="In this article"><ul></ul></nav></details>
             </div></aside>
           </div>
         </div>
@@ -72,23 +78,34 @@ const {
       </div>
     </article>
   </Section>
+  {relatedArticles.length > 0 && <Section variant="sand" class="reference-section">
+    <p class="reference-label mb-5">Continue reading</p>
+    <h2 class="reference-h2">More from the studio.</h2>
+    <div class="reference-related-grid">
+      {relatedArticles.map((article) => <article class="reference-related-card"><p class="reference-label">{article.tag}</p><h3>{article.title}</h3><p>{article.excerpt}</p><a class="editorial-link" href={article.href}>Read article ↗</a></article>)}
+    </div>
+  </Section>}
   <Closing />
 </BaseLayout>
 
 <script>
   const toc = document.querySelector<HTMLElement>('.article-toc');
-  const list = toc?.querySelector('ul');
+  const mobileToc = document.querySelector<HTMLDetailsElement>('.article-mobile-toc');
+  const lists = document.querySelectorAll<HTMLUListElement>('.article-toc ul, .article-mobile-toc ul');
   const headings = document.querySelectorAll<HTMLElement>('.prose-vuka h2, .prose-vuka h3');
-  if (toc && list && headings.length) {
+  if (toc && lists.length && headings.length) {
     headings.forEach((heading, index) => {
       if (!heading.id) heading.id = `article-section-${index + 1}`;
-      const item = document.createElement('li');
-      const link = document.createElement('a');
-      link.href = `#${heading.id}`;
-      link.textContent = heading.textContent;
-      item.append(link);
-      list.append(item);
+      lists.forEach((list) => {
+        const item = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = `#${heading.id}`;
+        link.textContent = heading.textContent;
+        item.append(link);
+        list.append(item);
+      });
     });
     toc.hidden = false;
+    if (mobileToc) mobileToc.hidden = false;
   }
 </script>

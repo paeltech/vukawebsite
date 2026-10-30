@@ -9,24 +9,6 @@ export const referenceCopy = {
       "primary": "Build with Vuka",
       "secondary": "How we build"
     },
-    "context": [
-      {
-        "label": "Portfolio",
-        "body": "Hakiki, product authentication in Tanzania"
-      },
-      {
-        "label": "We build with",
-        "body": "Founders, corporations, public institutions and investors"
-      },
-      {
-        "label": "Studio",
-        "body": "Dar es Salaam · East Africa"
-      }
-    ],
-    "photo": {
-      "caption": "The opportunity is here. So are we.",
-      "credit": "Dar es Salaam, Tanzania · Photography: Nichika Sakurai"
-    },
     "why": {
       "label": "The opportunity",
       "headline": "Start with a customer. Build a company.",

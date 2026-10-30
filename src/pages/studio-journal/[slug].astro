@@ -1,6 +1,6 @@
 ---
 import ArticleLayout from '@/layouts/ArticleLayout.astro';
-import { getAllArticleSlugs, getArticleBySlug } from '@/lib/articles';
+import { getAllArticleSlugs, getJournalArticles, getThesisArticles } from '@/lib/articles';
 
 export async function getStaticPaths() {
   const slugs = await getAllArticleSlugs('journal');
@@ -8,7 +8,9 @@ export async function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
-const article = await getArticleBySlug(slug!, 'journal');
+const journalArticles = await getJournalArticles();
+const article = journalArticles.find((item) => item.slug === slug);
+const relatedArticles = article ? [...journalArticles.filter((item) => item.slug !== slug), ...await getThesisArticles()].filter((item) => !item.comingSoon).slice(0, 3) : [];
 
 if (!article) {
   return Astro.redirect('/studio-journal');
@@ -23,6 +25,8 @@ if (!article) {
   tag={article.tag}
   tags={article.siteTags}
   date={article.date}
+  publishedAt={article.publishedAt}
+  relatedArticles={relatedArticles}
   backHref="/studio-journal"
   backLabel="Back to studio journal"
 >

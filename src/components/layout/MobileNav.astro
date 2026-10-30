@@ -2,6 +2,8 @@
 import Button from '@/components/ui/Button.astro';
 import Wordmark from '@/components/ui/Wordmark.astro';
 import { navLinks, primaryCta } from '@/config/site';
+const currentPath = Astro.url.pathname.replace(/\/$/, '');
+const isCurrentPage = (href: string) => !href.includes('#') && (currentPath === href || currentPath.startsWith(`${href}/`));
 
 interface ChildLink {
   label: string;
@@ -69,6 +71,7 @@ function hasChildren(link: NavEntry): link is NavEntry & { children: readonly Ch
           ) : (
             <a
               href={link.href}
+              aria-current={isCurrentPage(link.href) ? 'page' : undefined}
               class="py-4 font-light text-xl text-vuka-black hover:text-vuka-black"
             >
               {link.label}

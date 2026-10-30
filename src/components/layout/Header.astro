@@ -4,6 +4,8 @@ import NavDropdown from '@/components/layout/NavDropdown.astro';
 import MobileNav from '@/components/layout/MobileNav.astro';
 import Wordmark from '@/components/ui/Wordmark.astro';
 import { navLinks, primaryCta } from '@/config/site';
+const currentPath = Astro.url.pathname.replace(/\/$/, '');
+const isCurrentPage = (href: string) => !href.includes('#') && (currentPath === href || currentPath.startsWith(`${href}/`));
 
 interface ChildLink {
   label: string;
@@ -27,13 +29,13 @@ function hasChildren(link: NavEntry): link is NavEntry & { children: readonly Ch
   <div class="mx-auto flex h-[72px] md:h-[88px] max-w-[1440px] items-center gap-6 px-6 md:px-10 xl:px-20">
     <Wordmark variant="default" class="shrink-0" />
 
-    <nav class="hidden flex-1 items-center justify-end gap-6 lg:flex" aria-label="Primary">
+    <nav class="hidden flex-1 items-center justify-end gap-4 xl:gap-6 lg:flex" aria-label="Primary">
       {
         navLinks.map((link) =>
           hasChildren(link) ? (
             <NavDropdown label={link.label} href={link.href} items={link.children} />
           ) : (
-            <a href={link.href} aria-current={Astro.url.pathname.replace(/\/$/, '') === link.href ? 'page' : undefined} class="nav-link font-normal text-base transition-colors">
+            <a href={link.href} aria-current={isCurrentPage(link.href) ? 'page' : undefined} class="nav-link font-normal text-base transition-colors">
               {link.label}
             </a>
           ),

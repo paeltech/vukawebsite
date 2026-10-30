@@ -1,29 +1,39 @@
 ---
 import Tag from '@/components/ui/Tag.astro';
 import { cn } from '@/lib/cn';
+import { formatRelativeDate } from '@/lib/relative-date';
 
 interface Props {
   tag: string;
   tags?: string[];
   date: string;
+  publishedAt?: Date;
   title: string;
   excerpt?: string;
   class?: string;
 }
 
-const { tag, tags, date, title, excerpt, class: className = '' } = Astro.props;
+const { tag, tags, date, publishedAt, title, excerpt, class: className = '' } = Astro.props;
 const displayTags = tags && tags.length > 0 ? tags : [tag];
+const dateTime = publishedAt && !Number.isNaN(publishedAt.getTime()) ? publishedAt.toISOString() : undefined;
 ---
 
 <header class={cn('vuka-reveal', className)}>
-  <div class="mb-6 flex flex-wrap items-center gap-2">
-    {displayTags.map((label) => (
-      <Tag variant="programme" label={label} />
-    ))}
-    <span class="text-sm text-baobab">{date}</span>
+  <div class="article-meta">
+    <div class="article-meta-tags">{displayTags.map((label) => <Tag variant="programme" label={label} />)}</div>
+    <time class="article-published-time" datetime={dateTime} title={date} aria-label={`Published ${date}`}>{dateTime ? formatRelativeDate(publishedAt!) : date}</time>
   </div>
   <h1 class="article-title">{title}</h1>
   {excerpt && (
     <p class="mt-vuka-xl text-xl leading-relaxed text-baobab">{excerpt}</p>
   )}
 </header>
+
+<script>
+  import { formatRelativeDate } from '@/lib/relative-date';
+
+  document.querySelectorAll<HTMLTimeElement>('.article-published-time[datetime]').forEach((element) => {
+    const publishedAt = new Date(element.dateTime);
+    if (!Number.isNaN(publishedAt.getTime())) element.textContent = formatRelativeDate(publishedAt);
+  });
+</script>
