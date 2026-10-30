@@ -24,6 +24,7 @@ export const joinTeamPage = {
   expertiseOptions: [
     'Venture building & studio operations',
     'Product & engineering',
+    'AI engineering, evaluation & data systems',
     'Go-to-market & growth',
     'Finance, legal & compliance',
     'Domain expertise (sector-specific)',
@@ -34,7 +35,7 @@ export const joinTeamPage = {
     'Paid contract or full-time role',
     'Invest in the studio or ventures',
     'Advisory or board involvement',
-    'Other — I will explain below',
+    'Other, I will explain below',
   ],
   fields: {
     name: { label: 'Your name', placeholder: 'First and last' },

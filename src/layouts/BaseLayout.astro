@@ -11,7 +11,7 @@ interface Props extends SeoProps {
 }
 
 const { title, description, canonical, ogType, noindex, class: className = '', hideChrome = false } = Astro.props;
-const seo = buildSeo({ title, description, canonical, ogType, noindex });
+const seo = buildSeo({ title, description, canonical: canonical ?? Astro.url.pathname, ogType, noindex });
 ---
 
 <!doctype html>
@@ -30,11 +30,14 @@ const seo = buildSeo({ title, description, canonical, ogType, noindex });
     <meta property="og:type" content={seo.ogType} />
     <meta property="og:site_name" content={siteConfig.name} />
     {seo.canonical && <meta property="og:url" content={seo.canonical} />}
+    <link rel="preload" href="/fonts/CodecPro-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <meta name="theme-color" content="#f5efe6" />
     <link rel="icon" type="image/svg+xml" href="/assets/mark-ember.svg" />
   </head>
   <body class={className}>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     {!hideChrome && <Header />}
-    <main id="main-content">
+    <main id="main-content" tabindex="-1">
       <slot />
     </main>
     {!hideChrome && <Footer />}

@@ -24,7 +24,7 @@ const { tag, body, cta, title, icon = 'pathway-founder' } = Astro.props;
       <Icon name={icon} class="text-ember" size={20} />
     </div>
   </div>
-  {title && <h3 class="mb-3 font-bold text-xl">{title}</h3>}
+  {title && <h3 class="mb-3 font-normal text-xl">{title}</h3>}
   <p class="mb-6 flex-1 text-lg leading-relaxed text-vuka-black whitespace-pre-line">{body}</p>
   <span class="inline-flex items-center gap-2 self-start font-normal text-baobab transition-colors group-hover:text-ember">
     {cta.label}

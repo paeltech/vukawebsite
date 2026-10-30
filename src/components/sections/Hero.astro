@@ -1,15 +1,8 @@
 ---
 import Button from '@/components/ui/Button.astro';
-import Mark from '@/components/ui/Mark.astro';
 import PageHeader from '@/components/sections/PageHeader.astro';
 import StatStrip from '@/components/sections/StatStrip.astro';
 import type { LinkCta } from '@/data/copy/types';
-
-interface Stat {
-  value: string;
-  label: string;
-}
-
 interface Props {
   eyebrow?: string;
   headline: string;
@@ -18,26 +11,27 @@ interface Props {
   accentRotate?: readonly string[];
   primaryCta: LinkCta;
   secondaryCta: LinkCta;
-  stats?: Stat[];
+  stats?: { value: string; label: string }[];
 }
-
-const { eyebrow, headline, subcopy, accent, accentRotate, primaryCta, secondaryCta, stats } =
-  Astro.props;
+const { primaryCta, secondaryCta, stats, ...heading } = Astro.props;
 ---
-
-<div class="relative">
-  <div
-    class="pointer-events-none absolute -right-4 -top-8 hidden w-[min(280px,35vw)] lg:block xl:-right-8"
-    aria-hidden="true"
-  >
-    
-  </div>
-
-  <PageHeader {eyebrow} {headline} {subcopy} {accent} {accentRotate} headlineSize="hero">
-    <div class="mt-vuka-3xl flex flex-col gap-4 sm:flex-row sm:items-center">
-      <Button href={primaryCta.href} variant="primary" size="lg">{primaryCta.label}</Button>
+<div class="home-hero">
+  <img class="hero-mark" src="/assets/mark-sand.svg" width="1100" height="1100" alt="" aria-hidden="true" />
+  <PageHeader {...heading} headlineSize="hero">
+    <div class="hero-actions mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
+      <Button href={primaryCta.href} size="lg">{primaryCta.label}</Button>
       <Button href={secondaryCta.href} variant="secondary" size="lg">{secondaryCta.label}</Button>
     </div>
     {stats && stats.length > 0 && <StatStrip {stats} />}
   </PageHeader>
 </div>
+<style>
+  .home-hero { position: relative; isolation: isolate; padding: 16px 0 0; }
+  .hero-mark { position: absolute; z-index: -1; width: 1100px; max-width: none; height: 1100px; right: -430px; top: -300px; opacity: .28; pointer-events: none; }
+  .home-hero :global(h1) { max-width: 1000px; letter-spacing: -.05em; }
+  @media (max-width: 767px) {
+    .home-hero { padding-top: 0; }
+    .hero-mark { width: 520px; height: 520px; right: -330px; top: -130px; opacity: .18; }
+    .hero-actions :global(a) { width: 100%; }
+  }
+</style>

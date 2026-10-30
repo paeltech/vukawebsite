@@ -1,0 +1,10 @@
+---
+interface Props { compact?: boolean; }
+const { compact = false } = Astro.props;
+---
+<figure class:list={['hakiki-visual', compact && 'hakiki-visual--compact']} aria-label="Illustration of Hakiki product verification by SMS">
+  <img src="/assets/portfolio/ventures/hakiki-logo.png" width="170" height="70" alt="Hakiki" loading="lazy" />
+  <div class="hakiki-phone" aria-hidden="true">
+    <div class="hakiki-screen"><div class="hakiki-status"><span>9:41</span><span>••• 4G</span></div><div class="hakiki-contact"><span>H</span><strong>HAKIKI</strong><small>Text message</small></div><p class="hakiki-time">Today 09:41</p><p class="hakiki-sent">4821 7730 1192</p><p class="hakiki-received">Verification received.<br />View product and<br />registration details.</p></div>
+  </div>
+</figure>

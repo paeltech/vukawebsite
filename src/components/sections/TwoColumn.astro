@@ -10,12 +10,12 @@ const { youBring, weBring } = Astro.props;
 ---
 
 <div class="vuka-reveal grid grid-cols-1 gap-6 md:grid-cols-2">
-  <div class="vuka-card p-8">
+  <div class="border-t border-baobab py-6">
     <div class="mb-6 flex items-center gap-4">
-      <div class="icon-well">
+      <div class="hidden">
         <Icon name="founder" class="text-ember" size={20} />
       </div>
-      <h3 class="font-bold text-xl">You bring</h3>
+      <h3 class="font-normal text-xl">You bring</h3>
     </div>
     <ul class="space-y-4">
       {
@@ -28,12 +28,12 @@ const { youBring, weBring } = Astro.props;
       }
     </ul>
   </div>
-  <div class="vuka-card border-l-4 border-l-ember p-8">
+  <div class="border-t border-baobab py-6">
     <div class="mb-6 flex items-center gap-4">
-      <div class="icon-well">
+      <div class="hidden">
         <Icon name="layers" class="text-ember" size={20} />
       </div>
-      <h3 class="font-bold text-xl">We bring</h3>
+      <h3 class="font-normal text-xl">We bring</h3>
     </div>
     <ul class="space-y-4">
       {

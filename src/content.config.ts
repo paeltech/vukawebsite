@@ -1,4 +1,6 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
+import { glob } from 'astro/loaders';
 
 const portfolioSectors = [
   'B2B Infrastructure & Fintech',
@@ -29,7 +31,7 @@ const clientLogoSchema = z.object({
 });
 
 const portfolio = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/portfolio' }),
   schema: z.object({
     title: z.string(),
     sector: z.enum(portfolioSectors),

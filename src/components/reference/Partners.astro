@@ -1,0 +1,9 @@
+---
+import { referenceCopy } from '@/data/copy/reference';
+const copy = referenceCopy.home.partners;
+const hrefs = ['/founders', '/corporates', '/government', '/investors'];
+---
+<div>
+  <div class="reference-editorial mb-10"><p class="reference-label">{copy.label}</p><h2 class="reference-h2">{copy.headline}</h2></div>
+  {copy.rows.map((row, index) => <article class="reference-partner-row"><span class="reference-label" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><h3>{row.title}</h3><div class="reference-row-copy"><h4>{row.headline}</h4><p>{row.body}</p><a href={hrefs[index]} class="editorial-link">{row.cta}</a></div></article>)}
+</div>

@@ -1,102 +1,41 @@
 ---
 import Container from '@/components/layout/Container.astro';
-import Divider from '@/components/ui/Divider.astro';
 import Wordmark from '@/components/ui/Wordmark.astro';
-import { footerLinks, siteConfig } from '@/config/site';
+import { siteConfig, isAboutEnabled, isPortfolioEnabled } from '@/config/site';
+const studioLinks = [
+  { label: 'How we build', href: '/what-we-do' },
+  ...(isPortfolioEnabled() ? [{ label: 'Portfolio', href: '/portfolio' }] : []),
+  ...(isAboutEnabled() ? [{ label: 'The studio', href: '/about' }] : []),
+  { label: 'Our thesis', href: '/our-thesis' },
+  { label: 'Studio journal', href: '/studio-journal' },
+];
+const buildLinks = [
+  { label: 'Who we work with', href: '/who-we-work-with' },
+  { label: 'Start a conversation', href: '/work-with-us' },
+  { label: 'Join the studio', href: '/join-our-team' },
+];
 ---
-
-<footer class="site-footer text-parchment">
-  <Divider variant="ember" />
-
-  <Container class="py-vuka-3xl md:py-vuka-4xl">
-    <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-10">
-      <!-- Brand -->
-      <div class="lg:col-span-1">
-        <Wordmark variant="parchment" easterEgg class="mb-5" />
-        <p class="max-w-xs font-light text-lg leading-relaxed text-baobab">
-          A venture builder, co-building companies with bold founders,
-          governments, organisations, and partners
-        </p>
-      </div>
-
-      <!-- Studio links -->
-      <div>
-        <p class="mb-5 font-light text-[11px] uppercase tracking-category text-baobab">Studio</p>
-        <ul class="flex flex-col gap-3">
-          {
-            footerLinks.studio.map((link) => (
-              <li>
-                <a
-                  href={link.href}
-                  class="font-light text-lg text-sand transition-colors hover:text-parchment"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-
-      <!-- Work with us links -->
-      <div>
-        <p class="mb-5 font-light text-[11px] uppercase tracking-category text-baobab">Work with us</p>
-        <ul class="flex flex-col gap-3">
-          {
-            footerLinks.workWithUs.map((link) => (
-              <li>
-                <a
-                  href={link.href}
-                  class="font-light text-lg text-sand transition-colors hover:text-parchment"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-
-      <!-- Contact -->
-      <div>
-        <p class="mb-5 font-light text-[11px] uppercase tracking-category text-baobab">Contact</p>
-        <ul class="flex flex-col gap-3">
-          <li>
-            <a
-              href={`mailto:${siteConfig.email}`}
-              class="font-bold text-lg text-parchment transition-colors hover:text-sand"
-            >
-              {siteConfig.email}
-            </a>
-          </li>
-          <li>
-            <a
-              href={siteConfig.social.linkedin}
-              class="font-light text-lg text-sand transition-colors hover:text-parchment"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
-          </li>
-          <li>
-            <a
-              href={siteConfig.social.paul}
-              class="font-light text-lg text-sand transition-colors hover:text-parchment"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              paulmandele.co
-            </a>
-          </li>
-        </ul>
-      </div>
+<footer class="site-footer reference-footer">
+  <Container>
+    <div class="reference-footer-grid">
+      <div class="footer-brand"><Wordmark variant="parchment" /><p>AI-native venture studio.<br />Dar es Salaam, East Africa.</p></div>
+      <nav aria-label="Studio"><h2>Studio</h2>{studioLinks.map(link => <a href={link.href}>{link.label}</a>)}</nav>
+      <nav aria-label="Build with us"><h2>Build with us</h2>{buildLinks.map(link => <a href={link.href}>{link.label}</a>)}</nav>
+      <div class="footer-contact"><h2>Get in touch</h2><a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a><a href={siteConfig.social.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div>
     </div>
-
-    <Divider variant="subtle" class="my-10" />
-
-    <p class="font-light text-[11px] tracking-eyebrow text-baobab">
-      © 2026 Vuka Ventures · {siteConfig.location}
-    </p>
+    <p class="footer-copyright">© {new Date().getUTCFullYear()} Vuka Ventures</p>
   </Container>
 </footer>
+<style>
+  .reference-footer { padding: 0 0 32px; background: var(--color-vuka-black); color: var(--color-parchment); }
+  .reference-footer-grid { display: grid; grid-template-columns: 1.3fr .8fr 1fr 1.1fr; gap: 40px; padding-top: 48px; border-top: 1px solid #d4c4a833; }
+  .footer-brand p { margin-top: 20px; color: var(--color-sand); font-size: 14px; line-height: 1.8; }
+  nav, .footer-contact { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+  h2 { margin: 0 0 6px; color: var(--color-sand); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  a { font-size: 14px; line-height: 1.6; text-underline-offset: 4px; }
+  a:hover { color: var(--color-sand); text-decoration: underline; }
+  .footer-contact a { overflow-wrap: anywhere; }
+  .footer-copyright { margin-top: 48px; color: var(--color-sand); font-size: 12px; line-height: 20px; }
+  @media (max-width: 1023px) { .reference-footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; } }
+  @media (max-width: 479px) { .reference-footer-grid { grid-template-columns: 1fr 1fr; gap: 32px 24px; } .footer-brand, .footer-contact { grid-column: 1 / -1; } }
+</style>

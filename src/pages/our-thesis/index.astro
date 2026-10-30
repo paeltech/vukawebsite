@@ -1,41 +1,21 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/layout/Section.astro';
-import EmptyState from '@/components/sections/EmptyState.astro';
-import PageHeader from '@/components/sections/PageHeader.astro';
+import ReferenceHero from '@/components/reference/ReferenceHero.astro';
+import Closing from '@/components/reference/Closing.astro';
+import FilterBar from '@/components/sections/FilterBar.astro';
 import ThesisEssayCard from '@/components/sections/ThesisEssayCard.astro';
-import SectionLabel from '@/components/ui/SectionLabel.astro';
+import EmptyState from '@/components/sections/EmptyState.astro';
+import { referenceCopy } from '@/data/copy/reference';
 import { thesisPage } from '@/data/copy/thesis';
 import { getThesisArticles } from '@/lib/articles';
-
+import { thesisTags } from '@/lib/tags';
 const articles = await getThesisArticles();
+const copy = referenceCopy.pages.thesis;
 ---
-
-<BaseLayout title="Our thesis" description={thesisPage.summary}>
-  <Section>
-    <PageHeader {...thesisPage.header} headlineSize="hero" />
-
-    <p class="vuka-reveal mt-vuka-4xl max-w-3xl text-xl leading-relaxed text-vuka-black">
-      {thesisPage.summary}
-    </p>
-
-    {
-      articles.length > 0 ? (
-        <div class="mt-vuka-4xl">
-          <SectionLabel text={thesisPage.essaysLabel} class="mb-vuka-3xl" />
-          <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {
-              articles.map((article) => (
-                <ThesisEssayCard article={article} basePath="/our-thesis" />
-              ))
-            }
-          </div>
-        </div>
-      ) : (
-        <div class="mt-vuka-4xl">
-          <EmptyState message={thesisPage.emptyState} />
-        </div>
-      )
-    }
-  </Section>
+<BaseLayout title="Our thesis" description={thesisPage.summary} class="reference-page">
+  <Section class="reference-page-intro"><ReferenceHero {...copy.header} /></Section>
+  <Section variant="sand" class="reference-section"><div class="reference-statement"><div><p class="reference-label">{copy.statement.label}</p><h2 class="reference-h2">{copy.statement.headline}</h2></div><ul>{copy.statement.pillars.map(pillar => <li>{pillar}</li>)}</ul></div></Section>
+  <Section class="reference-section"><FilterBar tags={thesisTags} targetId="thesis-grid" emptyMessage="No essays in this category yet." /><p class="reference-label mt-8 mb-6">{copy.list.label}</p><h2 class="reference-h2">{copy.list.headline}</h2>{articles.length ? <div id="thesis-grid" class="mt-12">{articles.map(article => <div data-tags={['All', ...article.siteTags].join('|')}><ThesisEssayCard {article} basePath="/our-thesis" /></div>)}</div> : <div class="mt-12"><EmptyState message={thesisPage.emptyState} /></div>}</Section>
+  <Closing />
 </BaseLayout>

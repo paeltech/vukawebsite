@@ -180,32 +180,19 @@ There is no generic equity split. There is a structured
 conversation about what each party brings — and a fair
 arrangement that reflects that.`,
     faqs: [
-      {
-        question: 'Do I give up control if Vuka is a co-founder?',
-        answer: `Co-founding is a partnership, not a takeover. Governance
-structure, decision rights, and equity splits are defined
-at the outset. You are not an employee. You are a co-founder.
-The conversation about structure happens before any
-commitment is made.`,
-      },
-      {
-        question: 'What sectors is Vuka originating in right now?',
-        answer: `B2B infrastructure and fintech, applied AI for traditional
-industries (agriculture, logistics, healthcare), climate
-and energy access, and government digital services. If you
-have deep expertise in one of these areas and a strong
-view on a specific opportunity, that is the conversation
-to have.`,
-      },
-      {
-        question: `What does Vuka bring that I couldn't hire independently?`,
-        answer: `The studio brings embedded co-building — not a service
-provider relationship. We are in the venture with equity,
-accountable for the outcome, and present through the entire
-build phase. Hiring a product agency delivers a product.
-Co-founding with Vuka builds a company.`,
-      },
-    ],
+  {
+    "question": "Do I need to arrive with an idea?",
+    "answer": "This pathway starts with an opportunity developed by the studio. You bring domain knowledge, customer relationships and the commitment to become a co-founder."
+  },
+  {
+    "question": "How is an AI-native opportunity assessed?",
+    "answer": "We examine customer demand, access to appropriate data, technical feasibility and the cost of delivering value. A working model is one input; the opportunity also needs a business case."
+  },
+  {
+    "question": "How is equity decided?",
+    "answer": "Equity reflects the relative contributions of the founder and the studio. Terms, governance and responsibilities are documented in a co-founding agreement before building begins."
+  }
+],
     cta: {
       headline: `You know the market.
 We know how to build in it.`,
@@ -308,39 +295,19 @@ This is a co-founder arrangement, not a service
 agreement. Vuka's return is tied to the venture's
 outcome — which is exactly why the co-building is real.`,
     faqs: [
-      {
-        question: 'How much equity does Vuka take?',
-        answer: `10–20%, structured per venture based on the scoping
-conversation. The range reflects different levels of
-studio contribution — more embedded capacity, more equity.
-Terms are agreed before any work begins.`,
-      },
-      {
-        question: 'What does the 90-day sprint actually produce?',
-        answer: `A working product in the hands of real users. The sprint
-produces a minimum viable product validated by actual
-customer interaction — not a prototype shown in a pitch.
-What specifically gets built is defined during the scoping
-session based on your market and your idea.`,
-      },
-      {
-        question: `What if my idea isn't in your sector focus?`,
-        answer: `Vuka builds in four sectors: B2B fintech, applied AI,
-climate and energy, and government digital services.
-If your idea sits outside these areas, the honest answer
-is that our operational depth is calibrated to these
-sectors and we are likely not the right co-builder for
-a venture outside them. We will tell you that directly.`,
-      },
-      {
-        question: `What happens if the build doesn't work?`,
-        answer: `If the 90-day sprint produces evidence that the market
-hypothesis is wrong, we stop and say so. Vuka's equity
-stake gives us the same incentive you have: only continue
-if the product has a real chance. We do not build for
-the sake of building.`,
-      },
-    ],
+  {
+    "question": "What should I bring to the first conversation?",
+    "answer": "Bring the customer problem, what you have learned, who you can reach and where you need help. You do not need to have chosen an AI model or designed the technical architecture."
+  },
+  {
+    "question": "How do you approach the first build?",
+    "answer": "We scope a useful product around a specific customer task, with evaluation criteria and a clear view of costs. Any sprint timeline depends on that scope, data access and the inputs each side provides."
+  },
+  {
+    "question": "What are the commercial terms?",
+    "answer": "The existing model is 10–20% equity for embedded operating capacity, the venture lab cheque and ongoing co-founder support. The specific split and commitments are discussed and documented during scoping."
+  }
+],
     cta: {
       headline: `The programme ends.
 The build continues.
@@ -456,38 +423,19 @@ This is a standard term, not a negotiation point.
 
 All terms are agreed and documented before any work begins.`,
     faqs: [
-      {
-        question: 'How does the fee structure work?',
-        answer: `The fee is scoped per engagement. It reflects the
-complexity of the build, the level of embedded capacity
-required, and the timeline. The scoping conversation
-produces a specific fee proposal — not a rate card.`,
-      },
-      {
-        question: 'Who owns the IP?',
-        answer: `The corporate parent retains full IP ownership. Vuka's
-stake is an equity warrant in the spinout venture — not
-a claim on the intellectual property of the product.
-This is a standard term in every engagement.`,
-      },
-      {
-        question: 'What happens to the team after launch?',
-        answer: `The spinout is built to operate independently. By the
-time the venture is ready to stand alone, it has an
-internal team capable of running without Vuka's embedded
-capacity. Vuka exits the operational role but retains
-the equity warrant position as a long-term stakeholder.`,
-      },
-      {
-        question: 'How is this different from hiring a digital agency?',
-        answer: `A digital agency delivers a product. Vuka builds a
-company. The distinction is the equity warrant — it
-means our incentive is the venture's long-term success,
-not the contract's completion. An agency that delivers
-a product and invoices has no reason to care what
-happens after handover. We do.`,
-      },
-    ],
+  {
+    "question": "What makes an opportunity suitable for a spinout?",
+    "answer": "A clear customer problem, a credible commercial opening and assets the new venture can use with permission. AI should create a meaningful product or operating advantage within that business case."
+  },
+  {
+    "question": "Who owns the IP?",
+    "answer": "The corporate parent retains IP ownership. Vuka’s equity warrant is in the spinout venture. Specific data, licensing and operating arrangements are documented during scoping."
+  },
+  {
+    "question": "What does the build fee cover?",
+    "answer": "The fee covers the agreed delivery scope and embedded capacity. It is based on complexity, dependencies and timeline. Warrant terms and governance are agreed separately before work begins."
+  }
+],
     cta: {
       headline: `The idea has been in committee
 long enough.`,
@@ -607,44 +555,19 @@ instruments that may apply to your engagement — reducing
 or eliminating the government budget requirement in some
 cases. This is discussed during the scoping conversation.`,
     faqs: [
-      {
-        question: 'Is this different from hiring a consultancy?',
-        answer: `Fundamentally, yes. A consultancy delivers a recommendation
-or a specification. Vuka delivers a working service. The
-output is not a document — it is a digital service that
-citizens can use. If you need a transformation strategy
-or a policy recommendation, we are not the right partner.
-If you need something built, we are.`,
-      },
-      {
-        question: 'How does Vuka engage with government procurement?',
-        answer: `We understand that standard government procurement
-processes exist for good reasons and that working outside
-them requires appropriate authority. The scoping conversation
-is designed to explore what a Vuka engagement looks like
-inside your specific procurement context — before any
-formal process begins. We do not assume procurement
-flexibility that does not exist.`,
-      },
-      {
-        question: 'What does a scoped pilot engagement look like?',
-        answer: `A defined service for a defined user group, delivered
-in 90 days. The pilot is sized to be meaningful — not
-a token proof of concept — but scoped to fit inside a
-procurement envelope that does not require a full tender
-process. The scoping conversation defines the specifics.`,
-      },
-      {
-        question: 'Can Vuka connect us to DFI funding instruments?',
-        answer: `Yes, where applicable. Vuka's sector focus in government
-digital services aligns with DFI deployment mandates in
-East Africa. We can support the identification and
-structuring of co-financing options from IFC, UKAID,
-African Development Bank, and GIZ. This is not guaranteed
-for every engagement — but it is worth exploring in the
-scoping conversation.`,
-      },
-    ],
+  {
+    "question": "Where can AI contribute to a public service?",
+    "answer": "It may assist defined tasks such as finding information, processing documents or supporting internal workflows. Suitability depends on the data, users, consequences of errors and the institution’s ability to oversee the system."
+  },
+  {
+    "question": "Is a 90-day delivery guaranteed?",
+    "answer": "No. A sprint is scoped around the service and its dependencies. Access to data, approvals, integrations and acceptance criteria determine what can be delivered and when."
+  },
+  {
+    "question": "Can the internal team run the service after launch?",
+    "answer": "Documentation, training, monitoring and handover responsibilities are part of the delivery scope. The design needs to reflect the team’s capacity to operate and maintain it."
+  }
+],
     cta: {
       headline: `The mandate exists.
 The internal capacity to execute it doesn't.

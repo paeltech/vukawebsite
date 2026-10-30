@@ -1,45 +1,15 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/layout/Section.astro';
-import AudienceHubCards from '@/components/sections/AudienceHubCards.astro';
-import ContentSection from '@/components/sections/ContentSection.astro';
-import PageHeader from '@/components/sections/PageHeader.astro';
-import PageCTA from '@/components/sections/PageCTA.astro';
-import ContextNav from '@/components/ui/ContextNav.astro';
-import { whoWeWorkWith } from '@/data/copy/audiences';
+import ReferenceHero from '@/components/reference/ReferenceHero.astro';
+import Partners from '@/components/reference/Partners.astro';
+import Closing from '@/components/reference/Closing.astro';
+import { referenceCopy } from '@/data/copy/reference';
+const copy = referenceCopy.pages.partners;
 ---
-
-<BaseLayout title="Who we work with">
-  <Section>
-    <PageHeader {...whoWeWorkWith.header} headlineSize="hero">
-      <ContextNav
-        links={[
-          { label: 'Audiences on home', href: '/#audiences' },
-          { label: 'How we build', href: '/#pathways' },
-        ]}
-      />
-    </PageHeader>
-  </Section>
-
-  <Section variant="sand">
-    <ContentSection label={whoWeWorkWith.overview.label} icon="situation">
-      <p class="max-w-3xl text-lg leading-relaxed whitespace-pre-line text-vuka-black">
-        {whoWeWorkWith.overview.body}
-      </p>
-    </ContentSection>
-  </Section>
-
-  <Section>
-    <AudienceHubCards cards={whoWeWorkWith.cards} />
-  </Section>
-
-  <Section variant="sand">
-    <PageCTA
-      cta={{
-        headline: whoWeWorkWith.bottomNote,
-        label: whoWeWorkWith.bottomCta.label,
-        href: whoWeWorkWith.bottomCta.href,
-      }}
-    />
-  </Section>
+<BaseLayout title="Who we work with" description={copy.header.subcopy} class="reference-page">
+  <Section class="reference-page-intro"><ReferenceHero {...copy.header} /></Section>
+  <Section class="reference-section"><Partners /></Section>
+  <Section variant="sand" class="reference-section"><p class="reference-label mb-6">{copy.technology.label}</p><h2 class="reference-h2">{copy.technology.headline}</h2><article class="reference-simple-row mt-12"><span class="reference-label" aria-hidden="true">01</span><h3>{copy.technology.title}</h3><div><p>{copy.technology.body}</p><a href="/partners" class="editorial-link">{copy.technology.cta}</a></div></article></Section>
+  <Closing />
 </BaseLayout>

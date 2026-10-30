@@ -1,37 +1,12 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/layout/Section.astro';
-import PageCTA from '@/components/sections/PageCTA.astro';
-import PageHeader from '@/components/sections/PageHeader.astro';
-import PortfolioCard from '@/components/sections/PortfolioCard.astro';
-import { portfolioPage } from '@/data/copy/portfolio';
-import { getPublishedPortfolio, isPortfolioEnabled } from '@/lib/portfolio';
-
-if (!isPortfolioEnabled()) {
-  return Astro.redirect('/');
-}
-
-const ventures = await getPublishedPortfolio();
+import VentureFeature from '@/components/reference/VentureFeature.astro';
+import Closing from '@/components/reference/Closing.astro';
+import { isPortfolioEnabled } from '@/config/site';
+if (!isPortfolioEnabled()) return Astro.redirect('/');
 ---
-
-<BaseLayout title="Portfolio" description={portfolioPage.header.subcopy}>
-  <Section>
-    <PageHeader {...portfolioPage.header} headlineSize="hero" />
-
-    {
-      ventures.length > 0 ? (
-        <div class="mt-vuka-4xl flex flex-col gap-4">
-          {ventures.map((entry) => (
-            <PortfolioCard entry={entry} />
-          ))}
-        </div>
-      ) : (
-        <p class="mt-vuka-4xl text-lg text-baobab">No ventures published yet.</p>
-      )
-    }
-  </Section>
-
-  <Section>
-    <PageCTA cta={portfolioPage.bottomCta} />
-  </Section>
+<BaseLayout title="Portfolio" class="reference-page">
+  <Section class="reference-page-intro"><VentureFeature portfolioPage /></Section>
+  <Closing />
 </BaseLayout>

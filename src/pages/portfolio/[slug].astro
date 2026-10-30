@@ -1,27 +1,42 @@
 ---
-import { render } from 'astro:content';
-import VentureLayout from '@/layouts/VentureLayout.astro';
-import { getPortfolioEntry, getPortfolioSlugs, isPortfolioEnabled } from '@/lib/portfolio';
-
-export async function getStaticPaths() {
-  if (!isPortfolioEnabled()) {
-    return [];
-  }
-
-  const slugs = await getPortfolioSlugs();
-  return slugs.map((slug) => ({ params: { slug } }));
-}
-
-const { slug } = Astro.params;
-const entry = slug ? await getPortfolioEntry(slug) : undefined;
-
-if (!entry) {
-  return Astro.redirect('/portfolio');
-}
-
-const { Content } = await render(entry);
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/layout/Section.astro';
+import Closing from '@/components/reference/Closing.astro';
+import Button from '@/components/ui/Button.astro';
+import { getPortfolioSlugs, getPortfolioEntry } from '@/lib/portfolio';
+export async function getStaticPaths() { return (await getPortfolioSlugs()).map(slug => ({ params: { slug } })); }
+const entry = await getPortfolioEntry(Astro.params.slug!);
+if (!entry) return Astro.redirect('/portfolio');
+const steps = [
+  { title: 'Start with the label.', body: 'Every check starts on the product. The Ruzuku label gives the buyer two routes: scan the QR code with the Hakiki app, or send the printed code by SMS.' },
+  { title: 'Send a simple message.', body: 'The buyer texts the product keyword and verification code to 15054. For Ruzuku, that means “Ruzuku” followed by the code. This route works without a smartphone or dedicated app.' },
+  { title: 'Read the result.', body: 'The reply tells the buyer whether the code is recognised. A successful check returns the product name, manufacturing date and expiry date. An invalid code returns a response with a contact for further help.' },
+];
 ---
-
-<VentureLayout entry={entry}>
-  <Content />
-</VentureLayout>
+<BaseLayout title="Hakiki: product authentication in Tanzania" description="The Hakiki product story: connecting physical product labels with accessible SMS verification for consumers, manufacturers and regulators in Tanzania." class="reference-page">
+  <Section class="reference-page-intro hakiki-story-intro">
+    <a href="/portfolio" class="editorial-link">← Portfolio</a>
+    <div class="hakiki-story-header">
+      <div><p class="reference-label">Hakiki · A Vuka venture</p><h1 class="hakiki-story-title">Trust starts with<br />a simple check.</h1><p class="reference-lead">From the label on a product to the phone in someone’s hand. Hakiki makes product verification accessible at the moment it matters.</p></div>
+      <div class="hakiki-story-identity"><img src={entry.data.logo} width="300" height="112" alt="Hakiki" /><dl><div><dt>Focus</dt><dd>Product traceability & authentication</dd></div><div><dt>Market</dt><dd>Tanzania</dd></div><div><dt>Built through</dt><dd>Studio Origination</dd></div><div><dt>Access</dt><dd>SMS & QR code</dd></div></dl></div>
+    </div>
+  </Section>
+  <Section variant="sand" class="reference-section">
+    <div class="hakiki-story-editorial"><div><p class="reference-label">01 / The problem</p><h2 class="reference-h2">A familiar label.<br />An unanswered question.</h2></div><div class="hakiki-story-reading"><p class="reference-lead">How do you know the product in front of you is what it claims to be?</p><p>In agricultural supply chains, that question carries real weight. A buyer needs confidence in what they are taking home. A manufacturer needs to protect the trust attached to its name. A regulator needs information that supports oversight.</p><p>A certificate elsewhere in the supply chain cannot answer every question at the point of purchase. Verification needs to travel with the product and work with the technology people already use.</p></div></div>
+  </Section>
+  <Section class="reference-section">
+    <div class="hakiki-story-editorial"><div><p class="reference-label">02 / The solution</p><h2 class="reference-h2">Connect the product<br />to its record.</h2></div><div class="hakiki-story-reading"><p class="reference-lead">Hakiki brings a physical product and its digital information into the same conversation.</p><p>A verification label gives the buyer a place to start. QR access serves people using the app. SMS provides another route for people using a basic phone or choosing to send a text.</p><p>That choice is central to the product: build around local habits, connectivity and access, so the check can happen where the product is bought and used.</p></div></div>
+    <figure class="hakiki-label-example"><div class="hakiki-label-art"><div class="hakiki-product-package"><img src="/assets/portfolio/hakiki/product-label.png" width="542" height="538" alt="Ruzuku product label in Tanzanian flag colours, with a QR code, scratch panel, Hakiki branding and SMS instructions for 15054." loading="lazy" /></div></div><figcaption><p class="reference-label">On the package</p><h3 class="reference-h3">The label is the starting point.</h3><p>The Ruzuku sticker puts verification instructions on the product itself. A QR code and SMS instructions give buyers two ways to begin the same check.</p><p class="hakiki-example-note">Illustrative packaging featuring the supplied Ruzuku label.</p></figcaption></figure>
+  </Section>
+  <Section variant="sand" class="reference-section">
+    <p class="reference-label mb-6">03 / How it works</p><h2 class="reference-h2">A label. A message.<br />An answer.</h2>
+    <div class="hakiki-workflow"><ol>{steps.map((step,i) => <li><span class="reference-label" aria-hidden="true">{String(i+1).padStart(2,'0')}</span><div><h3 class="reference-h3">{step.title}</h3><p>{step.body}</p></div></li>)}</ol><figure class="hakiki-sms-example"><img src="/assets/portfolio/hakiki/authentication-sms.png" width="430" height="942" alt="Historical SMS test with 15054: an invalid Ruzuku code returns a support message; a recognised code returns Yara Prilated Urea 46-0-0 50 Kg with manufacturing and expiry dates." loading="lazy" /><figcaption>Historical SMS test conversation in Swahili. The product codes and 2024–2025 dates are examples.</figcaption></figure></div>
+  </Section>
+  <Section class="reference-section">
+    <div class="hakiki-story-editorial"><div><p class="reference-label">04 / Impact</p><h2 class="reference-h2">One check.<br />Value across the chain.</h2></div><div class="hakiki-story-reading"><p class="reference-lead">The consumer experience is simple. The value connects buyers, brands and the institutions responsible for the market.</p><p>Hakiki has been deployed with TOSCI, ASA, TTCL and AATF, bringing agricultural, regulatory and telecommunications stakeholders into the same product story.</p></div></div>
+    <div class="hakiki-impact-grid"><div><h3 class="reference-h3">For buyers</h3><p>A way to check product information by SMS, with a response they can read on their own phone.</p></div><div><h3 class="reference-h3">For manufacturers</h3><p>A direct connection between the product in circulation and the information behind the brand.</p></div><div><h3 class="reference-h3">For regulators</h3><p>A traceability approach designed around product verification and local oversight workflows.</p></div></div>
+    {entry.data.clientLogos && <div class="hakiki-deployment"><p class="reference-label">Deployment relationships</p><div>{entry.data.clientLogos.map(logo => <img src={logo.src} alt={logo.name} width="150" height="80" loading="lazy" />)}</div></div>}
+  </Section>
+  <Section variant="sand" class="reference-section"><div class="hakiki-story-editorial"><div><p class="reference-label">05 / The studio’s role</p><h2 class="reference-h2">Local insight,<br />built into the product.</h2></div><div class="hakiki-story-reading"><p class="reference-lead">Hakiki was built through Vuka’s Studio Origination model.</p><p>The work connected product development, regulatory navigation and the route to market. SMS access, language, variable connectivity and the needs of several stakeholders shaped the product from the start.</p><p>That is the lesson we carry into every venture: understand the conditions a product must work in, then build the company around them.</p><Button href="/work-with-us?type=partner">Explore a product challenge ↗</Button></div></div></Section>
+  <Closing />
+</BaseLayout>

@@ -1,53 +1,25 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/layout/Section.astro';
-import EmptyState from '@/components/sections/EmptyState.astro';
+import ReferenceHero from '@/components/reference/ReferenceHero.astro';
+import Closing from '@/components/reference/Closing.astro';
 import FilterBar from '@/components/sections/FilterBar.astro';
 import JournalArticleRow from '@/components/sections/JournalArticleRow.astro';
-import PageHeader from '@/components/sections/PageHeader.astro';
-import ContextNav from '@/components/ui/ContextNav.astro';
+import EmptyState from '@/components/sections/EmptyState.astro';
+import { referenceCopy } from '@/data/copy/reference';
 import { journalPage } from '@/data/copy/thesis';
 import { journalTags } from '@/lib/tags';
 import { getJournalArticles } from '@/lib/articles';
-
 const articles = await getJournalArticles();
-const latestSlug = articles[0]?.slug;
+const latest = articles[0];
+const copy = referenceCopy.pages.journal;
 ---
-
-<BaseLayout title="Studio journal" description={journalPage.header.subcopy}>
-  <Section>
-    <PageHeader {...journalPage.header} headlineSize="hero">
-      <ContextNav links={[journalPage.thesisLink]} class="mt-vuka-2xl" />
-    </PageHeader>
-
-    {
-      articles.length === 0 ? (
-        <div class="mt-vuka-4xl">
-          <EmptyState message={journalPage.emptyState} />
-        </div>
-      ) : (
-        <div class="mt-vuka-4xl">
-          <FilterBar
-            tags={journalTags}
-            targetId="journal-grid"
-            emptyMessage={journalPage.filterEmpty}
-          />
-
-          <div id="journal-grid" class="mt-vuka-3xl flex flex-col gap-4">
-            {
-              articles.map((article) => (
-                <div data-tags={['All', ...article.siteTags].join('|')}>
-                  <JournalArticleRow
-                    article={article}
-                    basePath="/studio-journal"
-                    latest={article.slug === latestSlug}
-                  />
-                </div>
-              ))
-            }
-          </div>
-        </div>
-      )
-    }
-  </Section>
+<BaseLayout title="Studio journal" description={journalPage.header.subcopy} class="reference-page">
+  <Section class="reference-page-intro"><ReferenceHero {...copy.header} /></Section>
+  <Section class="reference-section"><FilterBar tags={journalTags} targetId="journal-grid" emptyMessage={journalPage.filterEmpty} /><div id="journal-grid" class="mt-12">
+    {latest && <article data-tags={['All', ...latest.siteTags].join('|')} class="reference-article-feature mb-16"><img src="/assets/photos/dar-es-salaam-street.webp" alt="Dar es Salaam, the local operating context for the studio" width="640" height="440" loading="lazy" class="h-[300px] w-full rounded-sm object-cover md:h-[440px]" /><div><p class="reference-label">{latest.tag}</p><h2 class="reference-h3">{latest.title}</h2><p>{latest.excerpt}</p><a href={latest.href} class="editorial-link">Read the studio note ↗</a></div></article>}
+    <div><p class="reference-label mb-6">{copy.list.label}</p><h2 class="reference-h2 mb-12">{copy.list.headline}</h2></div>
+    {articles.length ? articles.slice(1).map(article => <div data-tags={['All', ...article.siteTags].join('|')}><JournalArticleRow {article} basePath="/studio-journal" /></div>) : <EmptyState message={journalPage.emptyState} />}
+  </div></Section>
+  <Closing />
 </BaseLayout>

@@ -15,6 +15,7 @@ export interface MediumPost {
 }
 
 const parser = new Parser({
+  timeout: 10000,
   customFields: {
     item: ['content:encoded', 'dc:creator'],
   },
@@ -52,18 +53,17 @@ function firstSubstantialParagraph(html: string): string {
 }
 
 function buildExcerpt(contentSnippet: string | undefined, html: string | undefined): string {
-  const plain = stripHtml(html ?? '');
-  const candidates = [contentSnippet, plain].filter(Boolean) as string[];
-
-  for (const candidate of candidates) {
-    const cleaned = stripPhotoCredits(candidate);
-    if (cleaned.length >= 20) return cleaned.slice(0, 280);
+  const source = firstSubstantialParagraph(html ?? '') || contentSnippet || stripHtml(html ?? '');
+  const cleaned = stripPhotoCredits(source).replace(/\s+/g, ' ').trim();
+  if (cleaned.length <= 220) return cleaned;
+  const sentences = cleaned.match(/[^.!?]+[.!?]+(?:[”’"']|$|\s)/g) ?? [];
+  let summary = '';
+  for (const sentence of sentences) {
+    if ((summary + sentence).trim().length > 220) break;
+    summary += sentence;
   }
+  return summary.trim().length >= 50 ? summary.trim() : `${cleaned.slice(0, 219).replace(/\s+\S*$/, '').trim()}…`;
 
-  const fromHtml = firstSubstantialParagraph(html ?? '');
-  if (fromHtml) return fromHtml.slice(0, 280);
-
-  return stripPhotoCredits(candidates[0] ?? '').slice(0, 280);
 }
 
 function getRssUrl(username: string): string {
@@ -76,7 +76,7 @@ function getRssUrl(username: string): string {
  * Fetches Medium posts via RSS at build time.
  * Requires MEDIUM_USERNAME in environment (see .env.example).
  */
-export async function fetchMediumPosts(): Promise<MediumPost[]> {
+async function loadMediumPosts(): Promise<MediumPost[]> {
   const username = import.meta.env.MEDIUM_USERNAME;
   if (!username) {
     console.warn('[medium] MEDIUM_USERNAME not set — skipping RSS fetch.');
@@ -87,7 +87,7 @@ export async function fetchMediumPosts(): Promise<MediumPost[]> {
     const feed = await parser.parseURL(getRssUrl(username));
 
     return (feed.items ?? [])
-      .map((item) => {
+      .map((item): MediumPost | null => {
         const categories = (item.categories ?? []).map(String);
         const route = getMediumRouteFromTags(categories);
         if (!route) return null;
@@ -110,6 +110,9 @@ export async function fetchMediumPosts(): Promise<MediumPost[]> {
       .filter((post): post is MediumPost => post !== null)
       .sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
   } catch (error) {
+    if (import.meta.env.PROD) {
+      throw new Error('Medium feed unavailable. Build stopped to preserve published article routes.', { cause: error });
+    }
     console.warn('[medium] Failed to fetch RSS feed:', error);
     return [];
   }
@@ -118,4 +121,15 @@ export async function fetchMediumPosts(): Promise<MediumPost[]> {
 export async function getMediumPostsByRoute(route: MediumRoute): Promise<MediumPost[]> {
   const posts = await fetchMediumPosts();
   return posts.filter((post) => post.route === route);
+}
+
+// Reuse one feed snapshot across page generation, including concurrent requests.
+let feedSnapshot: Promise<MediumPost[]> | undefined;
+let snapshotExpiresAt = 0;
+export function fetchMediumPosts(): Promise<MediumPost[]> {
+  if (!feedSnapshot || Date.now() >= snapshotExpiresAt) {
+    snapshotExpiresAt = Date.now() + 5 * 60 * 1000;
+    feedSnapshot = loadMediumPosts();
+  }
+  return feedSnapshot;
 }

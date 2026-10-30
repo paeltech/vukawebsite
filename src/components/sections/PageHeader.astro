@@ -22,14 +22,14 @@ const {
 
 const headlineClass =
   headlineSize === 'hero'
-    ? 'text-balance font-heavy leading-none tracking-tight text-display'
-    : 'text-balance font-extrabold text-h2 leading-tight tracking-snug';
+    ? 'text-balance font-normal leading-none tracking-tight text-display'
+    : 'text-balance font-normal text-h2 leading-tight tracking-tight';
 
 const hasAccent = accent && headline.includes(accent);
 const headlineParts = hasAccent ? headline.split(accent) : [headline];
 ---
 
-<header class={className}>
+<header class:list={["page-heading", className]}>
   {eyebrow && <Eyebrow text={eyebrow} inverted={inverted} class="mb-vuka-2xl" />}
   <h1 class:list={[headlineClass, inverted ? 'text-parchment' : 'text-vuka-black']}>
     {
@@ -64,7 +64,7 @@ const headlineParts = hasAccent ? headline.split(accent) : [headline];
     subcopy && (
       <p
         class:list={[
-          'mt-vuka-xl max-w-2xl text-lg leading-relaxed',
+          'mt-8 max-w-[820px] text-xl md:text-2xl leading-[1.42]',
           inverted ? 'text-sand' : 'text-vuka-black',
         ]}
       >

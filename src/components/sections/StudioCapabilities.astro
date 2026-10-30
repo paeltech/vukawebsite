@@ -11,7 +11,7 @@ const { summary, services } = Astro.props;
 ---
 
 <div class="vuka-reveal">
-  <p class="max-w-3xl text-xl leading-relaxed text-parchment md:text-2xl md:leading-relaxed">
+  <p class="max-w-3xl text-xl leading-relaxed text-vuka-black md:text-2xl md:leading-relaxed">
     {summary}
   </p>
 
@@ -19,14 +19,14 @@ const { summary, services } = Astro.props;
     <ul class="flex flex-col gap-3">
       {
         services.columnA.map((item) => (
-          <li class="text-lg leading-relaxed text-sand">{item}</li>
+          <li class="border-t border-baobab py-5 text-xl leading-relaxed text-vuka-black">{item}</li>
         ))
       }
     </ul>
     <ul class="flex flex-col gap-3">
       {
         services.columnB.map((item) => (
-          <li class="text-lg leading-relaxed text-sand">{item}</li>
+          <li class="border-t border-baobab py-5 text-xl leading-relaxed text-vuka-black">{item}</li>
         ))
       }
     </ul>

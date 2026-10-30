@@ -10,13 +10,13 @@ interface Props {
 const { cards } = Astro.props;
 ---
 
-<div class="vuka-reveal flex flex-col gap-4">
+<div class="vuka-reveal flex flex-col">
   {
     cards.map((card) => (
-      <article class="grid grid-cols-1 gap-4 border border-sand bg-parchment p-6 md:grid-cols-2 md:items-start md:gap-10 md:p-8">
+      <article class="grid grid-cols-1 gap-4 border-t border-sand bg-parchment py-8 md:grid-cols-2 md:items-start md:gap-10 md:py-10">
         <div>
           <Tag label={card.title} variant="programme" class="mb-4" />
-          <h2 class="font-bold text-xl leading-snug text-vuka-black md:text-2xl">{card.problemHeadline}</h2>
+          <h2 class="font-normal text-xl leading-snug text-vuka-black md:text-2xl">{card.problemHeadline}</h2>
         </div>
         <div class="flex flex-col gap-vuka-lg">
           <p class="text-lg leading-relaxed text-vuka-black">{card.body}</p>

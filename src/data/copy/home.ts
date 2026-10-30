@@ -1,4 +1,4 @@
-import type { LinkCta, PageHeader } from './types';
+import type { LinkCta } from './types';
 
 export interface HomeAudienceCard {
   tag: string;

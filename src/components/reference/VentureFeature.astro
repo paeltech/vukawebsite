@@ -1,0 +1,21 @@
+---
+import { referenceCopy } from '@/data/copy/reference';
+import { getFeaturedPortfolio } from '@/lib/portfolio';
+interface Props { portfolioPage?: boolean; related?: boolean; }
+const { portfolioPage = false, related = false } = Astro.props;
+const venture = await getFeaturedPortfolio();
+const copy = referenceCopy.home.portfolio;
+const Heading = portfolioPage ? 'h1' : 'h2';
+---
+{venture && <div class="reference-venture">
+  {!related && <div class="reference-venture-heading"><div><p class="reference-label">{copy.label}</p><Heading class="reference-h2">{copy.headline}</Heading></div></div>}
+  <article class="venture-summary">
+    <a href="/portfolio/hakiki" class="venture-summary-logo" aria-label="Read the Hakiki product story"><img src={venture.data.logo} width="300" height="112" alt="Hakiki" loading="lazy" /></a>
+    <div class="venture-summary-copy">
+      <p class="reference-label">Product authentication · Tanzania</p>
+      <h2 class:list={[portfolioPage ? 'reference-h2' : 'reference-h3']}>{related ? referenceCopy.audiences.founders.related.headline : 'Confidence in what you buy.'}</h2>
+      <p>Hakiki connects product labels with SMS verification, helping people check what they buy and giving manufacturers and regulators a clearer view of the products in circulation.</p>
+      <a href="/portfolio/hakiki" class="editorial-link">Read the Hakiki story <span aria-hidden="true">↗</span></a>
+    </div>
+  </article>
+</div>}

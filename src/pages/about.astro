@@ -1,67 +1,18 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/layout/Section.astro';
-import PageCTA from '@/components/sections/PageCTA.astro';
-import PageHeader from '@/components/sections/PageHeader.astro';
-import PrincipleCard from '@/components/sections/PrincipleCard.astro';
-import TeamMemberCard from '@/components/sections/TeamMemberCard.astro';
-import ContentSection from '@/components/sections/ContentSection.astro';
-import ContextNav from '@/components/ui/ContextNav.astro';
-import { aboutPage } from '@/data/copy/about';
+import ReferenceHero from '@/components/reference/ReferenceHero.astro';
+import StudioFeature from '@/components/reference/StudioFeature.astro';
+import Closing from '@/components/reference/Closing.astro';
+import { referenceCopy } from '@/data/copy/reference';
 import { isAboutEnabled } from '@/config/site';
-
-if (!isAboutEnabled()) {
-  return Astro.redirect('/');
-}
-
-const principleIcons = ['principle', 'layers', 'process', 'proof'] as const;
+if (!isAboutEnabled()) return Astro.redirect('/');
+const copy = referenceCopy.pages.studio;
 ---
-
-<BaseLayout title="About" description={aboutPage.header.subcopy}>
-  <Section>
-    <PageHeader {...aboutPage.header} headlineSize="hero" />
-  </Section>
-
-  <Section variant="dark">
-    <ContentSection label="The studio" icon="situation" inverted>
-      <p class="max-w-3xl text-xl leading-relaxed text-sand whitespace-pre-line">
-        {aboutPage.story}
-      </p>
-      <ContextNav
-        inverted
-        links={[{ label: 'Why we exist — on home', href: '/#why' }]}
-        class="mt-vuka-3xl"
-      />
-    </ContentSection>
-  </Section>
-
-  <Section>
-    <ContentSection label="How we operate" icon="process">
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-        {
-          aboutPage.principles.map((principle, index) => (
-            <PrincipleCard
-              title={principle.title}
-              body={principle.body}
-              icon={principleIcons[index % principleIcons.length]}
-            />
-          ))
-        }
-      </div>
-    </ContentSection>
-  </Section>
-
-  <Section variant="dark">
-    <ContentSection label="Team" icon="founder" inverted>
-      <div class="flex flex-col gap-vuka-4xl">
-        {aboutPage.team.map((member) => (
-          <TeamMemberCard {...member} />
-        ))}
-      </div>
-    </ContentSection>
-  </Section>
-
-  <Section>
-    <PageCTA cta={aboutPage.cta} />
-  </Section>
+<BaseLayout title="Studio" description={copy.header.subcopy} class="reference-page">
+  <Section class="reference-page-intro"><ReferenceHero {...copy.header} /></Section>
+  <Section class="reference-section"><StudioFeature studioPage /></Section>
+  <Section variant="sand" class="reference-section"><div class="reference-editorial"><p class="reference-label">{copy.founder.label}</p><div><h2 class="reference-h2">{copy.founder.headline}</h2><p class="reference-term-body">{copy.founder.body}</p></div></div></Section>
+  <Section class="reference-section"><p class="reference-label mb-6">{copy.principles.label}</p><h2 class="reference-h2">{copy.principles.headline}</h2><div class="reference-rows">{copy.principles.rows.map((row, i) => <article class="reference-simple-row"><span class="reference-label" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><h3>{row.title}</h3><div><p>{row.body}</p></div></article>)}</div></Section>
+  <Closing />
 </BaseLayout>

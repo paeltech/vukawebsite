@@ -1,3 +1,5 @@
+import sanitizeHtml from 'sanitize-html';
+
 function stripHtml(html: string): string {
   return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 }
@@ -52,8 +54,25 @@ function markArticleDeck(html: string): string {
 
 /** Prepare Medium HTML for on-site article pages */
 export function sanitizeArticleHtml(html: string, title: string): string {
-  let result = html.trim();
+  let result = sanitizeHtml(html, {
+    allowedTags: [...sanitizeHtml.defaults.allowedTags, 'img'],
+    allowedAttributes: {
+      ...sanitizeHtml.defaults.allowedAttributes,
+      img: ['src', 'alt', 'width', 'height', 'loading', 'decoding'],
+      a: ['href', 'name', 'target', 'rel'],
+    },
+    allowedSchemes: ['http', 'https', 'mailto', 'tel'],
+    transformTags: {
+      img: (_tag, attributes) => ({ tagName: 'img', attribs: { ...attributes, alt: attributes.alt || '', loading: 'lazy', decoding: 'async' } }),
+      a: (_tag, attributes) => ({ tagName: 'a', attribs: { ...attributes, ...(attributes.target === '_blank' ? { rel: 'noopener noreferrer' } : {}) } }),
+    },
+    exclusiveFilter: frame => frame.tag === 'img' && (
+      /(?:^|\/)medium\.com\/_\/stat(?:\?|$)/i.test(frame.attribs.src || '') ||
+      (frame.attribs.width === '1' && frame.attribs.height === '1')
+    ),
+  }).trim();
   result = stripLeadingDuplicateTitle(result, title);
+  result = result.replace(/<(\/?)h1(\b[^>]*)>/gi, '<$1h2$2>');
   result = stripPhotoCreditCaptions(result);
   result = promoteStrongParagraphsToHeadings(result);
   result = markArticleDeck(result);

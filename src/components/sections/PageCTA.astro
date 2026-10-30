@@ -12,11 +12,11 @@ interface Props {
 const { cta } = Astro.props;
 ---
 
-<div class="vuka-reveal rounded-sm bg-surface-dark p-10 text-parchment md:p-14">
+<div class="vuka-reveal bg-surface-dark px-6 py-16 text-parchment md:p-16">
   <div class="grid grid-cols-1 gap-vuka-3xl lg:grid-cols-[1fr_auto] lg:items-center">
-    <h2 class="font-heavy text-h3 leading-tight whitespace-pre-line">{cta.headline}</h2>
+    <h2 class="font-normal text-h2 leading-tight whitespace-pre-line">{cta.headline}</h2>
     <div>
-      <Button href={cta.href} variant="primary" size="lg">
+      <Button href={cta.href} variant="light" size="lg">
         {cta.label}
         <Icon name="arrow-right" size={18} />
       </Button>

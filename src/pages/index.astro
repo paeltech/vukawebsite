@@ -1,33 +1,39 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/layout/Section.astro';
-import Hero from '@/components/sections/Hero.astro';
-import ProblemCards from '@/components/sections/ProblemCards.astro';
-import HomeAudiences from '@/components/sections/HomeAudiences.astro';
-import HomePathways from '@/components/sections/HomePathways.astro';
-import TeamCallout from '@/components/sections/TeamCallout.astro';
-import { homeHero, homeWhy, homeAudiences, homePathways } from '@/data/copy/home';
-import { teamCallout } from '@/data/copy/join-team';
+import Container from '@/components/layout/Container.astro';
+import ReferenceHero from '@/components/reference/ReferenceHero.astro';
+import Partners from '@/components/reference/Partners.astro';
+import Services from '@/components/reference/Services.astro';
+import BuildProcess from '@/components/reference/BuildProcess.astro';
+import VentureFeature from '@/components/reference/VentureFeature.astro';
+import StudioFeature from '@/components/reference/StudioFeature.astro';
+import Closing from '@/components/reference/Closing.astro';
+import { referenceCopy } from '@/data/copy/reference';
+import { isPortfolioEnabled } from '@/config/site';
+const copy = referenceCopy.home;
 ---
-
-<BaseLayout>
-  <Section class="flex min-h-dvh items-center">
-    <Hero {...homeHero} />
+<BaseLayout class="reference-page">
+  <Section class="reference-page-intro overflow-hidden">
+    <ReferenceHero {...copy.hero} home cta={copy.hero.primary} href="/work-with-us" secondary={copy.hero.secondary} />
   </Section>
-
-  <Section id="why" variant="sand">
-    <ProblemCards {...homeWhy} />
+  <Container>
+    <div class="reference-context">{copy.context.filter(item => isPortfolioEnabled() || item.label !== 'Portfolio').map(item => <div><p class="reference-label">{item.label}</p><p>{item.body}</p></div>)}</div>
+    <figure class="reference-photo"><img src="/assets/photos/dar-es-salaam-harbour.webp" alt="Dar es Salaam harbour and city skyline" width="1280" height="430" /><figcaption><span>{copy.photo.caption}</span><span>{copy.photo.credit}</span></figcaption></figure>
+  </Container>
+  <Section id="why" class="reference-section">
+    <div class="reference-proposition">
+      <div><p class="reference-label">{copy.why.label}</p><h2 class="reference-h2">{copy.why.headline}</h2></div>
+      <div class="reference-reading"><p class="reference-lead">{copy.why.lead}</p><p>{copy.why.body}</p><a href="/what-we-do" class="editorial-link">{copy.why.cta}</a></div>
+    </div>
   </Section>
-
-  <Section id="audiences">
-    <HomeAudiences {...homeAudiences} />
+  <Section id="audiences" variant="sand" class="reference-section"><Partners /></Section>
+  <Section id="services" class="reference-section"><span id="pathways" aria-hidden="true"></span><Services home /></Section>
+  <Section id="process" variant="dark" class="reference-section"><BuildProcess /></Section>
+  <Section id="difference" class="reference-section">
+    <div class="reference-editorial"><p class="reference-label">{copy.difference.label}</p><div class="reference-stack"><h2 class="reference-h2">{copy.difference.headline}</h2><div class="reference-comparisons">{copy.difference.comparisons.map(item => <div><h3>{item.title}</h3><p>{item.body}</p></div>)}</div><div class="reference-reading"><p class="reference-lead">{copy.difference.lead}</p><p>{copy.difference.body}</p></div><a href="/about" class="editorial-link">{copy.difference.cta}</a></div></div>
   </Section>
-
-  <Section id="pathways" variant="sand">
-    <HomePathways {...homePathways} />
-  </Section>
-
-  <Section id="join-team" variant="parchment">
-    <TeamCallout {...teamCallout} />
-  </Section>
+  {isPortfolioEnabled() && <Section id="portfolio" variant="sand" class="reference-section"><VentureFeature /></Section>}
+  <Section id="studio" class="reference-section"><span id="join-team" aria-hidden="true"></span><StudioFeature /></Section>
+  <Closing />
 </BaseLayout>

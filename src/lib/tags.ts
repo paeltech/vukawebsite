@@ -30,7 +30,7 @@ export const mediumRouteTags = {
 
 export type MediumRoute = keyof typeof mediumRouteTags;
 
-const ROUTE_TAGS = new Set(Object.values(mediumRouteTags));
+const ROUTE_TAGS = new Set<string>(Object.values(mediumRouteTags));
 
 /** Known Medium tag slugs → site display labels */
 const MEDIUM_TAG_ALIASES: Record<string, string> = {

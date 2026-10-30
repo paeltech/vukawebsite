@@ -1,0 +1,29 @@
+---
+import Button from '@/components/ui/Button.astro';
+interface Props {
+  eyebrow: string;
+  headline: string;
+  subcopy?: string;
+  lead?: string;
+  body?: string;
+  cta?: string;
+  href?: string;
+  secondary?: string;
+  secondaryHref?: string;
+  home?: boolean;
+}
+const { eyebrow, headline, subcopy, lead, body, cta, href = '/work-with-us', secondary, secondaryHref = '/what-we-do', home = false } = Astro.props;
+const lines = headline.split('\n');
+---
+<header class:list={['reference-hero', home && 'reference-hero--home']}>
+  {home && <img src="/assets/home-hero.png" width="1080" height="1350" fetchpriority="high" class="reference-hero-mark" alt="" aria-hidden="true" />}
+  <div class="reference-hero-heading">
+    <p class="reference-label">{eyebrow}</p>
+    <h1>{home ? lines.map(line => <span class="reference-hero-line">{line.split(/(AI-native)/).map(part => part === 'AI-native' ? <span class="reference-nowrap">{part}</span> : part)}</span>) : headline.replace(/\s*\n\s*/g, ' ')}</h1>
+  </div>
+  <div class="reference-hero-copy">
+    {(lead || subcopy) && <p class="reference-hero-lead">{lead || subcopy}</p>}
+    {body && <p class="reference-hero-body">{body}</p>}
+    {cta && <div class="reference-actions"><Button href={href} size="lg">{cta} {!cta.includes('↗') && <span aria-hidden="true">↗</span>}</Button>{secondary && <Button href={secondaryHref} variant="secondary" size="lg">{secondary}</Button>}</div>}
+  </div>
+</header>

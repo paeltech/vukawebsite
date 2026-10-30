@@ -1,0 +1,34 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/layout/Section.astro';
+import ReferenceHero from './ReferenceHero.astro';
+import VentureFeature from './VentureFeature.astro';
+import Closing from './Closing.astro';
+import FAQ from '@/components/sections/FAQ.astro';
+import { isPortfolioEnabled } from '@/config/site';
+interface Props {
+  copy: {
+    header: { eyebrow: string; headline: string; subcopy: string; cta: string };
+    partnership: { label: string; headline: string; youLabel: string; you: readonly string[]; weLabel: string; we: readonly string[] };
+    process: { label: string; headline: string; steps: readonly { title: string; body: string }[] };
+    engagement: { label: string; headline: string; body: string };
+    faq: { label: string; headline: string; cta: string };
+  };
+  enquiry: string;
+  faqs: { question: string; answer: string }[];
+  engagementBody?: string;
+  relatedHref: string;
+}
+const { copy, enquiry, faqs, engagementBody, relatedHref } = Astro.props;
+const termParagraphs = (engagementBody || copy.engagement.body).split(/\n\s*\n/).map(p => p.replace(/\s+/g, ' ').trim());
+const href = `/work-with-us?type=${encodeURIComponent(enquiry)}`;
+---
+<BaseLayout title={copy.header.eyebrow} description={copy.header.subcopy} class="reference-page">
+  <Section class="reference-page-intro"><ReferenceHero {...copy.header} {href} /></Section>
+  <Section variant="sand" class="reference-section"><p class="reference-label mb-6">{copy.partnership.label}</p><h2 class="reference-h2">{copy.partnership.headline}</h2><div class="reference-partnership"><div><h3 class="reference-label">{copy.partnership.youLabel}</h3><ul>{copy.partnership.you.map(item => <li>{item}</li>)}</ul></div><div><h3 class="reference-label">{copy.partnership.weLabel}</h3><ul>{copy.partnership.we.map(item => <li>{item}</li>)}</ul></div></div></Section>
+  <Section class="reference-section"><p class="reference-label mb-6">{copy.process.label}</p><h2 class="reference-h2">{copy.process.headline}</h2><ol class="reference-rows">{copy.process.steps.map((step, i) => <li class="reference-simple-row"><span class="reference-label" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><h3>{step.title}</h3><div><p>{step.body}</p></div></li>)}</ol></Section>
+  <Section variant="sand" class="reference-section"><p class="reference-label mb-6">{copy.engagement.label}</p><h2 class="reference-h2">{copy.engagement.headline}</h2><div class="reference-term-body">{termParagraphs.map(paragraph => <p>{paragraph}</p>)}</div></Section>
+  {isPortfolioEnabled() && <Section class="reference-section"><VentureFeature related /></Section>}
+  <Section class="reference-section"><div class="reference-faq-heading"><p class="reference-label">{copy.faq.label}</p><h2 class="reference-h2">{copy.faq.headline}</h2></div><FAQ items={faqs} /><a href={relatedHref} class="editorial-link mt-8">{copy.faq.cta}</a></Section>
+  <Closing {href} />
+</BaseLayout>

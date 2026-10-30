@@ -36,7 +36,9 @@ const { copy, placeholder, cta } = Astro.props;
 <script>
   document.getElementById('thesis-subscribe')?.addEventListener('submit', (e) => {
     e.preventDefault();
-    const input = e.target?.querySelector('input[type="email"]');
+    const form = e.currentTarget;
+    if (!(form instanceof HTMLFormElement)) return;
+    const input = form.querySelector('input[type="email"]');
     if (!(input instanceof HTMLInputElement)) return;
     const subject = encodeURIComponent('Notify me — Vuka thesis updates');
     const body = encodeURIComponent(`Please notify me at: ${input.value}`);

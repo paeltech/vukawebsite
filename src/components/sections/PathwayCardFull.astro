@@ -1,5 +1,4 @@
 ---
-import Button from '@/components/ui/Button.astro';
 import Icon from '@/components/ui/Icon.astro';
 import type { IconName } from '@/lib/icons';
 import Tag from '@/components/ui/Tag.astro';
@@ -40,7 +39,7 @@ const ctaClass =
     !compact && (
       <h3
         class:list={[
-          'mb-4 font-bold text-xl leading-snug whitespace-pre-line',
+          'mb-4 font-normal text-xl leading-snug whitespace-pre-line',
           variant === 'dark' ? 'text-parchment' : '',
         ]}
       >

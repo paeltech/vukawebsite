@@ -1,8 +1,8 @@
 export const siteConfig = {
   name: 'vuka.',
-  title: "vuka. · East Africa's venture studio",
+  title: "vuka. · AI-native venture studio in East Africa",
   description:
-    'Vuka is an East African venture studio. We co-build technology companies with founders, organisations, and institutions who are ready to build.',
+    'Vuka is an AI-native venture studio in East Africa. We co-build companies with AI at the core of their products and operations, grounded in local market insight.',
   url: 'https://vukaventures.co',
   email: 'hello@vukaventures.co',
   location: 'Dar es Salaam, East Africa',
@@ -30,23 +30,10 @@ export function isPortfolioEnabled(): boolean {
 }
 
 export const navLinks = [
-  { label: 'what we do', href: '/what-we-do' },
-  {
-    label: 'who we work with',
-    href: '/who-we-work-with',
-    children: [
-      { label: 'Founders', href: '/founders' },
-      { label: 'Corporates', href: '/corporates' },
-      { label: 'Government agencies', href: '/government' },
-      { label: 'Investors & DFIs', href: '/investors' },
-      { label: 'Technology partners', href: '/partners' },
-    ],
-  },
-  { label: 'our thesis', href: '/our-thesis' },
-  { label: 'studio journal', href: '/studio-journal' },
-  ...(siteConfig.portfolioEnabled
-    ? [{ label: 'portfolio', href: '/portfolio' } as const]
-    : []),
+  { label: 'What we do', href: '/what-we-do' },
+  { label: 'How we work', href: '/what-we-do#process' },
+  ...(siteConfig.portfolioEnabled ? [{ label: 'Portfolio', href: '/portfolio' }] : []),
+  ...(siteConfig.aboutEnabled ? [{ label: 'Studio', href: '/about' }] : []),
 ] as const;
 
 export const footerLinks = {
@@ -68,6 +55,6 @@ export const footerLinks = {
 } as const;
 
 export const primaryCta = {
-  label: 'work with us',
+  label: 'Build with Vuka',
   href: '/work-with-us',
 } as const;

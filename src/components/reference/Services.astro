@@ -1,0 +1,15 @@
+---
+import { referenceCopy } from '@/data/copy/reference';
+import Button from '@/components/ui/Button.astro';
+interface Props { home?: boolean; }
+const { home = false } = Astro.props;
+const copy = referenceCopy.home.services;
+---
+<div class="reference-editorial">
+  <p class="reference-label">{copy.label}</p>
+  <div class="reference-stack">
+    <h2 class="reference-h2">{copy.headline}</h2>
+    <div class="reference-service-grid">{copy.cards.map(card => <article class="reference-service"><p class="reference-label">{card.label}</p><h3>{card.title}</h3><p>{card.body}</p></article>)}</div>
+    <Button href={home ? '/what-we-do' : '/work-with-us'} class="w-fit" size="md">{home ? copy.cta : 'Discuss your venture ↗'}</Button>
+  </div>
+</div>

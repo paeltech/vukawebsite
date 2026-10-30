@@ -114,29 +114,26 @@ Vuka is built for founders who are ready to build — not ready to be coached.`,
       'Equity-aligned co-building through the build phase',
       'Access to tier-1 cloud and tooling via partner programs',
     ],
-    engagement: `Vuka embeds inside your venture with equity alignment. Two pathways apply depending on where you start:
-
-Founder-in-Residence — you bring the idea; Vuka provides the build engine.
-Studio Origination — Vuka originates the venture; you join as domain co-founder.
-
-Commercial terms are agreed during scoping. Selection is based on market validity and fit — not pitch polish.`,
+    engagement: "We build alongside founders through an equity-aligned partnership. If you bring the opportunity, explore Founder-in-Residence. If you want to co-found around a studio-originated opportunity, explore Studio Origination.\n\nScope, responsibilities and commercial terms are agreed before the build begins. The starting point is customer evidence, founder commitment and a fit with the studio’s capacity.",
     proof: `Vuka is founded by Paul Mandele — a decade inside the East African ecosystem as an operator, not an observer. The studio's founding argument is published: Africa Doesn't Need More Startup Accelerators, It Needs Venture Engines Instead.
 
 The $100 Problem essay documents the infrastructure access gap — why credits exist and why most East African founders cannot reach them.
 
 Hakiki — product traceability built for the Tanzanian market — is operational proof that the studio model produces companies still running, not demo-day graduates.`,
     faqs: [
-      {
-        question: "What does Vuka actually do that an accelerator doesn't?",
-        answer: `An accelerator adds polish to what you already have. Vuka adds what you are missing — operational co-building, embedded capacity, and equity alignment that lasts through the build phase.
-
-Accelerators extract value at the moment of contact and leave. The studio stays in the room until the company can stand alone.`,
-      },
-      {
-        question: 'Which pathway should I apply for?',
-        answer: `Founder-in-Residence if you bring the idea and need a co-builder. Studio Origination if Vuka identifies the opportunity and you join as domain co-founder. If you are unsure, apply through the contact form — we will route you.`,
-      },
-    ],
+  {
+    "question": "What makes Vuka an AI-native studio?",
+    "answer": "We consider AI in the product, the build process and the way the company operates from the outset. That can include model-powered features and AI-assisted workflows. Each use needs a clear purpose, a way to evaluate performance and someone accountable for the outcome."
+  },
+  {
+    "question": "Do I need AI expertise to work with Vuka?",
+    "answer": "You need to understand the customer problem and be ready to build. Bring the evidence and market access you have. We work through the product and technical choices together."
+  },
+  {
+    "question": "Does every idea need to use AI?",
+    "answer": "We assess the customer problem first. If AI does not improve the experience, capability or economics, it should not be forced into the product. That assessment is part of deciding whether an opportunity fits the studio."
+  }
+],
     pathways: [
       { label: 'Founder-in-Residence', href: '/what-we-do/founder-in-residence' },
       { label: 'Studio Origination', href: '/what-we-do/studio-origination' },
@@ -192,22 +189,24 @@ You need a co-builder with skin in the game — not a retainer.`,
       'Equity warrant alignment — skin in the game',
       'Operational infrastructure until the venture can stand alone',
     ],
-    engagement: `Corporate spinouts run on fee-for-service plus equity warrant. The fee covers the build scope; the warrant ties Vuka's return to long-term venture success.
-
-IP ownership stays with the corporate parent. Vuka does not operate as a consultancy on retainer — we co-build with accountability for whether the venture works.`,
+    engagement: "Corporate spinouts use a scoped build fee plus an equity warrant. The fee covers the agreed work; the warrant aligns Vuka with the venture’s long-term outcome.\n\nIP ownership remains with the corporate parent. Data permissions, operating responsibilities and the relationship between parent and spinout are documented before work begins.",
     proof: `Paul Mandele has built ventures inside corporations across East Africa through Smart Foundry and a decade of ecosystem operation. The Venture Engines essay is the structural argument for co-building over consultancy.
 
 Hakiki demonstrates delivery at regulatory scale — a co-built venture operational across Tanzania's food and agricultural supply chain.`,
     faqs: [
-      {
-        question: 'Why give equity to an external partner?',
-        answer: `Because equity is alignment. A vendor who invoices and leaves has no incentive to care what happens after handover. An equity warrant ties Vuka's return to the venture's outcome — which is exactly why the co-building is real, not performative.`,
-      },
-      {
-        question: 'How is this different from hiring a consultancy?',
-        answer: `Consultancies deliver documents and move on. Vuka builds a standalone company with equity alignment and stays through launch. The engagement is structured for venture outcomes — not billable hours.`,
-      },
-    ],
+  {
+    "question": "Where does AI fit in a corporate venture?",
+    "answer": "We look at the customer problem, the expertise your organisation holds and the data it has permission to use. The opportunity may be an AI-powered product, a different cost of delivery or an operating model that makes a new business viable."
+  },
+  {
+    "question": "What happens to our IP and data?",
+    "answer": "The corporate parent retains IP ownership under the engagement model. Data access, provider terms and permitted uses are agreed during scoping. We establish those boundaries before choosing or integrating systems."
+  },
+  {
+    "question": "How is the studio aligned with the outcome?",
+    "answer": "The engagement combines delivery fees with an equity warrant. Build scope, governance and warrant terms are documented before work begins."
+  }
+],
     pathways: [{ label: 'Corporate Spinout', href: '/what-we-do/corporate-spinout' }],
     relatedWorkIntro: `Co-built ventures with corporate and B2B stakeholders — proof of delivery beyond strategy documents.`,
     cta: {
@@ -258,20 +257,22 @@ You need a team that builds working services — not one that advises.`,
       'Co-build methodology with your internal team',
       'Handover documentation and capability transfer',
     ],
-    engagement: `Government engagements are milestone-based contracts. No equity warrant component for government clients.
-
-Fees are scoped to defined deliverables — a working service, not an advisory engagement. Vuka delivers at startup speed within the boundaries your procurement process requires.`,
+    engagement: "Public-sector engagements use scoped, milestone-based contracts with no equity warrant. Fees reflect the agreed service, dependencies and delivery scope.\n\nAI use, data access, acceptance criteria and handover responsibilities are defined alongside your institution’s procurement and approval requirements.",
     proof: `Vuka's sector focus in government digital services aligns with DFI deployment mandates. Hakiki — product traceability built for the Tanzanian market — is documented proof of delivery at regulatory scale.`,
     faqs: [
-      {
-        question: 'How is this different from the IT vendors we already work with?',
-        answer: `IT vendors deliver against specifications written months earlier. Vuka delivers working services designed for actual users — co-built with your team, at startup speed, with no equity warrant for government clients.`,
-      },
-      {
-        question: 'Can this work within our procurement timelines?',
-        answer: `We scope engagements to fit defined pilot boundaries — a single service, a defined user group, a 90-day build. The scoping conversation maps your mandate to a procurement pathway that works.`,
-      },
-    ],
+  {
+    "question": "Does the service have to use AI?",
+    "answer": "No. The public service and its users set the brief. We assess whether AI improves a specific task and whether it can be evaluated and operated within the institution’s requirements."
+  },
+  {
+    "question": "Who is responsible for AI-assisted decisions?",
+    "answer": "Responsibility must be explicit in the service design. We agree which tasks can be assisted, where human review is required, how exceptions are handled and who owns the outcome."
+  },
+  {
+    "question": "Can you work within our procurement process?",
+    "answer": "We scope the engagement around your institution’s authority, approvals and procurement requirements. Timelines depend on the service boundary, access, integrations and those processes."
+  }
+],
     pathways: [{ label: 'Government Innovation', href: '/what-we-do/government-innovation' }],
     relatedWorkIntro: `Ventures deployed with regulators and public-sector stakeholders — working services, not roadmaps.`,
     cta: {
@@ -320,22 +321,24 @@ There are approximately 50 venture studios operating across the entire African c
       'Sector focus mapped to DFI deployment mandates',
       'Operational portfolio ventures — not pitch-stage pipeline',
     ],
-    engagement: `The investment conversation is about what the next phase of the studio build requires — not about claiming depth that doesn't exist yet.
-
-Vuka is at founding stage with a published thesis, defined methodology, and a first operational portfolio venture. Studio-level backing conversations cover governance, capital deployment, and venture pipeline development.`,
+    engagement: "Vuka is a founding-stage studio. The conversation is about the capacity, governance and capital required to develop its AI-native venture-building approach.\n\nStudio-level backing covers venture selection, operating resources, reporting and pipeline development. Current capabilities and planned expansion are considered separately during due diligence.",
     proof: `The Venture Engines essay is the universal founding argument — subject to rebuttal, named institutions, specific mechanisms. Paul Mandele brings a decade of East African ecosystem operation. Sector focus maps to IFC, UKAID, African Development Bank, and GIZ deployment mandates.
 
 Hakiki is the first portfolio venture — operational, established, and documented.`,
     faqs: [
-      {
-        question: 'Why fund a studio over funding individual companies or accelerators?',
-        answer: `Because capital efficiency matters. The Venture Engines argument applied to capital deployment: 4 companies built right versus 17 polished and abandoned. A venture studio keeps operational capacity in the room — the infrastructure accelerators do not provide.`,
-      },
-      {
-        question: 'What stage is the studio at today?',
-        answer: `Founding stage — with a published thesis, defined methodology, sector focus, and a first operational portfolio venture. We are direct about what exists and what the next phase of the build requires.`,
-      },
-    ],
+  {
+    "question": "What is the AI-native investment thesis?",
+    "answer": "AI may expand what small teams can build and operate. Our thesis is that this capability, combined with local market knowledge and customer access, can create opportunities for new businesses in East Africa. Each opportunity still needs evidence of demand and viable economics."
+  },
+  {
+    "question": "What evidence should investors assess?",
+    "answer": "Assess current work and capacity, customer evidence, data access, evaluation methods and the cost of delivering the product. The studio thesis and planned pipeline should be assessed separately from completed venture outcomes."
+  },
+  {
+    "question": "Is Hakiki an AI venture?",
+    "answer": "Hakiki is product traceability and anti-counterfeit technology developed for Tanzania. We present it as experience in building for local operating conditions, without claiming AI capabilities that have not been documented."
+  }
+],
     pathways: [{ label: 'Read the founding thesis', href: '/our-thesis' }],
     relatedWorkIntro: `Portfolio ventures that demonstrate studio-level outcomes — operational companies, not demo-day graduates.`,
     cta: {
@@ -384,20 +387,22 @@ Not because they are ineligible. Because programs are partnership-gated through 
       'Venture qualification against program requirements',
       'Operational proof — companies still running, not applicants',
     ],
-    engagement: `Vuka is pursuing formal ecosystem partner status with big tech startup programs as an African organisation.
-
-Partners receive a qualified pipeline and accountable local routing — ventures being built inside the studio, assessed against program requirements before credits are deployed.`,
+    engagement: "Technology partnerships are in development. We are interested in arrangements that help qualifying ventures access and use AI models, compute and development infrastructure.\n\nPartner status, eligibility, data terms, usage limits and reporting are confirmed for each arrangement. Credits or tool access are available only where those arrangements have been established.",
     proof: `The $100 Problem essay is the published access-gap argument. Vuka's studio model produces the operational proof partners need — Hakiki is a documented venture still running, built inside the studio through Studio Origination.`,
     faqs: [
-      {
-        question: 'We already accept African applications directly — why do we need a partner?',
-        answer: `Because direct application channels do not overcome partnership-gated tier structures. Founders who apply individually often reach only the lowest credit tiers. A local ecosystem partner with operational depth routes qualified ventures into the programs as they were designed to work — at scale, with accountability.`,
-      },
-      {
-        question: 'What does a qualified venture look like?',
-        answer: `A company being built inside the studio — with operational depth, market validation, and program fit assessed before application. Not a pitch competition graduate or a cold application without build context.`,
-      },
-    ],
+  {
+    "question": "What kinds of technology partnerships are relevant?",
+    "answer": "AI models, cloud and compute infrastructure, evaluation and observability tools, data systems and developer tooling are relevant where they support ventures being built by the studio."
+  },
+  {
+    "question": "Does Vuka already hold partner status?",
+    "answer": "Partnerships are in development. Contact the studio to confirm current arrangements, available programmes and eligibility."
+  },
+  {
+    "question": "What would we work on together?",
+    "answer": "A partnership can cover venture qualification, onboarding, technical adoption, usage economics and feedback. The scope depends on the programme and the needs of participating ventures."
+  }
+],
     pathways: [{ label: 'The $100 Problem essay', href: '/our-thesis' }],
     relatedWorkIntro: `Studio-built ventures that demonstrate the qualified pipeline partners need — companies still running, not pitch-stage applicants.`,
     cta: {

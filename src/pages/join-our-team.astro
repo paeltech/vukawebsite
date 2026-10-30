@@ -1,36 +1,11 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/layout/Section.astro';
-import JoinTeamForm from '@/components/sections/JoinTeamForm.astro';
-import PageHeader from '@/components/sections/PageHeader.astro';
-import ContextNav from '@/components/ui/ContextNav.astro';
-import SectionLabel from '@/components/ui/SectionLabel.astro';
-import { joinTeamPage } from '@/data/copy/join-team';
+import ReferenceHero from '@/components/reference/ReferenceHero.astro';
+import StudioForm from '@/components/reference/StudioForm.astro';
+import { referenceCopy } from '@/data/copy/reference';
+const copy = referenceCopy.pages.talent;
 ---
-
-<BaseLayout title="Join our team" description={joinTeamPage.header.subcopy}>
-  <Section>
-    <PageHeader {...joinTeamPage.header} headlineSize="hero">
-      <ContextNav links={[{ label: 'Team callout on home', href: '/#join-team' }]} />
-    </PageHeader>
-  </Section>
-
-  <Section variant="sand">
-    <SectionLabel text={joinTeamPage.formIntro.headline} class="mb-4" />
-    <p class="vuka-reveal mb-vuka-3xl max-w-xl text-lg text-vuka-black">
-      {joinTeamPage.formIntro.subcopy}
-    </p>
-    <div class="max-w-2xl">
-      <JoinTeamForm />
-    </div>
-    <div class="vuka-reveal mt-vuka-3xl">
-      <p class="mb-2 font-light text-baobab">{joinTeamPage.directContact.label}</p>
-      <a
-        href={`mailto:${joinTeamPage.directContact.email}`}
-        class="font-bold text-xl text-ember hover:text-ember-hover"
-      >
-        {joinTeamPage.directContact.email}
-      </a>
-    </div>
-  </Section>
+<BaseLayout title="Join the studio" description={copy.subcopy} class="reference-page reference-contact-page">
+  <Section class="reference-form-intro"><div class="reference-form-layout"><div class="reference-form-copy"><ReferenceHero eyebrow={copy.eyebrow} headline={copy.headline} subcopy={copy.subcopy} /><p class="mt-8 whitespace-pre-line">{copy.note}</p><p class="mt-8">Looking to invest instead?<br /><a class="editorial-link" href="/investors">Explore studio investment ↗</a></p></div><div><h2 class="mb-8 text-[26px] leading-[34px]">{copy.formTitle}</h2><StudioForm kind="talent" /></div></div></Section>
 </BaseLayout>

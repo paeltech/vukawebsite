@@ -1,0 +1,9 @@
+---
+import { referenceCopy } from '@/data/copy/reference';
+import Container from '@/components/layout/Container.astro';
+import Button from '@/components/ui/Button.astro';
+interface Props { href?: string; }
+const { href = '/work-with-us' } = Astro.props;
+const copy = referenceCopy.closing;
+---
+<section class="reference-closing"><Container><div class="reference-closing-grid"><div><p class="reference-label">{copy.label}</p><h2>{copy.headline}</h2></div><div><p>{copy.body}</p><Button href={href} variant="light" size="lg">{copy.cta}</Button></div></div></Container></section>

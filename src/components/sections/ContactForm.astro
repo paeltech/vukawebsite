@@ -95,7 +95,7 @@ const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
   </form>
 
   <div id="form-success" class="hidden border border-sand bg-parchment p-8 rounded-sm">
-    <h3 class="mb-4 font-bold text-2xl">{workWithUs.success.title}</h3>
+    <h3 class="mb-4 font-normal text-2xl">{workWithUs.success.title}</h3>
     <p class="text-lg leading-relaxed whitespace-pre-line">{workWithUs.success.body}</p>
     <Button href={workWithUs.success.thesisLink} variant="text" class="mt-6">
       Read our thesis →
@@ -103,7 +103,7 @@ const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
   </div>
 </div>
 
-<script define:vars={{ email: siteConfig.email, successCopy: workWithUs.success }}>
+<script define:vars={{ email: siteConfig.email, enquiryTypeMap }}>
   function initContactForm() {
     const form = document.getElementById('contact-form');
     const success = document.getElementById('form-success');
@@ -118,7 +118,7 @@ const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
     }
 
     const enquirySelect = form.querySelector('#enquiry');
-    const defaultEnquiry = enquirySelect?.dataset.default;
+    const defaultEnquiry = enquiryTypeMap[params.get('type')] || enquirySelect?.dataset.default;
     if (defaultEnquiry && enquirySelect instanceof HTMLSelectElement) {
       enquirySelect.value = defaultEnquiry;
     }

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./prose.css";
+@import "./reference.css";
 
 /* --- Codec Pro @font-face ----------------------------------- */
 
@@ -87,14 +88,15 @@
   --color-sand: #d4c4a8;
   --color-rift-green: #2a4a3a;
   --color-ember-hover: #a8490f;
+  --color-mineral: #ece4d6;
 
   /* Typography */
   --font-codec: "Codec Pro", sans-serif;
-  --font-weight-heavy: 900;
+  --font-weight-heavy: 400;
 
   /* Golden-ratio type scale */
-  --text-display: clamp(3.5rem, 9vw, 7.6875rem);
-  --text-h2: clamp(2rem, 5vw, 4.75rem);
+  --text-display: clamp(3rem, 7.2vw, 6.5rem);
+  --text-h2: clamp(2.25rem, 4.45vw, 4rem);
   --text-h3: clamp(1.5rem, 3vw, 2.9375rem);
   --text-h4: clamp(1.25rem, 2vw, 1.8125rem);
 
@@ -260,8 +262,8 @@
 
 /* Scroll reveal — progressive enhancement */
 @utility vuka-reveal {
-  opacity: 0;
-  transform: translateY(1.25rem);
+  opacity: 1;
+  transform: none;
   transition:
     opacity 600ms var(--ease-vuka-out),
     transform 600ms var(--ease-vuka-out);
@@ -282,5 +284,47 @@
 
 /* Anchor targets — offset fixed header */
 section[id] {
-  scroll-margin-top: 5.5rem;
+  scroll-margin-top: 120px;
 }
+
+/* Reference-led Paper system: 1280px content, regular Codec, open rows. */
+@layer base {
+  h1, h2, h3, h4 { font-weight: 400; }
+  button, input, select, textarea { font: inherit; }
+  img { max-width: 100%; }
+}
+.editorial-heading { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 64px; }
+.editorial-label { font-size: 14px; line-height: 20px; color: var(--color-baobab); }
+.editorial-row { display: grid; grid-template-columns: 32px minmax(200px, 1fr) minmax(0, 1.15fr); gap: 40px; padding: 32px 0; }
+.audience-list > .editorial-heading { margin-bottom: 40px; }
+.row-number { color: var(--color-baobab); font-size: 14px; }
+.row-title { font-size: 30px; line-height: 1.2; overflow-wrap: anywhere; }
+.row-content { display: flex; flex-direction: column; gap: 16px; }
+.editorial-link { display: inline-flex; align-items: center; gap: 16px; width: fit-content; font-size: 16px; font-weight: 700; line-height: 1.5; padding-block: 4px; text-underline-offset: 5px; }
+.editorial-link:hover, .editorial-link:focus-visible { color: var(--color-ember-hover); text-decoration: underline; }
+.pathway-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 40px; }
+.page-heading h1 { max-width: 1100px; }
+.page-heading .text-accent, #join-team .text-accent { color: inherit; }
+.site-section { border: 0; }
+.site-footer { border-top: 1px solid var(--color-baobab); }
+.site-footer .text-baobab { color: var(--color-sand); }
+.vuka-card, .vuka-card-dark { border-width: 1px 0 0; border-radius: 0; box-shadow: none; }
+.vuka-card-hover:hover, .vuka-card-dark-hover:hover { transform: none; box-shadow: none; }
+@media (max-width: 1100px) {
+  .editorial-heading { grid-template-columns: 180px minmax(0, 1fr); gap: 40px; }
+}
+@media (max-width: 767px) {
+  .editorial-heading { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .editorial-row { grid-template-columns: 24px minmax(0, 1fr); gap: 16px; padding: 24px 0; }
+  .row-title { font-size: 28px; }
+  .row-content { grid-column: 2; }
+  .pathway-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .page-heading h1 { overflow-wrap: anywhere; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+.skip-link { position: fixed; top: 8px; left: 24px; z-index: 300; padding: 12px 20px; border-radius: 100px; background: var(--color-vuka-black); color: var(--color-parchment); transform: translateY(-200%); }
+.skip-link:focus { transform: none; }

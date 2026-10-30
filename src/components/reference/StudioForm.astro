@@ -1,0 +1,84 @@
+---
+import Button from '@/components/ui/Button.astro';
+import { siteConfig } from '@/config/site';
+import { workWithUs, enquiryTypeMap } from '@/data/copy/work-with-us';
+import { joinTeamPage } from '@/data/copy/join-team';
+interface Props { kind?: 'contact' | 'talent'; }
+const { kind = 'contact' } = Astro.props;
+const talent = kind === 'talent';
+const endpoint = talent ? import.meta.env.PUBLIC_FORM_ENDPOINT_TEAM ?? import.meta.env.PUBLIC_FORM_ENDPOINT : import.meta.env.PUBLIC_FORM_ENDPOINT;
+const prefix = talent ? 'join' : 'contact';
+const success = talent ? joinTeamPage.success : workWithUs.success;
+const fields = [
+  { name: 'name', label: 'Your name', placeholder: 'First and last', type: 'text', required: true },
+  { name: 'email', label: 'Email address', placeholder: 'you@example.com', type: 'email', required: true },
+  { name: 'organisation', label: 'Organisation (optional)', placeholder: talent ? 'Current company or affiliation' : 'Company or institution', type: 'text', required: false },
+] as const;
+const selects = talent ? [
+  { name: 'expertise', label: 'Your expertise', placeholder: 'Select an area', options: joinTeamPage.expertiseOptions },
+  { name: 'motive', label: 'How would you like to contribute?', placeholder: 'Select an arrangement', options: joinTeamPage.motiveOptions },
+] : [
+  { name: 'enquiry', label: 'What brings you here?', placeholder: 'Select an option', options: workWithUs.enquiryOptions },
+];
+---
+<div data-studio-form data-email={siteConfig.email} data-type-map={JSON.stringify(enquiryTypeMap)}>
+  <form method="POST" action={endpoint || `mailto:${siteConfig.email}`} data-endpoint={endpoint || ''} enctype={endpoint ? undefined : 'text/plain'} class="reference-form">
+    {!endpoint && <p class="reference-form-note">Share a few details below. We’ll open an email draft for you to review and send from your email app.</p>}
+    <input type="hidden" name="_subject" value={talent ? 'Vuka join team interest' : 'Vuka enquiry'} />
+    {fields.map(field => <div><label for={`${prefix}-${field.name}`}>{field.label}</label><input id={`${prefix}-${field.name}`} name={field.name} type={field.type} placeholder={field.placeholder} required={field.required} autocomplete={field.name === 'name' ? 'name' : field.name === 'email' ? 'email' : 'organization'} /></div>)}
+    {selects.map(field => <div><label for={`${prefix}-${field.name}`}>{field.label}</label><select id={`${prefix}-${field.name}`} name={field.name} required><option value="" selected disabled>{field.placeholder}</option>{field.options.map(option => <option value={option}>{option}</option>)}</select></div>)}
+    <div><label for={`${prefix}-message`}>{talent ? 'Tell us more' : 'Tell us about the opportunity'}</label><textarea id={`${prefix}-message`} name="message" rows="5" required placeholder={talent ? 'The products, systems or markets you know. What have you built, and where would you like to contribute?' : 'Who has this problem? What have you learned, and where do you need a building partner?'}></textarea></div>
+    <div class="hidden" aria-hidden="true"><label for={`${prefix}-website`}>Website</label><input id={`${prefix}-website`} name="_gotcha" tabindex="-1" autocomplete="off" /></div>
+    <p data-form-error role="alert" hidden>Your message could not be sent. Please try again or email {siteConfig.email}.</p>
+    <Button type="submit" class="w-full" size="lg">{endpoint ? (talent ? 'Submit interest ↗' : 'Send enquiry ↗') : 'Continue in email ↗'}</Button>
+    <p class="reference-form-privacy">{endpoint ? 'We use these details to respond to your enquiry.' : 'You’ll send the message from your email app.'}</p>
+  </form>
+  <div data-form-success role="status" tabindex="-1" hidden><h2 class="reference-h3">{success.title}</h2><p class="mt-6 whitespace-pre-line">{success.body}</p><a href="/our-thesis" class="editorial-link mt-6">Read our thesis ↗</a></div>
+</div>
+<script>
+  import { buildEnquiryEmail } from '@/lib/contact';
+  function initStudioForms() {
+    document.querySelectorAll<HTMLElement>('[data-studio-form]').forEach(root => {
+      if (root.dataset.initialized) return;
+      root.dataset.initialized = 'true';
+      const form = root.querySelector('form');
+      const error = root.querySelector<HTMLElement>('[data-form-error]');
+      const success = root.querySelector<HTMLElement>('[data-form-success]');
+      if (!form || !error || !success) return;
+      const enquiry = form.querySelector<HTMLSelectElement>('[name="enquiry"]');
+      const type = new URLSearchParams(window.location.search).get('type');
+      const typeMap = JSON.parse(root.dataset.typeMap || '{}');
+      if (enquiry && type && typeMap[type]) enquiry.value = typeMap[type];
+      form.addEventListener('submit', async event => {
+        event.preventDefault();
+        if (!form.reportValidity()) return;
+        error.hidden = true;
+        const data = new FormData(form);
+        if (data.get('_gotcha')) return;
+        const endpoint = form.dataset.endpoint;
+        if (!endpoint) {
+          window.location.href = buildEnquiryEmail(root.dataset.email || '', data);
+          return;
+        }
+        const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+        const label = button?.textContent;
+        form.setAttribute('aria-busy', 'true');
+        if (button) { button.disabled = true; button.textContent = 'Sending…'; }
+        try {
+          const response = await fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+          if (!response.ok) throw new Error('Submission failed');
+          form.hidden = true;
+          success.hidden = false;
+          success.focus();
+        } catch {
+          error.hidden = false;
+        } finally {
+          form.removeAttribute('aria-busy');
+          if (button) { button.disabled = false; button.textContent = label || 'Send enquiry ↗'; }
+        }
+      });
+    });
+  }
+  initStudioForms();
+  document.addEventListener('astro:page-load', initStudioForms);
+</script>

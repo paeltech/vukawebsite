@@ -1,0 +1,10 @@
+---
+import { referenceCopy } from '@/data/copy/reference';
+interface Props { studioPage?: boolean; }
+const { studioPage = false } = Astro.props;
+const copy = studioPage ? referenceCopy.pages.studio.feature : referenceCopy.home.studio;
+---
+<div class="reference-studio-feature">
+  <img src="/assets/photos/dar-es-salaam-street.webp" alt="A street in Dar es Salaam, photographed by Emma Kapicha" width="640" height="440" loading="lazy" />
+  <div><p class="reference-label">{copy.label}</p><h2>{copy.headline}</h2><p>{copy.body}</p><a href={studioPage ? '/portfolio' : '/about'} class="editorial-link">{copy.cta}</a></div>
+</div>

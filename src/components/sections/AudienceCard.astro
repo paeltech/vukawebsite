@@ -1,5 +1,4 @@
 ---
-import Button from '@/components/ui/Button.astro';
 import Icon from '@/components/ui/Icon.astro';
 import type { IconName } from '@/lib/icons';
 
@@ -53,7 +52,7 @@ const ctaClass =
       {eyebrow}
     </p>
   )}
-  <h3 class:list={['mb-4 font-bold text-xl transition-colors', headlineClass]}>{headline}</h3>
+  <h3 class:list={['mb-4 font-normal text-xl transition-colors', headlineClass]}>{headline}</h3>
   <p class:list={['mb-6 flex-1 text-lg leading-relaxed whitespace-pre-line', bodyClass]}>{body}</p>
   <span class:list={['inline-flex items-center gap-2 self-start font-normal transition-colors', ctaClass]}>
     {cta.label}

@@ -1,37 +1,18 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/layout/Section.astro';
-import ContentSection from '@/components/sections/ContentSection.astro';
-import HomePathways from '@/components/sections/HomePathways.astro';
-import PageCTA from '@/components/sections/PageCTA.astro';
-import PageHeader from '@/components/sections/PageHeader.astro';
-import ProcessSteps from '@/components/sections/ProcessSteps.astro';
-import StudioCapabilities from '@/components/sections/StudioCapabilities.astro';
-import { homePathways } from '@/data/copy/home';
-import { whatWeDo } from '@/data/copy/pathways';
+import ReferenceHero from '@/components/reference/ReferenceHero.astro';
+import Services from '@/components/reference/Services.astro';
+import BuildProcess from '@/components/reference/BuildProcess.astro';
+import Closing from '@/components/reference/Closing.astro';
+import { referenceCopy } from '@/data/copy/reference';
+const copy = referenceCopy.pages.services;
+const routes = ['studio-origination', 'founder-in-residence', 'corporate-spinout', 'government-innovation'];
 ---
-
-<BaseLayout title="What we do">
-  <Section>
-    <PageHeader eyebrow={whatWeDo.eyebrow} headline={whatWeDo.headline} subcopy={whatWeDo.subcopy} headlineSize="hero" />
-  </Section>
-
-  <Section variant="sand">
-    <HomePathways {...homePathways} />
-  </Section>
-
-  <Section variant="dark">
-    <StudioCapabilities summary={whatWeDo.summary} services={whatWeDo.services} />
-  </Section>
-
-  <Section>
-    <ContentSection label={whatWeDo.process.label} icon="process">
-      <p class="mb-vuka-3xl max-w-2xl text-lg leading-relaxed text-vuka-black">{whatWeDo.process.intro}</p>
-      <ProcessSteps steps={whatWeDo.process.steps} />
-    </ContentSection>
-  </Section>
-
-  <Section>
-    <PageCTA cta={whatWeDo.closingCta} />
-  </Section>
+<BaseLayout title="What we do" description={copy.header.subcopy} class="reference-page">
+  <Section class="reference-page-intro"><ReferenceHero {...copy.header} /></Section>
+  <Section variant="sand" class="reference-section"><Services /></Section>
+  <Section id="process" variant="dark" class="reference-section"><BuildProcess /></Section>
+  <Section id="pathways" class="reference-section"><p class="reference-label mb-6">{copy.pathways.label}</p><h2 class="reference-h2">{copy.pathways.headline}</h2><div class="reference-rows">{copy.pathways.rows.map((row, i) => <article class="reference-simple-row"><span class="reference-label" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><h3>{row.title}</h3><div><p>{row.body}</p><a href={`/what-we-do/${routes[i]}`} class="editorial-link">{row.cta}</a></div></article>)}</div></Section>
+  <Closing />
 </BaseLayout>

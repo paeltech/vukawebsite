@@ -15,10 +15,10 @@ const { tags, targetId = 'article-grid', emptyMessage } = Astro.props;
         <button
           type="button"
           class:list={[
-            'rounded-sm px-4 py-2 font-light text-sm transition-colors',
+            'rounded-full border border-sand px-5 py-3 font-normal text-sm transition-colors',
             index === 0
               ? 'bg-surface-dark text-parchment'
-              : 'bg-sand text-baobab hover:bg-baobab/20',
+              : 'bg-transparent text-vuka-black hover:border-baobab',
           ]}
           data-filter={tag === 'All' ? 'all' : tag}
           data-active={index === 0 ? 'true' : 'false'}
@@ -71,8 +71,8 @@ const { tags, targetId = 'article-grid', emptyMessage } = Astro.props;
             btn.setAttribute('aria-pressed', String(active));
             btn.classList.toggle('bg-surface-dark', active);
             btn.classList.toggle('text-parchment', active);
-            btn.classList.toggle('bg-sand', !active);
-            btn.classList.toggle('text-baobab', !active);
+            btn.classList.toggle('bg-transparent', !active);
+            btn.classList.toggle('text-vuka-black', !active);
           });
 
           items.forEach((item) => {
